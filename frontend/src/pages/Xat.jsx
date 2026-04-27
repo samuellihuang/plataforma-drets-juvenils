@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://plataforma-drets-juvenils.onrender.com';
+const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
 import styles from './Xat.module.css';
 
 const MAX_CHARS = 500;

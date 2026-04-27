@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Disclaimer from '../components/Disclaimer';
 import styles from './Simulador.module.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://plataforma-drets-juvenils.onrender.com';
+const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
 
 const STATUS = { LOADING: 'loading', ERROR: 'error', LIST: 'list', SCENARIO: 'scenario', RESULT: 'result' };
 
