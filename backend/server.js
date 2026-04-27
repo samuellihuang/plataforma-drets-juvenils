@@ -27,8 +27,16 @@ Acaba sempre amb: 'Això és informació orientativa, no assessorament legal pro
 app.use(helmet());
 
 // CORS
+const ALLOWED_ORIGINS = [
+  'https://plataforma-drets-juvenils.vercel.app',
+  'http://localhost:5173',
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS: origen no permès: ${origin}`));
+  },
   methods: ['POST', 'GET'],
   allowedHeaders: ['Content-Type'],
 }));
