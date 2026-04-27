@@ -1,0 +1,160 @@
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 4rem 0 3.5rem;
+}
+
+.odsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.75rem;
+}
+
+.heroTitle {
+  font-size: clamp(2.2rem, 7vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.accent {
+  color: var(--accent);
+  position: relative;
+}
+.accent::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 99px;
+  opacity: 0.45;
+}
+
+.heroSub {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  color: var(--text-muted);
+  font-weight: 500;
+  margin: 0.75rem auto 0;
+}
+
+.heroDesc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 1.1rem auto 0;
+  line-height: 1.7;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+  margin-top: 2.25rem;
+}
+
+.heroBtnPrimary {
+  min-width: 200px;
+  font-size: 1.05rem;
+  padding: 1rem 2rem;
+}
+
+.heroBtnGhost {
+  min-width: 200px;
+  font-size: 1.05rem;
+  padding: 1rem 2rem;
+}
+
+/* ── Section cards ── */
+.sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .sections { grid-template-columns: 1fr 1fr; }
+}
+
+.sectionCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.sectionCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(108, 99, 255, 0.18);
+}
+
+.cardIcon { font-size: 2.5rem; line-height: 1; }
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.65rem;
+}
+
+.cardTitle {
+  font-size: 1.2rem;
+  color: var(--text);
+  margin: 0;
+}
+
+.cardDesc {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  flex: 1;
+}
+
+.cardBtn { width: 100%; margin-top: 0.5rem; }
+
+/* ── ODS card ── */
+.odsCard {
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--accent);
+}
+
+.odsInner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.odsEmoji {
+  font-size: 2.25rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.1rem;
+}
+
+.odsTitle {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.odsText {
+  font-size: 0.93rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .odsInner { flex-direction: column; gap: 0.75rem; }
+}
