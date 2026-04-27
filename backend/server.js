@@ -3,13 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const Anthropic = require('@anthropic-ai/sdk');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const scenarios = require('./data/scenarios');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const SYSTEM_PROMPT = `Ets un assistent educatiu especialitzat en drets legals per a joves a Espanya. La teva funció és explicar conceptes legals de forma clara, simple i responsable.
 Normes:
@@ -22,6 +20,9 @@ Normes:
 - Prioritza: interaccions amb policia, drets laborals bàsics, ciberassetjament.
 - Si la pregunta és perillosa o il·legal, redirigeix cap a informació segura.
 Acaba sempre amb: 'Això és informació orientativa, no assessorament legal professional.'`;
+
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash', systemInstruction: SYSTEM_PROMPT });
 
 // Security
 app.use(helmet());
@@ -71,21 +72,15 @@ app.post('/api/chat', async (req, res) => {
   }
 
   try {
-    const result = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1024,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: message.trim() }],
-    });
-
-    const response = result.content[0]?.text;
+    const result = await model.generateContent(message.trim());
+    const response = result.response.text();
     if (!response) throw new Error('Resposta buida de l\'API');
 
     return res.json({ response });
   } catch (err) {
-    console.error('Error cridant l\'API d\'Anthropic:', err.message);
+    console.error('Error cridant l\'API de Gemini:', err.message);
 
-    if (err.status === 401) {
+    if (err.status === 401 || err.status === 403) {
       return res.status(500).json({ error: 'Error d\'autenticació amb l\'API.' });
     }
     if (err.status === 429) {
