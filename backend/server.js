@@ -78,16 +78,9 @@ app.post('/api/chat', async (req, res) => {
 
     return res.json({ response });
   } catch (err) {
-    console.error('Error cridant l\'API de Gemini:', err.message);
+    console.error('Error cridant l\'API de Gemini:', err);
 
-    if (err.status === 401 || err.status === 403) {
-      return res.status(500).json({ error: 'Error d\'autenticació amb l\'API.' });
-    }
-    if (err.status === 429) {
-      return res.status(429).json({ error: 'Límit de l\'API assolit. Torna a intentar-ho més tard.' });
-    }
-
-    return res.status(500).json({ error: 'Error intern del servidor. Torna a intentar-ho.' });
+    return res.status(500).json({ error: err.message || String(err) });
   }
 });
 
