@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Disclaimer from '../components/Disclaimer';
 import styles from './Simulador.module.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || 'https://plataforma-drets-juvenils.onrender.com';
 
 const STATUS = { LOADING: 'loading', ERROR: 'error', LIST: 'list', SCENARIO: 'scenario', RESULT: 'result' };
 
@@ -14,7 +14,7 @@ export default function Simulador() {
   const [chosen, setChosen]     = useState(null);   // opció triada
 
   useEffect(() => {
-    fetch('${API_URL}/api/scenarios')
+    fetch(`${API_URL}/api/scenarios`)
       .then((r) => { if (!r.ok) throw new Error(`Error ${r.status}`); return r.json(); })
       .then((data) => { setScenarios(data); setStatus(STATUS.LIST); })
       .catch((err) => { setErrorMsg(err.message); setStatus(STATUS.ERROR); });
@@ -76,7 +76,7 @@ export default function Simulador() {
                 className="btn btn-primary"
                 style={{ marginTop: '1rem' }}
                 onClick={() => { setStatus(STATUS.LOADING); setErrorMsg('');
-                  fetch('${API_URL}/api/scenarios')
+                  fetch(`${API_URL}/api/scenarios`)
                     .then((r) => { if (!r.ok) throw new Error(`Error ${r.status}`); return r.json(); })
                     .then((d) => { setScenarios(d); setStatus(STATUS.LIST); })
                     .catch((e) => { setErrorMsg(e.message); setStatus(STATUS.ERROR); });
