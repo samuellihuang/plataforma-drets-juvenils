@@ -6,15 +6,6 @@ const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
 
 const STATUS = { LOADING: 'loading', ERROR: 'error', LIST: 'list', SCENARIO: 'scenario', RESULT: 'result' };
 
-const CATEGORY_ICONS = {
-  policia:   '🚔',
-  laboral:   '💼',
-  privacitat:'📱',
-  escola:    '🎓',
-  consum:    '🛒',
-  salut:     '🏥',
-};
-
 export default function Simulador() {
   const [status, setStatus]       = useState(STATUS.LOADING);
   const [scenarios, setScenarios] = useState([]);
@@ -94,8 +85,7 @@ export default function Simulador() {
           {/* ── ERROR ── */}
           {status === STATUS.ERROR && (
             <div className={`card ${styles.centered} ${styles.errorCard}`}>
-              <span className={styles.bigIcon}>⚠️</span>
-              <p className="text-danger">No s&apos;han pogut carregar els escenaris.</p>
+              <p className="text-danger" style={{ fontWeight: 600 }}>No s&apos;han pogut carregar els escenaris.</p>
               <p className="text-muted" style={{ fontSize: '0.9rem' }}>{errorMsg}</p>
               <button
                 className="btn btn-primary"
@@ -117,7 +107,6 @@ export default function Simulador() {
           {/* ── LIST ── */}
           {status === STATUS.LIST && (
             <>
-              {/* Filtres de categoria */}
               <div className={styles.categoryBar} role="tablist" aria-label="Filtra per categoria">
                 <button
                   role="tab"
@@ -125,7 +114,7 @@ export default function Simulador() {
                   className={`${styles.categoryBtn} ${activeCategory === 'tots' ? styles.categoryBtnActive : ''}`}
                   onClick={() => setActiveCategory('tots')}
                 >
-                  🗂 Tots ({scenarios.length})
+                  Tots ({scenarios.length})
                 </button>
                 {categories.map(({ key, label }) => {
                   const count = scenarios.filter((s) => s.category === key).length;
@@ -137,13 +126,12 @@ export default function Simulador() {
                       className={`${styles.categoryBtn} ${activeCategory === key ? styles.categoryBtnActive : ''}`}
                       onClick={() => setActiveCategory(key)}
                     >
-                      {CATEGORY_ICONS[key] || '📄'} {label} ({count})
+                      {label} ({count})
                     </button>
                   );
                 })}
               </div>
 
-              {/* Llista d'escenaris */}
               <div className={styles.list}>
                 {filtered.map((scenario) => (
                   <button
@@ -151,24 +139,22 @@ export default function Simulador() {
                     className={`card ${styles.scenarioCard}`}
                     onClick={() => selectScenario(scenario)}
                   >
-                    <span className={styles.scenarioNum}>#{scenario.id}</span>
+                    <span className={styles.scenarioNum}>{scenario.id}</span>
                     <div className={styles.scenarioCardBody}>
                       <div className={styles.scenarioCardTop}>
                         <h2 className={styles.scenarioCardTitle}>{scenario.title}</h2>
-                        <span className={styles.categoryTag}>
-                          {CATEGORY_ICONS[scenario.category]} {scenario.categoryLabel}
-                        </span>
+                        <span className={styles.categoryTag}>{scenario.categoryLabel}</span>
                       </div>
                       <p className={styles.scenarioCardContext}>{scenario.context}</p>
                     </div>
-                    <span className={styles.arrow}>→</span>
+                    <span className={styles.arrow}>›</span>
                   </button>
                 ))}
               </div>
             </>
           )}
 
-          {/* ── SCENARIO (tria opció) ── */}
+          {/* ── SCENARIO ── */}
           {status === STATUS.SCENARIO && active && (
             <div className={styles.scenarioView}>
               <button className={`btn btn-ghost ${styles.backBtn}`} onClick={backToList}>
@@ -177,7 +163,7 @@ export default function Simulador() {
 
               <div className={`card ${styles.contextCard}`}>
                 <span className={styles.contextLabel}>
-                  {CATEGORY_ICONS[active.category]} {active.categoryLabel} · Escenari #{active.id}
+                  {active.categoryLabel} · Escenari {active.id}
                 </span>
                 <h2>{active.title}</h2>
                 <p className={styles.contextText}>{active.context}</p>
@@ -216,7 +202,7 @@ export default function Simulador() {
               </button>
 
               <div className={`card ${styles.chosenCard}`}>
-                <span className={styles.chosenLabel}>Has triat l&apos;opció {chosen.id}</span>
+                <span className={styles.chosenLabel}>Opció triada · {chosen.id}</span>
                 <p className={styles.chosenText}>{chosen.text}</p>
               </div>
 
@@ -224,7 +210,6 @@ export default function Simulador() {
 
               <div className={`card ${styles.rightCard}`}>
                 <div className={styles.rightHeader}>
-                  <span className={styles.rightIcon}>⚖️</span>
                   <h3>El teu dret</h3>
                 </div>
                 <p className={styles.rightText}>{chosen.legalRight}</p>
@@ -232,7 +217,6 @@ export default function Simulador() {
 
               <div className={`card ${styles.explainCard}`}>
                 <div className={styles.rightHeader}>
-                  <span className={styles.rightIcon}>📚</span>
                   <h3>Explicació legal</h3>
                 </div>
                 <p className={styles.explainText}>{chosen.legalExplanation}</p>
@@ -240,13 +224,13 @@ export default function Simulador() {
 
               <div className={styles.resultActions}>
                 <button className="btn btn-primary" onClick={tryAnother}>
-                  🎲 Provar un altre escenari
+                  Provar un altre escenari
                 </button>
                 <button className="btn btn-ghost" onClick={() => selectScenario(active)}>
-                  🔁 Tornar a aquest escenari
+                  Tornar a aquest escenari
                 </button>
                 <button className="btn btn-ghost" onClick={backToList}>
-                  ← Llista d&apos;escenaris
+                  Llista d&apos;escenaris
                 </button>
               </div>
             </div>
@@ -262,14 +246,12 @@ function Consequence({ text }) {
   const isPositive = /correcte|excel·lent|bona/i.test(text);
   const isNegative = /negatiu|molt negatiu|arriscat/i.test(text);
   const cls = isPositive ? styles.consequencePos : isNegative ? styles.consequenceNeg : styles.consequenceNeutral;
+  const label = isPositive ? 'Resposta adequada' : isNegative ? 'Resposta inadequada' : 'Atenció';
 
   return (
     <div className={`card ${styles.consequenceCard} ${cls}`}>
       <div className={styles.rightHeader}>
-        <span className={styles.rightIcon}>
-          {isPositive ? '✅' : isNegative ? '❌' : '⚠️'}
-        </span>
-        <h3>Conseqüència</h3>
+        <span className={styles.consequenceLabel}>{label}</span>
       </div>
       <p className={styles.consequenceText}>{text}</p>
     </div>

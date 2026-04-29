@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import styles from './Xat.module.css';
 
 const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
-import styles from './Xat.module.css';
 
 const MAX_CHARS = 500;
 
 const WELCOME = {
   id: 'welcome',
   role: 'assistant',
-  text: '👋 Hola! Soc el teu assistent de drets legals per a joves a Espanya.\n\nPot preguntar-me sobre les teves interaccions amb la policia, drets laborals, privacitat a internet o qualsevol altre tema legal que t\'interessi.\n\nRecorda que les meves respostes són orientatives i no substitueixen un advocat/ada professional.',
+  text: 'Hola! Soc el teu assessor de drets legals per a joves a Espanya.\n\nPot preguntar-me sobre les teves interaccions amb la policia, drets laborals, privacitat a internet o qualsevol altre tema legal que t\'interessi.\n\nRecorda que les meves respostes són orientatives i no substitueixen un advocat o advocada professional.',
 };
 
 const SUGGESTIONS = [
@@ -21,12 +21,12 @@ function Message({ msg }) {
   const isUser = msg.role === 'user';
   return (
     <div className={`${styles.msgRow} ${isUser ? styles.msgRowUser : styles.msgRowAssistant}`}>
-      {!isUser && <div className={styles.avatar}>⚖️</div>}
+      {!isUser && <div className={styles.avatar}>A</div>}
       <div className={`${styles.bubble} ${isUser ? styles.bubbleUser : styles.bubbleAssistant}`}>
         {msg.text.split('\n').map((line, i) => (
           <span key={i}>{line}{i < msg.text.split('\n').length - 1 && <br />}</span>
         ))}
-        {msg.error && <span className={styles.errorTag}> ⚠️</span>}
+        {msg.error && <span className={styles.errorTag}> Error</span>}
       </div>
       {isUser && <div className={styles.avatarUser}>Tu</div>}
     </div>
@@ -36,7 +36,7 @@ function Message({ msg }) {
 function TypingIndicator() {
   return (
     <div className={`${styles.msgRow} ${styles.msgRowAssistant}`}>
-      <div className={styles.avatar}>⚖️</div>
+      <div className={styles.avatar}>A</div>
       <div className={`${styles.bubble} ${styles.bubbleAssistant} ${styles.typing}`}>
         <span /><span /><span />
       </div>
@@ -109,9 +109,9 @@ export default function Xat() {
 
       {/* ── Header ── */}
       <header className={styles.chatHeader}>
-        <div className={styles.headerAvatar}>⚖️</div>
+        <div className={styles.headerAvatar}>IA</div>
         <div className={styles.headerInfo}>
-          <span className={styles.headerName}>Assistent de Drets Juvenils</span>
+          <span className={styles.headerName}>Assessor de Drets Juvenils</span>
           <span className={styles.headerStatus}>
             <span className={styles.dot} />
             Sempre disponible · Respostes orientatives
@@ -126,7 +126,6 @@ export default function Xat() {
           <Message key={msg.id} msg={msg} />
         ))}
 
-        {/* Suggeriments inicials */}
         {showSuggestions && !loading && (
           <div className={styles.suggestions}>
             <p className={styles.suggestionsLabel}>Preguntes freqüents:</p>

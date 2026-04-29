@@ -1,21 +1,21 @@
 /* ── Hero ── */
 .hero {
   text-align: center;
-  padding: 4rem 0 3.5rem;
+  padding: 4.5rem 0 3.5rem;
 }
 
 .odsBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
   background: var(--accent-dim);
   color: var(--accent);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(30, 64, 175, 0.2);
   border-radius: 99px;
-  padding: 0.4rem 1.1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
+  padding: 0.35rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   margin-bottom: 1.75rem;
 }
 
@@ -24,7 +24,7 @@
   font-weight: 800;
   line-height: 1.15;
   color: var(--text);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .accent {
@@ -40,14 +40,14 @@
   height: 3px;
   background: var(--accent);
   border-radius: 99px;
-  opacity: 0.45;
+  opacity: 0.3;
 }
 
 .heroSub {
-  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   color: var(--text-muted);
   font-weight: 500;
-  margin: 0.75rem auto 0;
+  margin: 0.85rem auto 0;
 }
 
 .heroDesc {
@@ -55,7 +55,7 @@
   color: var(--text-muted);
   max-width: 520px;
   margin: 1.1rem auto 0;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .heroActions {
@@ -66,16 +66,11 @@
   margin-top: 2.25rem;
 }
 
-.heroBtnPrimary {
-  min-width: 200px;
-  font-size: 1.05rem;
-  padding: 1rem 2rem;
-}
-
+.heroBtnPrimary,
 .heroBtnGhost {
   min-width: 200px;
-  font-size: 1.05rem;
-  padding: 1rem 2rem;
+  font-size: 0.97rem;
+  padding: 0.9rem 1.75rem;
 }
 
 /* ── Section cards ── */
@@ -93,15 +88,23 @@
 .sectionCard {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.1rem;
   transition: transform 180ms ease, box-shadow 180ms ease;
+  border-top: 3px solid var(--accent);
 }
 .sectionCard:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 32px rgba(108, 99, 255, 0.18);
+  box-shadow: 0 8px 28px rgba(30, 64, 175, 0.12);
 }
 
-.cardIcon { font-size: 2.5rem; line-height: 1; }
+.cardNum {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+  opacity: 0.25;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
 
 .cardBody {
   display: flex;
@@ -111,14 +114,14 @@
 }
 
 .cardTitle {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   color: var(--text);
   margin: 0;
 }
 
 .cardDesc {
-  font-size: 0.95rem;
-  line-height: 1.65;
+  font-size: 0.93rem;
+  line-height: 1.7;
   flex: 1;
 }
 
@@ -128,6 +131,8 @@
 .odsCard {
   margin-bottom: 2rem;
   border-left: 4px solid var(--accent);
+  background: var(--accent-dim);
+  box-shadow: none;
 }
 
 .odsInner {
@@ -136,15 +141,22 @@
   gap: 1.25rem;
 }
 
-.odsEmoji {
-  font-size: 2.25rem;
+.odsNumBadge {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  line-height: 1;
-  margin-top: 0.1rem;
 }
 
 .odsTitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--text);
   margin-bottom: 0.5rem;
 }
@@ -157,4 +169,5 @@
 
 @media (max-width: 480px) {
   .odsInner { flex-direction: column; gap: 0.75rem; }
+  .hero { padding: 3rem 0 2.5rem; }
 }

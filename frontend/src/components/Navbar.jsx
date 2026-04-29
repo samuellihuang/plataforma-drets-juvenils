@@ -2,9 +2,9 @@ import { NavLink } from 'react-router-dom';
 import styles from './Navbar.module.css';
 
 const links = [
-  { to: '/',           label: 'Inici' },
-  { to: '/simulador',  label: 'Simulador' },
-  { to: '/xat',        label: 'Xat IA' },
+  { to: '/',          label: 'Inici' },
+  { to: '/simulador', label: 'Simulador' },
+  { to: '/xat',       label: 'Assessor IA' },
 ];
 
 export default function Navbar() {
@@ -12,8 +12,8 @@ export default function Navbar() {
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
         <NavLink to="/" className={styles.brand}>
-          <span className={styles.brandIcon}>⚖️</span>
-          <span>Drets Juvenils</span>
+          <span className={styles.brandMark}>DJ</span>
+          <span className={styles.brandText}>Drets Juvenils</span>
         </NavLink>
 
         <nav className={styles.nav} aria-label="Navegació principal">
