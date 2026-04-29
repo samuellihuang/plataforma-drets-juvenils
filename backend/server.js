@@ -22,7 +22,7 @@ Normes:
 Acaba sempre amb: 'Això és informació orientativa, no assessorament legal professional.'`;
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash', systemInstruction: SYSTEM_PROMPT });
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash', systemInstruction: SYSTEM_PROMPT });
 
 // Security
 app.use(helmet());
@@ -78,9 +78,16 @@ app.post('/api/chat', async (req, res) => {
 
     return res.json({ response });
   } catch (err) {
-    console.error('Error cridant l\'API de Gemini:', err);
+    console.error('Error cridant l\'API de Gemini:', err.message);
 
-    return res.status(500).json({ error: err.message || String(err) });
+    if (err.status === 401 || err.status === 403) {
+      return res.status(500).json({ error: 'Error d\'autenticació amb l\'API.' });
+    }
+    if (err.status === 429) {
+      return res.status(429).json({ error: 'Límit de l\'API assolit. Torna a intentar-ho més tard.' });
+    }
+
+    return res.status(500).json({ error: 'Error intern del servidor. Torna a intentar-ho.' });
   }
 });
 
