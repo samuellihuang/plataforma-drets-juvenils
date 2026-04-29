@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Disclaimer from '../components/Disclaimer';
 import styles from './Simulador.module.css';
 
@@ -6,12 +6,22 @@ const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
 
 const STATUS = { LOADING: 'loading', ERROR: 'error', LIST: 'list', SCENARIO: 'scenario', RESULT: 'result' };
 
+const CATEGORY_ICONS = {
+  policia:   '🚔',
+  laboral:   '💼',
+  privacitat:'📱',
+  escola:    '🎓',
+  consum:    '🛒',
+  salut:     '🏥',
+};
+
 export default function Simulador() {
-  const [status, setStatus]     = useState(STATUS.LOADING);
+  const [status, setStatus]       = useState(STATUS.LOADING);
   const [scenarios, setScenarios] = useState([]);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [active, setActive]     = useState(null);   // escenari seleccionat
-  const [chosen, setChosen]     = useState(null);   // opció triada
+  const [errorMsg, setErrorMsg]   = useState('');
+  const [active, setActive]       = useState(null);
+  const [chosen, setChosen]       = useState(null);
+  const [activeCategory, setActiveCategory] = useState('tots');
 
   useEffect(() => {
     fetch(`${API_URL}/api/scenarios`)
@@ -19,6 +29,19 @@ export default function Simulador() {
       .then((data) => { setScenarios(data); setStatus(STATUS.LIST); })
       .catch((err) => { setErrorMsg(err.message); setStatus(STATUS.ERROR); });
   }, []);
+
+  const categories = useMemo(() => {
+    const seen = new Map();
+    scenarios.forEach((s) => {
+      if (!seen.has(s.category)) seen.set(s.category, s.categoryLabel);
+    });
+    return Array.from(seen.entries()).map(([key, label]) => ({ key, label }));
+  }, [scenarios]);
+
+  const filtered = useMemo(() =>
+    activeCategory === 'tots' ? scenarios : scenarios.filter((s) => s.category === activeCategory),
+    [scenarios, activeCategory]
+  );
 
   function selectScenario(scenario) {
     setActive(scenario);
@@ -41,8 +64,10 @@ export default function Simulador() {
   }
 
   function tryAnother() {
-    const others = scenarios.filter((s) => s.id !== active.id);
-    if (others.length) selectScenario(others[Math.floor(Math.random() * others.length)]);
+    const pool = activeCategory === 'tots'
+      ? scenarios.filter((s) => s.id !== active.id)
+      : scenarios.filter((s) => s.category === activeCategory && s.id !== active.id);
+    if (pool.length) selectScenario(pool[Math.floor(Math.random() * pool.length)]);
     else backToList();
   }
 
@@ -75,7 +100,9 @@ export default function Simulador() {
               <button
                 className="btn btn-primary"
                 style={{ marginTop: '1rem' }}
-                onClick={() => { setStatus(STATUS.LOADING); setErrorMsg('');
+                onClick={() => {
+                  setStatus(STATUS.LOADING);
+                  setErrorMsg('');
                   fetch(`${API_URL}/api/scenarios`)
                     .then((r) => { if (!r.ok) throw new Error(`Error ${r.status}`); return r.json(); })
                     .then((d) => { setScenarios(d); setStatus(STATUS.LIST); })
@@ -89,22 +116,56 @@ export default function Simulador() {
 
           {/* ── LIST ── */}
           {status === STATUS.LIST && (
-            <div className={styles.list}>
-              {scenarios.map((scenario) => (
+            <>
+              {/* Filtres de categoria */}
+              <div className={styles.categoryBar} role="tablist" aria-label="Filtra per categoria">
                 <button
-                  key={scenario.id}
-                  className={`card ${styles.scenarioCard}`}
-                  onClick={() => selectScenario(scenario)}
+                  role="tab"
+                  aria-selected={activeCategory === 'tots'}
+                  className={`${styles.categoryBtn} ${activeCategory === 'tots' ? styles.categoryBtnActive : ''}`}
+                  onClick={() => setActiveCategory('tots')}
                 >
-                  <span className={styles.scenarioNum}>#{scenario.id}</span>
-                  <div className={styles.scenarioCardBody}>
-                    <h2 className={styles.scenarioCardTitle}>{scenario.title}</h2>
-                    <p className={styles.scenarioCardContext}>{scenario.context}</p>
-                  </div>
-                  <span className={styles.arrow}>→</span>
+                  🗂 Tots ({scenarios.length})
                 </button>
-              ))}
-            </div>
+                {categories.map(({ key, label }) => {
+                  const count = scenarios.filter((s) => s.category === key).length;
+                  return (
+                    <button
+                      key={key}
+                      role="tab"
+                      aria-selected={activeCategory === key}
+                      className={`${styles.categoryBtn} ${activeCategory === key ? styles.categoryBtnActive : ''}`}
+                      onClick={() => setActiveCategory(key)}
+                    >
+                      {CATEGORY_ICONS[key] || '📄'} {label} ({count})
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Llista d'escenaris */}
+              <div className={styles.list}>
+                {filtered.map((scenario) => (
+                  <button
+                    key={scenario.id}
+                    className={`card ${styles.scenarioCard}`}
+                    onClick={() => selectScenario(scenario)}
+                  >
+                    <span className={styles.scenarioNum}>#{scenario.id}</span>
+                    <div className={styles.scenarioCardBody}>
+                      <div className={styles.scenarioCardTop}>
+                        <h2 className={styles.scenarioCardTitle}>{scenario.title}</h2>
+                        <span className={styles.categoryTag}>
+                          {CATEGORY_ICONS[scenario.category]} {scenario.categoryLabel}
+                        </span>
+                      </div>
+                      <p className={styles.scenarioCardContext}>{scenario.context}</p>
+                    </div>
+                    <span className={styles.arrow}>→</span>
+                  </button>
+                ))}
+              </div>
+            </>
           )}
 
           {/* ── SCENARIO (tria opció) ── */}
@@ -115,7 +176,9 @@ export default function Simulador() {
               </button>
 
               <div className={`card ${styles.contextCard}`}>
-                <span className={styles.contextLabel}>Escenari #{active.id}</span>
+                <span className={styles.contextLabel}>
+                  {CATEGORY_ICONS[active.category]} {active.categoryLabel} · Escenari #{active.id}
+                </span>
                 <h2>{active.title}</h2>
                 <p className={styles.contextText}>{active.context}</p>
               </div>
