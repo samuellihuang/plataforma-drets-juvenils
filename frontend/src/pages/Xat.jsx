@@ -5,17 +5,39 @@ const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
 
 const MAX_CHARS = 500;
 
-const WELCOME = {
+const WELCOME_CA = {
   id: 'welcome',
   role: 'assistant',
   text: 'Hola! Soc el teu assessor de drets legals per a joves a Espanya.\n\nPot preguntar-me sobre les teves interaccions amb la policia, drets laborals, privacitat a internet o qualsevol altre tema legal que t\'interessi.\n\nRecorda que les meves respostes són orientatives i no substitueixen un advocat o advocada professional.',
 };
+
+const WELCOME_ES = {
+  id: 'welcome',
+  role: 'assistant',
+  text: '¡Hola! Soy tu asesor de derechos legales para jóvenes en España.\n\nPuedes preguntarme sobre tus interacciones con la policía, derechos laborales, privacidad en internet o cualquier otro tema legal que te interese.\n\nRecuerda que mis respuestas son orientativas y no sustituyen a un abogado o abogada profesional.',
+};
+
+const DISCLAIMER_CA = 'Aquesta plataforma és una IA educativa sobre drets dels joves. La informació és orientativa i no substitueix assessorament legal professional.';
+const DISCLAIMER_ES = 'Esta plataforma es una IA educativa sobre derechos de los jóvenes. La información es orientativa y no sustituye asesoramiento legal profesional.';
+
+function getWelcome(lang) {
+  return lang === 'es' ? WELCOME_ES : WELCOME_CA;
+}
 
 const SUGGESTIONS = [
   'Quins drets tinc amb la policia?',
   'Puc treballar amb 16 anys?',
   'Què és el ciberassetjament?',
 ];
+
+const ES_MARKERS = /tengo|tienes|tiene|soy|eres|pero|porque|cuando|puedo|quiero|también|para|está|como|más/gi;
+const CA_MARKERS = /tinc|tens|soc|ets|però|perquè|quan|puc|vull|també|per|és|com|més|molt/gi;
+
+function detectLanguage(text) {
+  const esScore = (text.match(ES_MARKERS) || []).length;
+  const caScore = (text.match(CA_MARKERS) || []).length;
+  return esScore > caScore ? 'es' : 'ca';
+}
 
 function Message({ msg }) {
   const isUser = msg.role === 'user';
@@ -45,14 +67,24 @@ function TypingIndicator() {
 }
 
 export default function Xat() {
-  const [messages, setMessages]   = useState([WELCOME]);
-  const [input, setInput]         = useState('');
-  const [loading, setLoading]     = useState(false);
+  const initialLang = navigator.language?.startsWith('es') ? 'es' : 'ca';
+  const [lang, setLang]             = useState(initialLang);
+  const [messages, setMessages]     = useState(() => [getWelcome(initialLang)]);
+  const [input, setInput]           = useState('');
+  const [loading, setLoading]       = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [isFirstMessage, setIsFirstMessage]   = useState(true);
+  const [showDisclaimer, setShowDisclaimer]   = useState(
+    !sessionStorage.getItem('dj_disclaimer_shown')
+  );
   const bottomRef  = useRef(null);
   const inputRef   = useRef(null);
   const charsLeft  = MAX_CHARS - input.length;
   const canSend    = input.trim().length > 0 && input.length <= MAX_CHARS && !loading;
+
+  useEffect(() => {
+    sessionStorage.setItem('dj_disclaimer_shown', '1');
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -61,6 +93,15 @@ export default function Xat() {
   const sendMessage = useCallback(async (text) => {
     const trimmed = text.trim();
     if (!trimmed || trimmed.length > MAX_CHARS || loading) return;
+
+    let activeLang = lang;
+    if (isFirstMessage) {
+      const detected = detectLanguage(trimmed);
+      setLang(detected);
+      activeLang = detected;
+      setIsFirstMessage(false);
+      setShowDisclaimer(false);
+    }
 
     setShowSuggestions(false);
     setMessages((prev) => [...prev, { id: Date.now(), role: 'user', text: trimmed }]);
@@ -71,7 +112,7 @@ export default function Xat() {
       const res = await fetch(`${API_URL}/api/chat`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ message: trimmed }),
+        body:    JSON.stringify({ message: trimmed, language: activeLang }),
       });
 
       const data = await res.json();
@@ -95,7 +136,7 @@ export default function Xat() {
       setLoading(false);
       inputRef.current?.focus();
     }
-  }, [loading]);
+  }, [loading, lang, isFirstMessage]);
 
   function handleKeyDown(e) {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -106,6 +147,20 @@ export default function Xat() {
 
   return (
     <div className={styles.shell}>
+
+      {/* ── Disclaimer banner ── */}
+      {showDisclaimer && (
+        <div className={styles.disclaimerBanner} role="note">
+          <span>{lang === 'es' ? DISCLAIMER_ES : DISCLAIMER_CA}</span>
+          <button
+            className={styles.disclaimerClose}
+            onClick={() => setShowDisclaimer(false)}
+            aria-label="Tancar avís"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       {/* ── Header ── */}
       <header className={styles.chatHeader}>

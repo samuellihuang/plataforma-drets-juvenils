@@ -4,7 +4,7 @@ import styles from './Simulador.module.css';
 
 const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
 
-const STATUS = { LOADING: 'loading', ERROR: 'error', LIST: 'list', SCENARIO: 'scenario', RESULT: 'result' };
+const STATUS = { LOADING: 'loading', ERROR: 'error', LIST: 'list', SCENARIO: 'scenario', RESULT: 'result', COMPLETE: 'complete' };
 
 export default function Simulador() {
   const [status, setStatus]       = useState(STATUS.LOADING);
@@ -14,10 +14,26 @@ export default function Simulador() {
   const [chosen, setChosen]       = useState(null);
   const [activeCategory, setActiveCategory] = useState('tots');
 
+  // Quiz mode state
+  const [quizMode, setQuizMode]   = useState(true);
+  const [quizQueue, setQuizQueue] = useState([]);
+  const [quizIdx, setQuizIdx]     = useState(0);
+
   useEffect(() => {
     fetch(`${API_URL}/api/scenarios`)
       .then((r) => { if (!r.ok) throw new Error(`Error ${r.status}`); return r.json(); })
-      .then((data) => { setScenarios(data); setStatus(STATUS.LIST); })
+      .then((data) => {
+        setScenarios(data);
+        // Auto-start quiz
+        setQuizQueue(data);
+        setQuizIdx(0);
+        if (data.length > 0) {
+          setActive(data[0]);
+          setStatus(STATUS.SCENARIO);
+        } else {
+          setStatus(STATUS.LIST);
+        }
+      })
       .catch((err) => { setErrorMsg(err.message); setStatus(STATUS.ERROR); });
   }, []);
 
@@ -33,6 +49,23 @@ export default function Simulador() {
     activeCategory === 'tots' ? scenarios : scenarios.filter((s) => s.category === activeCategory),
     [scenarios, activeCategory]
   );
+
+  // Rebuild quiz queue when category changes (in quiz mode)
+  function handleCategoryChange(cat) {
+    setActiveCategory(cat);
+    if (quizMode) {
+      const pool = cat === 'tots' ? scenarios : scenarios.filter((s) => s.category === cat);
+      setQuizQueue(pool);
+      setQuizIdx(0);
+      setChosen(null);
+      if (pool.length > 0) {
+        setActive(pool[0]);
+        setStatus(STATUS.SCENARIO);
+      } else {
+        setStatus(STATUS.LIST);
+      }
+    }
+  }
 
   function selectScenario(scenario) {
     setActive(scenario);
@@ -62,14 +95,65 @@ export default function Simulador() {
     else backToList();
   }
 
+  function nextInQuiz() {
+    const next = quizIdx + 1;
+    if (next < quizQueue.length) {
+      setQuizIdx(next);
+      setActive(quizQueue[next]);
+      setChosen(null);
+      setStatus(STATUS.SCENARIO);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      setStatus(STATUS.COMPLETE);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function restartQuiz() {
+    setQuizIdx(0);
+    setChosen(null);
+    if (quizQueue.length > 0) {
+      setActive(quizQueue[0]);
+      setStatus(STATUS.SCENARIO);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleQuizMode() {
+    if (quizMode) {
+      // Switch to list
+      setQuizMode(false);
+      setStatus(STATUS.LIST);
+    } else {
+      // Switch to quiz
+      setQuizMode(true);
+      const pool = activeCategory === 'tots' ? scenarios : scenarios.filter((s) => s.category === activeCategory);
+      setQuizQueue(pool);
+      setQuizIdx(0);
+      setChosen(null);
+      if (pool.length > 0) {
+        setActive(pool[0]);
+        setStatus(STATUS.SCENARIO);
+      }
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   return (
     <main className="page">
       <div className="container">
         <Disclaimer />
 
         <header className={styles.pageHeader}>
-          <h1>Simulador d&apos;escenaris</h1>
-          <p>Posa&apos;t en situació i practica com respondre davant situacions legals reals.</p>
+          <div className={styles.pageHeaderRow}>
+            <div>
+              <h1>Simulador d&apos;escenaris</h1>
+              <p>Posa&apos;t en situació i practica com respondre davant situacions legals reals.</p>
+            </div>
+            <button className={`btn btn-ghost ${styles.quizToggle}`} onClick={toggleQuizMode}>
+              {quizMode ? 'Llista completa' : 'Mode quiz'}
+            </button>
+          </div>
         </header>
 
         <div className={`${styles.stage} ${styles[status]}`}>
@@ -112,7 +196,7 @@ export default function Simulador() {
                   role="tab"
                   aria-selected={activeCategory === 'tots'}
                   className={`${styles.categoryBtn} ${activeCategory === 'tots' ? styles.categoryBtnActive : ''}`}
-                  onClick={() => setActiveCategory('tots')}
+                  onClick={() => handleCategoryChange('tots')}
                 >
                   Tots ({scenarios.length})
                 </button>
@@ -124,7 +208,7 @@ export default function Simulador() {
                       role="tab"
                       aria-selected={activeCategory === key}
                       className={`${styles.categoryBtn} ${activeCategory === key ? styles.categoryBtnActive : ''}`}
-                      onClick={() => setActiveCategory(key)}
+                      onClick={() => handleCategoryChange(key)}
                     >
                       {label} ({count})
                     </button>
@@ -157,9 +241,54 @@ export default function Simulador() {
           {/* ── SCENARIO ── */}
           {status === STATUS.SCENARIO && active && (
             <div className={styles.scenarioView}>
-              <button className={`btn btn-ghost ${styles.backBtn}`} onClick={backToList}>
-                ← Tots els escenaris
-              </button>
+              {/* Category bar in quiz mode */}
+              {quizMode && (
+                <div className={styles.categoryBar} role="tablist" aria-label="Filtra per categoria">
+                  <button
+                    role="tab"
+                    aria-selected={activeCategory === 'tots'}
+                    className={`${styles.categoryBtn} ${activeCategory === 'tots' ? styles.categoryBtnActive : ''}`}
+                    onClick={() => handleCategoryChange('tots')}
+                  >
+                    Tots ({scenarios.length})
+                  </button>
+                  {categories.map(({ key, label }) => {
+                    const count = scenarios.filter((s) => s.category === key).length;
+                    return (
+                      <button
+                        key={key}
+                        role="tab"
+                        aria-selected={activeCategory === key}
+                        className={`${styles.categoryBtn} ${activeCategory === key ? styles.categoryBtnActive : ''}`}
+                        onClick={() => handleCategoryChange(key)}
+                      >
+                        {label} ({count})
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Progress bar (quiz mode only) */}
+              {quizMode && quizQueue.length > 0 && (
+                <div className={styles.progressWrap}>
+                  <span className={styles.progressText}>
+                    Escenari {quizIdx + 1} de {quizQueue.length}
+                  </span>
+                  <div className={styles.progressBar}>
+                    <div
+                      className={styles.progressFill}
+                      style={{ width: `${((quizIdx + 1) / quizQueue.length) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {!quizMode && (
+                <button className={`btn btn-ghost ${styles.backBtn}`} onClick={backToList}>
+                  ← Tots els escenaris
+                </button>
+              )}
 
               <div className={`card ${styles.contextCard}`}>
                 <span className={styles.contextLabel}>
@@ -197,9 +326,11 @@ export default function Simulador() {
           {/* ── RESULT ── */}
           {status === STATUS.RESULT && active && chosen && (
             <div className={styles.resultView}>
-              <button className={`btn btn-ghost ${styles.backBtn}`} onClick={backToList}>
-                ← Tots els escenaris
-              </button>
+              {!quizMode && (
+                <button className={`btn btn-ghost ${styles.backBtn}`} onClick={backToList}>
+                  ← Tots els escenaris
+                </button>
+              )}
 
               <div className={`card ${styles.chosenCard}`}>
                 <span className={styles.chosenLabel}>Opció triada · {chosen.id}</span>
@@ -223,11 +354,50 @@ export default function Simulador() {
               </div>
 
               <div className={styles.resultActions}>
-                <button className="btn btn-primary" onClick={tryAnother}>
-                  Provar un altre escenari
-                </button>
-                <button className="btn btn-ghost" onClick={() => selectScenario(active)}>
-                  Tornar a aquest escenari
+                {quizMode ? (
+                  <>
+                    {quizIdx + 1 < quizQueue.length ? (
+                      <button className="btn btn-primary" onClick={nextInQuiz}>
+                        Escenari següent →
+                      </button>
+                    ) : (
+                      <button className="btn btn-primary" onClick={nextInQuiz}>
+                        Finalitzar quiz
+                      </button>
+                    )}
+                    <button className="btn btn-ghost" onClick={() => selectScenario(active)}>
+                      Tornar a aquest escenari
+                    </button>
+                    <button className="btn btn-ghost" onClick={backToList}>
+                      Llista d&apos;escenaris
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button className="btn btn-primary" onClick={tryAnother}>
+                      Provar un altre escenari
+                    </button>
+                    <button className="btn btn-ghost" onClick={() => selectScenario(active)}>
+                      Tornar a aquest escenari
+                    </button>
+                    <button className="btn btn-ghost" onClick={backToList}>
+                      Llista d&apos;escenaris
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* ── COMPLETE ── */}
+          {status === STATUS.COMPLETE && (
+            <div className={`card ${styles.completeCard}`}>
+              <div className={styles.completeIcon}>🎉</div>
+              <h2>Has completat tots els escenaris!</h2>
+              <p>Has practicat tots els escenaris del quiz. Pots tornar a començar o explorar la llista completa.</p>
+              <div className={styles.resultActions}>
+                <button className="btn btn-primary" onClick={restartQuiz}>
+                  Tornar a començar
                 </button>
                 <button className="btn btn-ghost" onClick={backToList}>
                   Llista d&apos;escenaris

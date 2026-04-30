@@ -6,8 +6,39 @@
   max-width: 760px;
   margin: 0 auto;
   padding: 0 1rem;
+  overflow: hidden;
   animation: pageIn 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* ── Disclaimer banner ── */
+.disclaimerBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  padding: 0.55rem 0.85rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  flex-shrink: 0;
+}
+.disclaimerBanner span { flex: 1; }
+.disclaimerClose {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  flex-shrink: 0;
+  min-height: unset;
+  transition: color var(--transition);
+}
+.disclaimerClose:hover { color: #fff; }
 @keyframes pageIn {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }

@@ -66,8 +66,7 @@ export default function Home() {
           </h1>
 
           <p className={styles.heroDesc}>
-            Plataforma educativa per a joves de 14 a 18 anys. Aprèn les lleis que
-            et protegeixen a Espanya amb simuladors interactius i assessorament intel·ligent.
+            Plataforma educativa sobre drets per a joves a Espanya. Aprèn les lleis que et protegeixen amb simuladors interactius i assessorament intel·ligent.
           </p>
 
           {/* Equal weight entry points */}
