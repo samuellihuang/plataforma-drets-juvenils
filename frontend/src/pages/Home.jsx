@@ -22,12 +22,12 @@ const steps = [
 ];
 
 const categories = [
-  { label: 'Policia i seguretat',  count: 4 },
-  { label: 'Drets laborals',       count: 4 },
-  { label: 'Privacitat digital',   count: 4 },
-  { label: 'Drets a l\'escola',    count: 4 },
-  { label: 'Consum i contractes',  count: 4 },
-  { label: 'Salut i benestar',     count: 4 },
+  { label: 'Policia i seguretat',  icon: '🛡' },
+  { label: 'Drets laborals',       icon: '💼' },
+  { label: 'Privacitat digital',   icon: '🔒' },
+  { label: 'Drets a l\'escola',    icon: '🎓' },
+  { label: 'Consum i contractes',  icon: '📋' },
+  { label: 'Salut i benestar',     icon: '❤' },
 ];
 
 function Reveal({ children, delay = 0, className = '' }) {
@@ -45,61 +45,90 @@ function Reveal({ children, delay = 0, className = '' }) {
 
 export default function Home() {
   return (
-    <main className="page">
+    <main className={`page ${styles.homePage}`}>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className={styles.hero}>
-        <div className={styles.blob1} aria-hidden="true" />
-        <div className={styles.blob2} aria-hidden="true" />
-        <div className={styles.blob3} aria-hidden="true" />
-        <div className={styles.grid}  aria-hidden="true" />
+        <div className={styles.heroBg} aria-hidden="true">
+          <div className={styles.heroPattern} />
+          <div className={styles.heroBlob1} />
+          <div className={styles.heroBlob2} />
+        </div>
 
-        <div className={`container ${styles.heroContent}`}>
-          <div className={styles.badge}>
-            <span className={styles.badgeDot} />
-            ODS 16 · Pau, Justícia i Institucions
+        <div className={`container ${styles.heroInner}`}>
+          <div className={styles.heroLeft}>
+            <div className={styles.badge}>
+              <span className={styles.badgeDot} />
+              ODS 16 · Pau, Justícia i Institucions
+            </div>
+
+            <h1 className={styles.heroTitle}>
+              Coneix els teus<br />
+              <em className={styles.heroEm}>drets legals</em>
+            </h1>
+
+            <p className={styles.heroDesc}>
+              Plataforma educativa per a joves de 14 a 18 anys. Aprèn les lleis que
+              et protegeixen a Espanya amb simuladors interactius i assessorament intel·ligent.
+            </p>
+
+            <div className={styles.heroActions}>
+              <Link to="/simulador" className={`btn btn-primary ${styles.heroBtnPrimary}`}>
+                Prova el simulador
+              </Link>
+              <Link to="/xat" className={`btn btn-ghost ${styles.heroBtnGhost}`}>
+                Parla amb l&apos;assessor IA
+              </Link>
+            </div>
+
+            <div className={styles.stats}>
+              <div className={styles.stat}>
+                <span className={styles.statNum}>24</span>
+                <span className={styles.statLabel}>Escenaris</span>
+              </div>
+              <div className={styles.statSep} />
+              <div className={styles.stat}>
+                <span className={styles.statNum}>6</span>
+                <span className={styles.statLabel}>Categories</span>
+              </div>
+              <div className={styles.statSep} />
+              <div className={styles.stat}>
+                <span className={styles.statNum}>100%</span>
+                <span className={styles.statLabel}>Gratuït</span>
+              </div>
+            </div>
           </div>
 
-          <h1 className={styles.heroTitle}>
-            Coneix els teus<br />
-            <span className={styles.gradientText}>drets legals</span>
-          </h1>
-
-          <p className={styles.heroDesc}>
-            Plataforma educativa per a joves de 14 a 18 anys. Aprèn les lleis que
-            et protegeixen a Espanya amb simuladors interactius i assessorament intel·ligent.
-          </p>
-
-          <div className={styles.heroActions}>
-            <Link to="/simulador" className={`btn btn-primary ${styles.heroBtnPrimary}`}>
-              Prova el simulador
-            </Link>
-            <Link to="/xat" className={`btn btn-ghost ${styles.heroBtnGhost}`}>
-              Parla amb l&apos;assessor IA
-            </Link>
-          </div>
-
-          <div className={styles.stats}>
-            <div className={styles.stat}>
-              <span className={styles.statNum}>24</span>
-              <span className={styles.statLabel}>Escenaris</span>
-            </div>
-            <div className={styles.statSep} />
-            <div className={styles.stat}>
-              <span className={styles.statNum}>6</span>
-              <span className={styles.statLabel}>Categories</span>
-            </div>
-            <div className={styles.statSep} />
-            <div className={styles.stat}>
-              <span className={styles.statNum}>100%</span>
-              <span className={styles.statLabel}>Gratuït</span>
+          <div className={styles.heroRight} aria-hidden="true">
+            <div className={styles.heroIllustration}>
+              <svg viewBox="0 0 200 200" fill="none" className={styles.scalesSvg}>
+                {/* Outer ring */}
+                <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1" strokeDasharray="3 5" opacity="0.3"/>
+                <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="0.75" opacity="0.15"/>
+                {/* Balance beam */}
+                <line x1="100" y1="38" x2="100" y2="162" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+                <line x1="60" y1="72" x2="140" y2="72" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+                {/* Left pan */}
+                <line x1="60" y1="72" x2="60" y2="96" stroke="currentColor" strokeWidth="1.75"/>
+                <ellipse cx="60" cy="108" rx="20" ry="8" stroke="currentColor" strokeWidth="1.75" fill="currentColor" fillOpacity="0.06"/>
+                {/* Right pan */}
+                <line x1="140" y1="72" x2="140" y2="96" stroke="currentColor" strokeWidth="1.75"/>
+                <ellipse cx="140" cy="108" rx="20" ry="8" stroke="currentColor" strokeWidth="1.75" fill="currentColor" fillOpacity="0.06"/>
+                {/* Top pivot */}
+                <circle cx="100" cy="72" r="5" fill="currentColor"/>
+                <circle cx="100" cy="72" r="9" stroke="currentColor" strokeWidth="1.5" opacity="0.3"/>
+                {/* Base */}
+                <line x1="82" y1="160" x2="118" y2="160" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+                {/* Decorative dots */}
+                <circle cx="100" cy="38" r="3" fill="currentColor" opacity="0.4"/>
+              </svg>
             </div>
           </div>
         </div>
 
         <div className={styles.heroWave} aria-hidden="true">
-          <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-            <path d="M0,40 C360,70 1080,10 1440,40 L1440,60 L0,60 Z" fill="var(--bg)" />
+          <svg viewBox="0 0 1440 50" preserveAspectRatio="none">
+            <path d="M0,30 C480,55 960,5 1440,30 L1440,50 L0,50 Z" fill="var(--bg)" />
           </svg>
         </div>
       </section>
@@ -108,7 +137,7 @@ export default function Home() {
       <section className={styles.howSection}>
         <div className="container">
           <Reveal>
-            <div className={styles.sectionLabel}>Com funciona</div>
+            <p className={styles.sectionLabel}>Com funciona</p>
             <h2 className={styles.sectionTitle}>Tres passos per aprendre els teus drets</h2>
           </Reveal>
 
@@ -130,12 +159,11 @@ export default function Home() {
       <section className={styles.featuresSection}>
         <div className="container">
           <Reveal>
-            <div className={styles.sectionLabel}>Eines</div>
+            <p className={styles.sectionLabel}>Eines</p>
             <h2 className={styles.sectionTitle}>Dues eines per aprendre</h2>
           </Reveal>
 
           <div className={styles.features}>
-            {/* Simulador */}
             <Reveal delay={0}>
               <article className={styles.featureCard}>
                 <div className={`${styles.featureVisual} ${styles.featureVisualBlue}`}>
@@ -156,7 +184,7 @@ export default function Home() {
                   <div className={styles.categoryGrid}>
                     {categories.map((c) => (
                       <span key={c.label} className={styles.categoryPill}>
-                        {c.label}
+                        <span>{c.icon}</span> {c.label}
                       </span>
                     ))}
                   </div>
@@ -167,7 +195,6 @@ export default function Home() {
               </article>
             </Reveal>
 
-            {/* Xat IA */}
             <Reveal delay={80}>
               <article className={styles.featureCard}>
                 <div className={`${styles.featureVisual} ${styles.featureVisualIndigo}`}>
@@ -209,7 +236,7 @@ export default function Home() {
               <div className={styles.odsLeft}>
                 <div className={styles.odsBadgeNum}>16</div>
                 <div>
-                  <div className={styles.odsKicker}>Objectiu de Desenvolupament Sostenible</div>
+                  <p className={styles.odsKicker}>Objectiu de Desenvolupament Sostenible</p>
                   <h3 className={styles.odsTitle}>Pau, Justícia i Institucions sòlides</h3>
                 </div>
               </div>
@@ -223,7 +250,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── DISCLAIMER ───────────────────────────────────────── */}
       <div className="container">
         <Disclaimer />
       </div>
