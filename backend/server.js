@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const scenarios = require('./data/scenarios');
+const scenariosEs = require('./data/scenarios_es');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -73,7 +74,35 @@ app.use(express.json());
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 
 // Scenarios endpoint
-app.get('/api/scenarios', (_req, res) => res.json(scenarios));
+app.get('/api/scenarios', (req, res) => {
+  const lang = req.query.lang === 'es' ? 'es' : 'ca';
+  if (lang === 'es') {
+    const translated = scenarios.map((s) => {
+      const es = scenariosEs[s.id];
+      if (!es) return s;
+      return {
+        ...s,
+        categoryLabel: es.categoryLabel || s.categoryLabel,
+        title:         es.title         || s.title,
+        context:       es.context       || s.context,
+        situation:     es.situation     || s.situation,
+        options: s.options.map((o) => {
+          const oEs = es.options?.[o.id];
+          if (!oEs) return o;
+          return {
+            ...o,
+            text:             oEs.text             || o.text,
+            consequence:      oEs.consequence      || o.consequence,
+            legalRight:       oEs.legalRight       || o.legalRight,
+            legalExplanation: oEs.legalExplanation || o.legalExplanation,
+          };
+        }),
+      };
+    });
+    return res.json(translated);
+  }
+  return res.json(scenarios);
+});
 
 // Chat endpoint
 app.post('/api/chat', async (req, res) => {

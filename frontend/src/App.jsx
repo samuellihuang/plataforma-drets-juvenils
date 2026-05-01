@@ -3,6 +3,7 @@ import Navbar    from './components/Navbar';
 import Home      from './pages/Home';
 import Simulador from './pages/Simulador';
 import Xat       from './pages/Xat';
+import { LangProvider } from './i18n';
 import styles    from './App.module.css';
 
 function AnimatedRoutes() {
@@ -19,10 +20,12 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <div className={styles.layout}>
-      <Navbar />
-      <AnimatedRoutes />
-    </div>
+    <LangProvider>
+      <div className={styles.layout}>
+        <Navbar />
+        <AnimatedRoutes />
+      </div>
+    </LangProvider>
   );
 }
 

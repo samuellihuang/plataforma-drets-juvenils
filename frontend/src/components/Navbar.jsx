@@ -1,21 +1,23 @@
 import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useLang } from '../i18n';
 import styles from './Navbar.module.css';
-
-const links = [
-  { to: '/',          label: 'Inici' },
-  { to: '/simulador', label: 'Simulador' },
-  { to: '/xat',       label: 'Assessor IA' },
-];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { lang, setLang, t } = useLang();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  const links = [
+    { to: '/',          label: t.nav.home },
+    { to: '/simulador', label: t.nav.simulator },
+    { to: '/xat',       label: t.nav.chat },
+  ];
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
@@ -39,6 +41,14 @@ export default function Navbar() {
             </NavLink>
           ))}
         </nav>
+
+        <button
+          className={styles.langBtn}
+          onClick={() => setLang(lang === 'ca' ? 'es' : 'ca')}
+          aria-label="Canviar idioma"
+        >
+          {t.nav.langLabel}
+        </button>
       </div>
     </header>
   );

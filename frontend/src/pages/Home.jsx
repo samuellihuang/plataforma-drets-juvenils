@@ -1,25 +1,8 @@
 import { Link } from 'react-router-dom';
 import Disclaimer from '../components/Disclaimer';
 import { useInView } from '../hooks/useInView';
+import { useLang } from '../i18n';
 import styles from './Home.module.css';
-
-const steps = [
-  {
-    num: '01',
-    title: 'Escull un escenari',
-    desc: 'Tria entre 24 situacions reals organitzades en 6 categories: policia, treball, privacitat, escola, consum i salut.',
-  },
-  {
-    num: '02',
-    title: 'Pren una decisió',
-    desc: 'Llig el context, analitza les opcions disponibles i tria la resposta que creus que és la correcta.',
-  },
-  {
-    num: '03',
-    title: 'Aprèn els teus drets',
-    desc: 'Descobreix quina opció era la millor i per quin motiu, amb les lleis i articles exactes que t\'emparen.',
-  },
-];
 
 const categories = [
   'Policia i seguretat',
@@ -44,6 +27,14 @@ function Reveal({ children, delay = 0, className = '' }) {
 }
 
 export default function Home() {
+  const { t } = useLang();
+
+  const steps = [
+    { num: '01', title: t.home.step1Title, desc: t.home.step1Desc },
+    { num: '02', title: t.home.step2Title, desc: t.home.step2Desc },
+    { num: '03', title: t.home.step3Title, desc: t.home.step3Desc },
+  ];
+
   return (
     <main className={`page ${styles.homePage}`}>
 
@@ -57,16 +48,16 @@ export default function Home() {
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.badge}>
             <span className={styles.badgeDot} />
-            ODS 16 · Pau, Justícia i Institucions
+            {t.home.badge}
           </div>
 
           <h1 className={styles.heroTitle}>
-            Coneix els teus<br />
-            <em className={styles.heroEm}>drets legals</em>
+            {t.home.heroLine1}<br />
+            <em className={styles.heroEm}>{t.home.heroLine2}</em>
           </h1>
 
           <p className={styles.heroDesc}>
-            Plataforma educativa sobre drets per a joves a Espanya. Aprèn les lleis que et protegeixen amb simuladors interactius i assessorament intel·ligent.
+            {t.home.heroDesc}
           </p>
 
           {/* Equal weight entry points */}
@@ -81,8 +72,8 @@ export default function Home() {
                 </svg>
               </div>
               <div className={styles.entryBody}>
-                <span className={styles.entryLabel}>Simulador d&apos;escenaris</span>
-                <span className={styles.entryDesc}>24 situacions reals · 6 categories</span>
+                <span className={styles.entryLabel}>{t.home.entry1Label}</span>
+                <span className={styles.entryDesc}>{t.home.entry1Desc}</span>
               </div>
               <span className={styles.entryArrow}>→</span>
             </Link>
@@ -98,8 +89,8 @@ export default function Home() {
                 </svg>
               </div>
               <div className={styles.entryBody}>
-                <span className={styles.entryLabel}>Assessor legal amb IA</span>
-                <span className={styles.entryDesc}>Respostes en català · Disponible 24h</span>
+                <span className={styles.entryLabel}>{t.home.entry2Label}</span>
+                <span className={styles.entryDesc}>{t.home.entry2Desc}</span>
               </div>
               <span className={styles.entryArrow}>→</span>
             </Link>
@@ -108,17 +99,17 @@ export default function Home() {
           <div className={styles.stats}>
             <div className={styles.stat}>
               <span className={styles.statNum}>24</span>
-              <span className={styles.statLabel}>Escenaris</span>
+              <span className={styles.statLabel}>{t.home.statScenarios}</span>
             </div>
             <div className={styles.statSep} />
             <div className={styles.stat}>
               <span className={styles.statNum}>6</span>
-              <span className={styles.statLabel}>Categories</span>
+              <span className={styles.statLabel}>{t.home.statCategories}</span>
             </div>
             <div className={styles.statSep} />
             <div className={styles.stat}>
               <span className={styles.statNum}>100%</span>
-              <span className={styles.statLabel}>Gratuït</span>
+              <span className={styles.statLabel}>{t.home.statFree}</span>
             </div>
           </div>
         </div>
@@ -128,8 +119,8 @@ export default function Home() {
       <section className={styles.howSection}>
         <div className="container">
           <Reveal>
-            <p className={styles.sectionLabel}>Com funciona</p>
-            <h2 className={styles.sectionTitle}>Tres passos per aprendre els teus drets</h2>
+            <p className={styles.sectionLabel}>{t.home.howLabel}</p>
+            <h2 className={styles.sectionTitle}>{t.home.howTitle}</h2>
           </Reveal>
 
           <div className={styles.steps}>
@@ -150,8 +141,8 @@ export default function Home() {
       <section className={styles.featuresSection}>
         <div className="container">
           <Reveal>
-            <p className={styles.sectionLabel}>Eines</p>
-            <h2 className={styles.sectionTitle}>Dues eines amb el mateix pes</h2>
+            <p className={styles.sectionLabel}>{t.home.toolsLabel}</p>
+            <h2 className={styles.sectionTitle}>{t.home.toolsTitle}</h2>
           </Reveal>
 
           <div className={styles.features}>
@@ -165,20 +156,16 @@ export default function Home() {
                     <circle cx="34" cy="33" r="7" fill="currentColor" fillOpacity="0.1"/>
                     <path d="M31.5 33l2 2 3-3" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  <h2 className={styles.featureTitle}>Simulador d&apos;escenaris</h2>
+                  <h2 className={styles.featureTitle}>{t.home.simTitle}</h2>
                 </div>
-                <p className={styles.featureDesc}>
-                  Practica situacions reals: et para la policia, t&apos;ofereixen feina
-                  sense contracte o et publiquen fotos sense permís. Pren decisions i
-                  descobreix quins drets t&apos;emparen en cada cas.
-                </p>
+                <p className={styles.featureDesc}>{t.home.simDesc}</p>
                 <div className={styles.categoryList}>
                   {categories.map((c) => (
                     <span key={c} className={styles.categoryTag}>{c}</span>
                   ))}
                 </div>
                 <Link to="/simulador" className={`btn btn-primary ${styles.featureBtn}`}>
-                  Comença a simular
+                  {t.home.simCta}
                 </Link>
               </article>
             </Reveal>
@@ -194,20 +181,16 @@ export default function Home() {
                     <rect x="22" y="18" width="20" height="17" rx="4" fill="currentColor" fillOpacity="0.07" stroke="currentColor" strokeWidth="2"/>
                     <path d="M27 24h10M27 28.5h7" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
                   </svg>
-                  <h2 className={styles.featureTitle}>Assessor legal amb IA</h2>
+                  <h2 className={styles.featureTitle}>{t.home.chatTitle}</h2>
                 </div>
-                <p className={styles.featureDesc}>
-                  Pregunta el que vulguis sobre lleis i drets a un assistent
-                  intel·ligent. Respostes clares en català, sense tecnicismes,
-                  adaptades a joves i basades en la legislació espanyola vigent.
-                </p>
+                <p className={styles.featureDesc}>{t.home.chatDesc}</p>
                 <div className={styles.featureTagList}>
-                  <span className={styles.featureTag}>Disponible 24h</span>
-                  <span className={styles.featureTag}>Respostes orientatives</span>
-                  <span className={styles.featureTag}>En català</span>
+                  <span className={styles.featureTag}>{t.home.chatTag1}</span>
+                  <span className={styles.featureTag}>{t.home.chatTag2}</span>
+                  <span className={styles.featureTag}>{t.home.chatTag3}</span>
                 </div>
                 <Link to="/xat" className={`btn btn-primary ${styles.featureBtn}`}>
-                  Fes una pregunta
+                  {t.home.chatCta}
                 </Link>
               </article>
             </Reveal>
@@ -223,15 +206,11 @@ export default function Home() {
               <div className={styles.odsLeft}>
                 <div className={styles.odsBadgeNum}>16</div>
                 <div>
-                  <p className={styles.odsKicker}>Objectiu de Desenvolupament Sostenible</p>
-                  <h3 className={styles.odsTitle}>Pau, Justícia i Institucions sòlides</h3>
+                  <p className={styles.odsKicker}>{t.home.odsKicker}</p>
+                  <h3 className={styles.odsTitle}>{t.home.odsTitle}</h3>
                 </div>
               </div>
-              <p className={styles.odsText}>
-                L&apos;ODS 16 de les Nacions Unides promou societats pacífiques i inclusives.
-                Garantir que els joves coneguin els seus drets és la base d&apos;una democràcia
-                sana i d&apos;una ciutadania activa i responsable.
-              </p>
+              <p className={styles.odsText}>{t.home.odsText}</p>
             </div>
           </Reveal>
         </div>

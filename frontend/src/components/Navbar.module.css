@@ -83,6 +83,27 @@
   font-weight: 600;
 }
 
+.langBtn {
+  padding: 0.3rem 0.7rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.langBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
 @media (max-width: 400px) {
   .link { padding: 0.4rem 0.55rem; font-size: 0.82rem; }
   .brandText { display: none; }

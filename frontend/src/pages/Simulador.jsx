@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import Disclaimer from '../components/Disclaimer';
+import { useLang } from '../i18n';
 import styles from './Simulador.module.css';
 
 const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
@@ -7,6 +8,7 @@ const API_URL = 'https://plataforma-drets-juvenils.onrender.com';
 const STATUS = { LOADING: 'loading', ERROR: 'error', LIST: 'list', SCENARIO: 'scenario', RESULT: 'result', COMPLETE: 'complete' };
 
 export default function Simulador() {
+  const { lang, t } = useLang();
   const [status, setStatus]       = useState(STATUS.LOADING);
   const [scenarios, setScenarios] = useState([]);
   const [errorMsg, setErrorMsg]   = useState('');
@@ -19,8 +21,10 @@ export default function Simulador() {
   const [quizQueue, setQuizQueue] = useState([]);
   const [quizIdx, setQuizIdx]     = useState(0);
 
-  useEffect(() => {
-    fetch(`${API_URL}/api/scenarios`)
+  function loadScenarios() {
+    setStatus(STATUS.LOADING);
+    setErrorMsg('');
+    fetch(`${API_URL}/api/scenarios?lang=${lang}`)
       .then((r) => { if (!r.ok) throw new Error(`Error ${r.status}`); return r.json(); })
       .then((data) => {
         setScenarios(data);
@@ -35,7 +39,12 @@ export default function Simulador() {
         }
       })
       .catch((err) => { setErrorMsg(err.message); setStatus(STATUS.ERROR); });
-  }, []);
+  }
+
+  useEffect(() => {
+    loadScenarios();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   const categories = useMemo(() => {
     const seen = new Map();
@@ -139,6 +148,8 @@ export default function Simulador() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  const allCatsLabel = `${t.sim.allCategories} (${scenarios.length})`;
+
   return (
     <main className="page">
       <div className="container">
@@ -147,11 +158,11 @@ export default function Simulador() {
         <header className={styles.pageHeader}>
           <div className={styles.pageHeaderRow}>
             <div>
-              <h1>Simulador d&apos;escenaris</h1>
-              <p>Posa&apos;t en situació i practica com respondre davant situacions legals reals.</p>
+              <h1>{t.sim.pageTitle}</h1>
+              <p>{t.sim.pageSubtitle}</p>
             </div>
             <button className={`btn btn-ghost ${styles.quizToggle}`} onClick={toggleQuizMode}>
-              {quizMode ? 'Llista completa' : 'Mode quiz'}
+              {quizMode ? t.sim.toList : t.sim.toQuiz}
             </button>
           </div>
         </header>
@@ -161,29 +172,22 @@ export default function Simulador() {
           {/* ── LOADING ── */}
           {status === STATUS.LOADING && (
             <div className={`card ${styles.centered}`}>
-              <div className={styles.spinner} aria-label="Carregant…" />
-              <p>Carregant escenaris…</p>
+              <div className={styles.spinner} aria-label={t.sim.loading} />
+              <p>{t.sim.loading}</p>
             </div>
           )}
 
           {/* ── ERROR ── */}
           {status === STATUS.ERROR && (
             <div className={`card ${styles.centered} ${styles.errorCard}`}>
-              <p className="text-danger" style={{ fontWeight: 600 }}>No s&apos;han pogut carregar els escenaris.</p>
+              <p className="text-danger" style={{ fontWeight: 600 }}>{t.sim.errorTitle}</p>
               <p className="text-muted" style={{ fontSize: '0.9rem' }}>{errorMsg}</p>
               <button
                 className="btn btn-primary"
                 style={{ marginTop: '1rem' }}
-                onClick={() => {
-                  setStatus(STATUS.LOADING);
-                  setErrorMsg('');
-                  fetch(`${API_URL}/api/scenarios`)
-                    .then((r) => { if (!r.ok) throw new Error(`Error ${r.status}`); return r.json(); })
-                    .then((d) => { setScenarios(d); setStatus(STATUS.LIST); })
-                    .catch((e) => { setErrorMsg(e.message); setStatus(STATUS.ERROR); });
-                }}
+                onClick={loadScenarios}
               >
-                Torna a intentar-ho
+                {t.sim.retryBtn}
               </button>
             </div>
           )}
@@ -198,7 +202,7 @@ export default function Simulador() {
                   className={`${styles.categoryBtn} ${activeCategory === 'tots' ? styles.categoryBtnActive : ''}`}
                   onClick={() => handleCategoryChange('tots')}
                 >
-                  Tots ({scenarios.length})
+                  {allCatsLabel}
                 </button>
                 {categories.map(({ key, label }) => {
                   const count = scenarios.filter((s) => s.category === key).length;
@@ -250,7 +254,7 @@ export default function Simulador() {
                     className={`${styles.categoryBtn} ${activeCategory === 'tots' ? styles.categoryBtnActive : ''}`}
                     onClick={() => handleCategoryChange('tots')}
                   >
-                    Tots ({scenarios.length})
+                    {allCatsLabel}
                   </button>
                   {categories.map(({ key, label }) => {
                     const count = scenarios.filter((s) => s.category === key).length;
@@ -273,7 +277,7 @@ export default function Simulador() {
               {quizMode && quizQueue.length > 0 && (
                 <div className={styles.progressWrap}>
                   <span className={styles.progressText}>
-                    Escenari {quizIdx + 1} de {quizQueue.length}
+                    {t.sim.progress(quizIdx + 1, quizQueue.length)}
                   </span>
                   <div className={styles.progressBar}>
                     <div
@@ -286,26 +290,26 @@ export default function Simulador() {
 
               {!quizMode && (
                 <button className={`btn btn-ghost ${styles.backBtn}`} onClick={backToList}>
-                  ← Tots els escenaris
+                  {t.sim.back}
                 </button>
               )}
 
               <div className={`card ${styles.contextCard}`}>
                 <span className={styles.contextLabel}>
-                  {active.categoryLabel} · Escenari {active.id}
+                  {active.categoryLabel} · {t.sim.scenarioWord} {active.id}
                 </span>
                 <h2>{active.title}</h2>
                 <p className={styles.contextText}>{active.context}</p>
               </div>
 
               <div className={`card ${styles.situationCard}`}>
-                <span className={styles.situationLabel}>La situació</span>
+                <span className={styles.situationLabel}>{t.sim.situationLabel}</span>
                 <p className={styles.situationText}>{active.situation}</p>
               </div>
 
               <div className={styles.optionsHeader}>
-                <h3>Quina és la teva resposta?</h3>
-                <p>Tria l&apos;opció que creus que és la correcta.</p>
+                <h3>{t.sim.optionsHeader}</h3>
+                <p>{t.sim.optionsSub}</p>
               </div>
 
               <div className={styles.options}>
@@ -328,27 +332,27 @@ export default function Simulador() {
             <div className={styles.resultView}>
               {!quizMode && (
                 <button className={`btn btn-ghost ${styles.backBtn}`} onClick={backToList}>
-                  ← Tots els escenaris
+                  {t.sim.back}
                 </button>
               )}
 
               <div className={`card ${styles.chosenCard}`}>
-                <span className={styles.chosenLabel}>Opció triada · {chosen.id}</span>
+                <span className={styles.chosenLabel}>{t.sim.chosenLabel} · {chosen.id}</span>
                 <p className={styles.chosenText}>{chosen.text}</p>
               </div>
 
-              <Consequence text={chosen.consequence} />
+              <Consequence text={chosen.consequence} t={t} />
 
               <div className={`card ${styles.rightCard}`}>
                 <div className={styles.rightHeader}>
-                  <h3>El teu dret</h3>
+                  <h3>{t.sim.rightTitle}</h3>
                 </div>
                 <p className={styles.rightText}>{chosen.legalRight}</p>
               </div>
 
               <div className={`card ${styles.explainCard}`}>
                 <div className={styles.rightHeader}>
-                  <h3>Explicació legal</h3>
+                  <h3>{t.sim.explainTitle}</h3>
                 </div>
                 <p className={styles.explainText}>{chosen.legalExplanation}</p>
               </div>
@@ -358,30 +362,30 @@ export default function Simulador() {
                   <>
                     {quizIdx + 1 < quizQueue.length ? (
                       <button className="btn btn-primary" onClick={nextInQuiz}>
-                        Escenari següent →
+                        {t.sim.nextQuiz}
                       </button>
                     ) : (
                       <button className="btn btn-primary" onClick={nextInQuiz}>
-                        Finalitzar quiz
+                        {t.sim.finishQuiz}
                       </button>
                     )}
                     <button className="btn btn-ghost" onClick={() => selectScenario(active)}>
-                      Tornar a aquest escenari
+                      {t.sim.retryThis}
                     </button>
                     <button className="btn btn-ghost" onClick={backToList}>
-                      Llista d&apos;escenaris
+                      {t.sim.backToList}
                     </button>
                   </>
                 ) : (
                   <>
                     <button className="btn btn-primary" onClick={tryAnother}>
-                      Provar un altre escenari
+                      {t.sim.tryAnother}
                     </button>
                     <button className="btn btn-ghost" onClick={() => selectScenario(active)}>
-                      Tornar a aquest escenari
+                      {t.sim.retryThis}
                     </button>
                     <button className="btn btn-ghost" onClick={backToList}>
-                      Llista d&apos;escenaris
+                      {t.sim.backToList}
                     </button>
                   </>
                 )}
@@ -393,14 +397,14 @@ export default function Simulador() {
           {status === STATUS.COMPLETE && (
             <div className={`card ${styles.completeCard}`}>
               <div className={styles.completeIcon}>🎉</div>
-              <h2>Has completat tots els escenaris!</h2>
-              <p>Has practicat tots els escenaris del quiz. Pots tornar a començar o explorar la llista completa.</p>
+              <h2>{t.sim.completeTitle}</h2>
+              <p>{t.sim.completeText}</p>
               <div className={styles.resultActions}>
                 <button className="btn btn-primary" onClick={restartQuiz}>
-                  Tornar a començar
+                  {t.sim.restartQuiz}
                 </button>
                 <button className="btn btn-ghost" onClick={backToList}>
-                  Llista d&apos;escenaris
+                  {t.sim.backToList}
                 </button>
               </div>
             </div>
@@ -412,11 +416,11 @@ export default function Simulador() {
   );
 }
 
-function Consequence({ text }) {
-  const isPositive = /correcte|excel·lent|bona/i.test(text);
-  const isNegative = /negatiu|molt negatiu|arriscat/i.test(text);
+function Consequence({ text, t }) {
+  const isPositive = /correcte|excel·lent|bona|correcto|excelente|buena/i.test(text);
+  const isNegative = /negatiu|molt negatiu|arriscat|negativo|muy negativo|arriesgado/i.test(text);
   const cls = isPositive ? styles.consequencePos : isNegative ? styles.consequenceNeg : styles.consequenceNeutral;
-  const label = isPositive ? 'Resposta adequada' : isNegative ? 'Resposta inadequada' : 'Atenció';
+  const label = isPositive ? t.sim.resultAdequat : isNegative ? t.sim.resultInadequat : t.sim.resultAtencio;
 
   return (
     <div className={`card ${styles.consequenceCard} ${cls}`}>
