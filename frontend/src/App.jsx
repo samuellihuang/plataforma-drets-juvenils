@@ -1,42 +1,36 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
-import Navbar    from './components/Navbar';
-import Home      from './pages/Home';
-import Simulador from './pages/Simulador';
-import Xat       from './pages/Xat';
-import { LangProvider } from './i18n';
-import styles    from './App.module.css';
+import React, { useState, useEffect } from "react";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Simulador from "./components/Simulador";
+import Xat from "./components/Xat";
+import Disclaimer from "./components/Disclaimer";
+import "./index.css";
 
-function AnimatedRoutes() {
-  const location = useLocation();
-  return (
-    <Routes location={location} key={location.pathname}>
-      <Route path="/"          element={<Home />} />
-      <Route path="/simulador" element={<Simulador />} />
-      <Route path="/xat"       element={<Xat />} />
-      <Route path="*"          element={<NotFound />} />
-    </Routes>
-  );
-}
+export default function App({ heroVariant = "split" }) {
+  const [route, setRoute] = useState("home");
+  const [lang, setLang] = useState(() => {
+    if (typeof window === "undefined") return "ca";
+    return localStorage.getItem("dj.lang") || "ca";
+  });
 
-export default function App() {
-  return (
-    <LangProvider>
-      <div className={styles.layout}>
-        <Navbar />
-        <AnimatedRoutes />
-      </div>
-    </LangProvider>
-  );
-}
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("dj.lang", lang);
+      document.documentElement.lang = lang;
+    }
+  }, [lang]);
 
-function NotFound() {
+  useEffect(() => {
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "instant" });
+  }, [route]);
+
   return (
-    <main className="page">
-      <div className="container text-center">
-        <h1 style={{ fontSize: '4rem', opacity: 0.15 }}>404</h1>
-        <h2 style={{ marginTop: '1rem' }}>Pàgina no trobada</h2>
-        <p className="mt-2">La pàgina que cerques no existeix.</p>
-      </div>
-    </main>
+    <>
+      <Navbar route={route} setRoute={setRoute} lang={lang} setLang={setLang} />
+      {route === "home"       && <Home       lang={lang} setRoute={setRoute} hero={heroVariant} />}
+      {route === "simulador"  && <Simulador  lang={lang} setRoute={setRoute} />}
+      {route === "xat"        && <Xat        lang={lang} />}
+      {route === "disclaimer" && <Disclaimer lang={lang} setRoute={setRoute} />}
+    </>
   );
 }
