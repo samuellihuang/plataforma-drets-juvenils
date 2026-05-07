@@ -86,9 +86,11 @@ function MessageBody({ text }) {
   for (const raw of text.split("\n")) {
     const line = raw.trimEnd();
 
-    /* Headings */
+    /* Headings — match longest prefix first */
+    const h3 = line.match(/^###\s+(.+)/);
     const h2 = line.match(/^##\s+(.+)/);
     const h1 = line.match(/^#\s+(.+)/);
+    if (h3) { flushUl(); flushOl(); blocks.push(<h4 key={key++}>{renderInline(h3[1])}</h4>); continue; }
     if (h2) { flushUl(); flushOl(); blocks.push(<h4 key={key++}>{renderInline(h2[1])}</h4>); continue; }
     if (h1) { flushUl(); flushOl(); blocks.push(<h3 key={key++}>{renderInline(h1[1])}</h3>); continue; }
 
