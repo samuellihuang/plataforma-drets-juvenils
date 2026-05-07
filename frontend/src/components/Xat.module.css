@@ -159,9 +159,40 @@
 
 .bubble p { margin: 0; text-wrap: pretty; }
 .bubble p + p { margin-top: var(--s-3); }
+.bubble p + ul, .bubble p + ol { margin-top: var(--s-3); }
+.bubble ul + p, .bubble ol + p { margin-top: var(--s-3); }
+
+.bubble ul, .bubble ol { margin: 0; padding-left: 1.25em; display: grid; gap: 4px; }
+.bubble li { line-height: 1.5; }
+
+.bubble h3 {
+  font-family: var(--f-display);
+  font-size: var(--t-lg);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: var(--s-4) 0 var(--s-2);
+  line-height: 1.15;
+}
+.bubble h4 {
+  font-family: var(--f-mono);
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: var(--s-4) 0 var(--s-2);
+  font-weight: 500;
+}
+.bubble h3:first-child, .bubble h4:first-child { margin-top: 0; }
+
 .bubble strong { font-weight: 600; }
-.bubble em { color: var(--c-accent); font-style: normal; }
-.bubbleUser em { color: var(--c-cream); text-decoration: underline; text-decoration-color: rgba(245,241,232,0.5); }
+.bubble em { font-style: italic; color: inherit; }
+.bubble code {
+  font-family: var(--f-mono);
+  font-size: 0.85em;
+  background: var(--c-line-soft);
+  border-radius: var(--r-xs);
+  padding: 1px 5px;
+}
+.bubbleUser code { background: rgba(245,241,232,0.15); }
 
 .cite {
   margin-top: var(--s-3);

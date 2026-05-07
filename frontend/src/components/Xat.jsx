@@ -47,25 +47,77 @@ function parseResponse(text) {
   return { content: body, citations };
 }
 
+/* Render inline markdown: **bold**, *italic*, `code` */
+function renderInline(text) {
+  const parts = [];
+  const re = /(\*\*(.+?)\*\*|\*(.+?)\*|_(.+?)_|`(.+?)`)/g;
+  let last = 0, m, key = 0;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) parts.push(text.slice(last, m.index));
+    if (m[2]) parts.push(<strong key={key++}>{m[2]}</strong>);
+    else if (m[3]) parts.push(<em key={key++}>{m[3]}</em>);
+    else if (m[4]) parts.push(<em key={key++}>{m[4]}</em>);
+    else if (m[5]) parts.push(<code key={key++}>{m[5]}</code>);
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+}
+
 function MessageBody({ text }) {
   if (!text) return null;
-  const parts = text.split(/\n\n+/);
-  return (
-    <>
-      {parts.map((part, i) => {
-        const lines = part.split("\n").map(l => l.trim()).filter(Boolean);
-        const isList = lines.every(l => /^[-•·]\s|^\d+[\.)]\s/.test(l)) && lines.length > 1;
-        if (isList) {
-          return (
-            <ul key={i} style={{ margin: i === 0 ? 0 : "var(--s-3) 0 0", paddingLeft: "1.1em" }}>
-              {lines.map((l, j) => <li key={j} style={{ marginBottom: 4 }}>{l.replace(/^[-•·]\s|^\d+[\.)]\s/, "")}</li>)}
-            </ul>
-          );
-        }
-        return <p key={i}>{part}</p>;
-      })}
-    </>
-  );
+
+  const blocks = [];
+  let key = 0;
+  let ulItems = [];
+  let olItems = [];
+
+  const flushUl = () => {
+    if (!ulItems.length) return;
+    blocks.push(<ul key={key++}>{ulItems}</ul>);
+    ulItems = [];
+  };
+  const flushOl = () => {
+    if (!olItems.length) return;
+    blocks.push(<ol key={key++}>{olItems}</ol>);
+    olItems = [];
+  };
+
+  for (const raw of text.split("\n")) {
+    const line = raw.trimEnd();
+
+    /* Headings */
+    const h2 = line.match(/^##\s+(.+)/);
+    const h1 = line.match(/^#\s+(.+)/);
+    if (h2) { flushUl(); flushOl(); blocks.push(<h4 key={key++}>{renderInline(h2[1])}</h4>); continue; }
+    if (h1) { flushUl(); flushOl(); blocks.push(<h3 key={key++}>{renderInline(h1[1])}</h3>); continue; }
+
+    /* Unordered list */
+    const ul = line.match(/^[-*•·]\s+(.+)/);
+    if (ul) { flushOl(); ulItems.push(<li key={key++}>{renderInline(ul[1])}</li>); continue; }
+
+    /* Ordered list */
+    const ol = line.match(/^\d+[.)]\s+(.+)/);
+    if (ol) { flushUl(); olItems.push(<li key={key++}>{renderInline(ol[1])}</li>); continue; }
+
+    /* Empty line → flush lists, start new paragraph */
+    if (!line.trim()) { flushUl(); flushOl(); continue; }
+
+    /* Normal line — accumulate into a paragraph */
+    flushUl(); flushOl();
+    const prev = blocks[blocks.length - 1];
+    if (prev?.type === "p") {
+      blocks[blocks.length - 1] = (
+        <p key={prev.key}>{prev.props.children}{" "}{renderInline(line)}</p>
+      );
+    } else {
+      blocks.push(<p key={key++}>{renderInline(line)}</p>);
+    }
+  }
+  flushUl();
+  flushOl();
+
+  return <>{blocks}</>;
 }
 
 export default function Xat({ lang }) {
