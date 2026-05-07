@@ -2,38 +2,29 @@ import React, { useState, useRef, useEffect } from "react";
 import s from "./Xat.module.css";
 import { t } from "../i18n/strings";
 
-const SYSTEM_PROMPT = {
-  ca: `Ets l'assistent legal de la Plataforma de Drets Juvenils, una iniciativa pública per a joves de 14 a 18 anys a Catalunya. Respons sempre en català, en to càlid i institucional, sense paternalismes. Bases legals: Constitució Espanyola, legislació catalana vigent, LO 4/2015, Estatut dels Treballadors, Decret 102/2010, Llei orgànica 8/2021. Estructura cada resposta així:
-1) Una frase clara amb el dret principal aplicable.
-2) Un paràgraf curt explicant el context i els límits.
-3) Una llista breu de passos pràctics ("Què pots fer ara").
-Cita els articles aplicables al final, separats per comes, amb el format "art. X de [norma]".
-Mai inventis una norma. Si no estàs segur, digues-ho i recomana l'Oficina Jove o el 116 111. Resposta en menys de 220 paraules.`,
-  es: `Eres el asistente legal de la Plataforma de Derechos Juveniles para jóvenes de 14 a 18 años en Cataluña. Respondes siempre en castellano. Tono cálido e institucional. Estructura: 1) frase con el derecho principal, 2) párrafo de contexto, 3) pasos prácticos. Cita artículos al final. Si no sabes, dilo y deriva a Oficina Joven o 116 111. Máx 220 palabras.`,
-  en: `You are the legal assistant for the Catalan Youth Rights Platform (ages 14–18). Reply in English. Warm, institutional tone. Structure: 1) sentence with the main applicable right, 2) short context paragraph, 3) bulleted practical steps. Cite articles at the end. If unsure, say so and refer to the Youth Office or 116 111. Max 220 words.`,
-};
+const BACKEND = "https://plataforma-drets-juvenils.onrender.com";
 
 async function askAssistant(history, lang) {
-  const sys = SYSTEM_PROMPT[lang] || SYSTEM_PROMPT.ca;
-  if (typeof window !== "undefined" && window.claude?.complete) {
-    try {
-      const messages = [
-        { role: "user", content:
-          `${sys}\n\n--- HISTÒRIA DE LA CONVERSA ---\n` +
-          history.map(m => `${m.from === "user" ? "USUARI" : "ASSISTENT"}: ${m.text}`).join("\n\n") +
-          `\n\n--- FI HISTÒRIA. Ara respon a l'última pregunta de l'usuari. ---`
-        },
-      ];
-      const text = await window.claude.complete({ messages });
-      return parseResponse(text);
-    } catch (e) {
-      return { content: "He tingut un problema connectant amb el servei. Torna-ho a intentar d'aquí a un moment.", citations: [] };
-    }
+  const lastUserMsg = [...history].reverse().find(m => m.from === "user");
+  if (!lastUserMsg) return { content: "", citations: [] };
+
+  try {
+    const res = await fetch(`${BACKEND}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: lastUserMsg.text, language: lang }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Error del servidor");
+    return parseResponse(data.response);
+  } catch (e) {
+    const fallback = lang === "es"
+      ? "He tenido un problema conectando con el servicio. Inténtalo de nuevo en un momento."
+      : lang === "en"
+      ? "There was a problem connecting to the service. Please try again in a moment."
+      : "He tingut un problema connectant amb el servei. Torna-ho a intentar d'aquí a un moment.";
+    return { content: fallback, citations: [] };
   }
-  return {
-    content: "Per poder respondre, aquesta plataforma necessita una connexió amb el model d'IA. Configura el teu backend a la funció askAssistant().",
-    citations: [],
-  };
 }
 
 function parseResponse(text) {
