@@ -2,6 +2,8 @@ import React from "react";
 import s from "./Home.module.css";
 import { t } from "../i18n/strings";
 
+/* Abstract editorial mark — geometric, no clipart.
+   A nested rule grid with a coral block, on ink. */
 function HeroMark() {
   return (
     <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -12,17 +14,21 @@ function HeroMark() {
       </defs>
       <rect width="320" height="240" fill="var(--c-ink)" />
       <rect width="320" height="240" fill="url(#dots)" />
+      {/* Frame rules */}
       <line x1="24"  y1="24"  x2="296" y2="24"  stroke="rgba(245,241,232,0.35)" strokeWidth="1" />
       <line x1="24"  y1="216" x2="296" y2="216" stroke="rgba(245,241,232,0.35)" strokeWidth="1" />
       <line x1="24"  y1="24"  x2="24"  y2="216" stroke="rgba(245,241,232,0.35)" strokeWidth="1" />
       <line x1="296" y1="24"  x2="296" y2="216" stroke="rgba(245,241,232,0.35)" strokeWidth="1" />
+      {/* Inner stack */}
       <rect x="48" y="56" width="160" height="14" fill="var(--c-cream)" opacity="0.92" />
       <rect x="48" y="78" width="120" height="8"  fill="var(--c-cream)" opacity="0.55" />
       <rect x="48" y="92" width="90"  height="8"  fill="var(--c-cream)" opacity="0.35" />
+      {/* Coral block */}
       <rect x="48" y="124" width="80" height="80" fill="var(--c-accent)" />
       <text x="56" y="156" fontFamily="JetBrains Mono, monospace" fontSize="9" letterSpacing="2" fill="var(--c-cream)">ART. 24.2</text>
       <text x="56" y="176" fontFamily="Fraunces, serif" fontSize="22" fill="var(--c-cream)" fontStyle="italic">Drets</text>
       <text x="56" y="196" fontFamily="Fraunces, serif" fontSize="22" fill="var(--c-cream)">teus</text>
+      {/* Right column rule + text */}
       <line x1="148" y1="124" x2="148" y2="204" stroke="rgba(245,241,232,0.5)" strokeWidth="0.5" />
       <text x="160" y="142" fontFamily="JetBrains Mono, monospace" fontSize="8" letterSpacing="1.5" fill="rgba(245,241,232,0.7)">SECCIÓ</text>
       <text x="160" y="164" fontFamily="Fraunces, serif" fontSize="14" fill="var(--c-cream)">Identificació</text>

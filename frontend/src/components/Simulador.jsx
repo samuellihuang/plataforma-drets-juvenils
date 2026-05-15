@@ -3,14 +3,15 @@ import s from "./Simulador.module.css";
 import { t, STRINGS } from "../i18n/strings";
 
 const TREE = {
-  pol: { qs: ["q1", "q2"], section: "pol" },
-  work:{ qs: ["q1", "q2"], section: "work" },
-  sch: { qs: ["q1", "q2"], section: "sch" },
-  fam: { qs: [], section: null },
-  net: { qs: [], section: null },
-  med: { qs: [], section: null },
+  pol:  { qs: ["q1", "q2"], section: "pol" },
+  work: { qs: ["q1", "q2"], section: "work" },
+  sch:  { qs: ["q1", "q2"], section: "sch" },
+  fam:  { qs: ["q1", "q2"], section: "fam" },
+  net:  { qs: ["q1", "q2"], section: "net" },
+  med:  { qs: ["q1", "q2"], section: "med" },
 };
 
+/* Tiny editorial mark for the side panel — shifts per scenario. */
 function SideMark({ scenario }) {
   const colors = {
     pol:  "var(--c-accent)",
@@ -35,14 +36,15 @@ function SideMark({ scenario }) {
 }
 
 export default function Simulador({ lang, setRoute }) {
+  // Step 0 = scenario picker. Step 1+ = questions. Last = result.
   const [step, setStep] = useState(0);
   const [scenarioId, setScenarioId] = useState(null);
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState([]); // array of {q, a}
 
   const scenarios = t("sim.scenarios", lang);
   const scenario = scenarios.find((sc) => sc.id === scenarioId);
   const tree = scenarioId ? TREE[scenarioId] : null;
-  const totalSteps = tree ? 1 + tree.qs.length + 1 : 2;
+  const totalSteps = tree ? 1 + tree.qs.length + 1 : 2; // pick + qs + result
   const currentStep = step + 1;
   const isResult = scenarioId && step > (tree?.qs.length ?? 0);
 
@@ -68,6 +70,8 @@ export default function Simulador({ lang, setRoute }) {
     setAnswers(newAnswers);
     setStep((s) => s + 1);
   };
+
+  // ====== RENDER ======
 
   // Step 0 — pick scenario
   if (step === 0) {
@@ -98,7 +102,7 @@ export default function Simulador({ lang, setRoute }) {
                 <h3 className={s.scenarioTitle}>{sc.title}</h3>
                 <p className={s.scenarioBody}>{sc.body}</p>
                 <div className={s.scenarioFoot}>
-                  <span>{TREE[sc.id]?.qs.length ? `${TREE[sc.id].qs.length + 1} ${t("sim.step", lang).toLowerCase()}` : "Demo"}</span>
+                  <span>{`${TREE[sc.id].qs.length + 1} ${t("sim.step", lang).toLowerCase()}`}</span>
                   <span>→</span>
                 </div>
               </button>
@@ -120,9 +124,12 @@ export default function Simulador({ lang, setRoute }) {
       "Obre el Xat i descriu la teva situació.",
       "Truca al 116 111 si necessites suport immediat.",
     ];
-    const articles = section === "pol" ? ["LO 4/2015 art. 16", "CE art. 24.2"]
+    const articles = section === "pol"  ? ["LO 4/2015 art. 16", "CE art. 24.2"]
                    : section === "work" ? ["ET art. 6", "RD 1620/2011"]
                    : section === "sch"  ? ["Decret 102/2010"]
+                   : section === "fam"  ? ["LO 8/2021", "CC art. 314"]
+                   : section === "net"  ? ["LO 1/1982 art. 7", "RGPD art. 17"]
+                   : section === "med"  ? ["Llei 21/2000", "LOPD art. 7"]
                    : ["—"];
 
     return (
@@ -216,7 +223,7 @@ export default function Simulador({ lang, setRoute }) {
     );
   }
 
-  // Question step
+  // Question step (1..tree.qs.length)
   const qKey = tree.qs[step - 1];
   const qText = t(`sim.${tree.section}.${qKey}`, lang);
   const aOpts = t(`sim.${tree.section}.${qKey}a`, lang);

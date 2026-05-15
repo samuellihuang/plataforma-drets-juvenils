@@ -395,7 +395,7 @@
 .page[data-hero="stacked"] .heroSide  { display: none; }
 .page[data-hero="stacked"] .heroTitle { font-size: var(--t-5xl); max-width: 14ch; }
 
-/* Hero variant: rule */
+/* Hero variant: editorial-rule (default = split). Add big rule above */
 .page[data-hero="rule"] .heroEyebrowRow { display: none; }
 .page[data-hero="rule"] .hero::before {
   content: "PLATAFORMA · DRETS · JUVENILS · CATALUNYA · 2026 ·";

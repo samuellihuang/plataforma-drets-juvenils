@@ -1,4 +1,5 @@
-/* Simulador — branching flow. Two-pane on desktop. */
+/* Simulador — branching flow. Two-pane on desktop:
+   left = progress + question; right = visual context. */
 .page {
   background: var(--c-cream);
   min-height: calc(100vh - 64px);

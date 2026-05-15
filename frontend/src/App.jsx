@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import Simulador from "./components/Simulador";
 import Xat from "./components/Xat";
 import Disclaimer from "./components/Disclaimer";
-import "./index.css";
+import "./styles/index.css";
 
 export default function App({ heroVariant = "split" }) {
   const [route, setRoute] = useState("home");
