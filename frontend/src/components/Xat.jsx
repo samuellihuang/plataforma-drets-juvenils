@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import s from "./Xat.module.css";
-import { t } from "../i18n/strings";
+import { d } from "../i18n/data";
 
 const BACKEND = "https://plataforma-drets-juvenils.onrender.com";
 
-async function askAssistant(history, lang) {
+async function askBackend(history, lang) {
   const lastUserMsg = [...history].reverse().find(m => m.from === "user");
   if (!lastUserMsg) return { content: "", citations: [] };
-
   try {
     const res = await fetch(`${BACKEND}/api/chat`, {
       method: "POST",
@@ -17,7 +15,7 @@ async function askAssistant(history, lang) {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Error del servidor");
     return parseResponse(data.response);
-  } catch (e) {
+  } catch {
     const fallback = lang === "es"
       ? "He tenido un problema conectando con el servicio. Inténtalo de nuevo en un momento."
       : lang === "en"
@@ -27,174 +25,116 @@ async function askAssistant(history, lang) {
   }
 }
 
-/* Extract trailing "art. X, art. Y" tokens into citations */
 function parseResponse(text) {
   if (!text) return { content: "", citations: [] };
   const trimmed = String(text).trim();
   const lines = trimmed.split(/\n+/);
   let citations = [];
   let body = trimmed;
-
-  // Look for last line that looks like citations
   const last = lines[lines.length - 1] || "";
   if (/art\.|llei|ley|article|decret|decreto/i.test(last) && last.length < 200) {
-    citations = last
-      .replace(/^[•\-—\s]+/, "")
-      .split(/[,;·]+/)
-      .map(c => c.trim())
-      .filter(Boolean)
-      .slice(0, 4);
+    citations = last.replace(/^[•\-—\s]+/, "").split(/[,;·]+/).map(c => c.trim()).filter(Boolean).slice(0, 4);
     body = lines.slice(0, -1).join("\n").trim();
   }
   return { content: body, citations };
 }
 
-/* Render a bot message body: paragraphs + bullets */
-function MessageBody({ text }) {
-  if (!text) return null;
-  const parts = text.split(/\n\n+/);
-  return (
-    <>
-      {parts.map((part, i) => {
-        const lines = part.split("\n").map(l => l.trim()).filter(Boolean);
-        const isList = lines.every(l => /^[-•·]\s|^\d+[\.)]\s/.test(l)) && lines.length > 1;
-        if (isList) {
-          return (
-            <ul key={i} style={{ margin: i === 0 ? 0 : "var(--s-3) 0 0", paddingLeft: "1.1em" }}>
-              {lines.map((l, j) => <li key={j} style={{ marginBottom: 4 }}>{l.replace(/^[-•·]\s|^\d+[\.)]\s/, "")}</li>)}
-            </ul>
-          );
-        }
-        return <p key={i}>{part}</p>;
-      })}
-    </>
-  );
-}
-
-export default function Xat({ lang }) {
-  const [messages, setMessages] = useState(() => [
-    { id: 0, from: "bot", text: t("chat.welcome", lang) }
+export default function Xat({ lang, setRoute }) {
+  const L = d(lang).chat;
+  const [messages, setMessages] = useState([
+    { from: "bot", text: L.greeting, suggestions: L.suggest },
   ]);
-  const [draft, setDraft] = useState("");
-  const [busy, setBusy] = useState(false);
+  const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
   const bodyRef = useRef(null);
-  const inputRef = useRef(null);
 
-  // Reset welcome when lang changes
   useEffect(() => {
-    setMessages([{ id: 0, from: "bot", text: t("chat.welcome", lang) }]);
-  }, [lang]);
+    if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+  }, [messages, typing]);
 
-  // Auto-scroll on new messages
-  useEffect(() => {
-    if (bodyRef.current) {
-      bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
-    }
-  }, [messages, busy]);
-
-  const send = async (rawText) => {
-    const text = (rawText ?? draft).trim();
-    if (!text || busy) return;
-    const userMsg = { id: Date.now(), from: "user", text };
-    const newHistory = [...messages, userMsg];
+  const send = async (text) => {
+    if (!text.trim() || typing) return;
+    const newHistory = [...messages, { from: "user", text }];
     setMessages(newHistory);
-    setDraft("");
-    setBusy(true);
-
-    const { content, citations } = await askAssistant(newHistory, lang);
-    setBusy(false);
-    setMessages((m) => [...m, { id: Date.now() + 1, from: "bot", text: content, citations }]);
+    setInput("");
+    setTyping(true);
+    const { content, citations } = await askBackend(newHistory, lang);
+    setMessages(m => [...m, { from: "bot", text: content, citations }]);
+    setTyping(false);
   };
-
-  const onKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      send();
-    }
-  };
-
-  const showSuggestions = messages.length === 1 && !busy;
-  const suggestions = t("chat.suggestions", lang);
 
   return (
-    <div className={s.page}>
-      <header className={s.head}>
-        <div className={s.headInner}>
-          <span className="eyebrow">{t("chat.eyebrow", lang)}</span>
-          <h1 className={s.title}>
-            {t("chat.title", lang).split(" ").slice(0,-1).join(" ")}{" "}
-            <em>{t("chat.title", lang).split(" ").slice(-1)}</em>
-          </h1>
-          <p className={s.lede}>{t("chat.lede", lang)}</p>
+    <main className="chat-page" id="main">
+      <header className="chat-head">
+        <div className="chat-head-inner">
+          <h1 className="chat-title">{L.title_a}<em>{L.title_em}</em>{L.title_b}</h1>
+          <p className="chat-lede">{L.lede}</p>
         </div>
       </header>
 
-      <div className={s.body} ref={bodyRef}>
-        <div className={s.bodyInner}>
-          {messages.map((m) => (
-            <div key={m.id} className={s.row} data-from={m.from}>
-              {m.from === "bot" && <span className={`${s.avatar} ${s.avatarBot}`} aria-hidden="true" />}
-              <div className={`${s.bubble} ${m.from === "bot" ? s.bubbleBot : s.bubbleUser}`}>
-                <div className={s.bubbleMeta}>
-                  {m.from === "bot" ? "Assistent · DJ" : "Tu"}
+      <div className="chat-body" ref={bodyRef}>
+        <div className="chat-body-inner">
+          {messages.map((m, i) => (
+            <div className="row" data-from={m.from} key={i}>
+              {m.from === "bot" && <span className="avatar avatar-bot" aria-hidden="true"/>}
+              <div className={"bubble " + (m.from === "bot" ? "bubble-bot" : "bubble-user")}>
+                <div className="bubble-meta">
+                  <span>{m.from === "bot" ? "Assistent · IA" : "Tu"}</span>
                   <span>·</span>
                   <span>ara</span>
                 </div>
-                <MessageBody text={m.text} />
-                {m.citations?.length > 0 && (
-                  <div className={s.cite}>
-                    <span>Base legal:</span>
-                    {m.citations.map((c, i) => <span key={i} className={s.citeChip}>{c}</span>)}
+                {m.text && m.text.split("\n\n").map((p, j) => <p key={j}>{p}</p>)}
+                {m.citations && m.citations.length > 0 && (
+                  <div className="cite">
+                    <span>Fonts:</span>
+                    {m.citations.map((c, j) => <span className="cite-chip" key={j}>{c}</span>)}
+                  </div>
+                )}
+                {m.suggestions && (
+                  <div className="suggest">
+                    {m.suggestions.map((s, j) => (
+                      <button key={j} className="suggest-btn" onClick={() => send(s)}>
+                        <span className="suggest-text">{s}</span>
+                        <span className="suggest-arrow" aria-hidden="true">→</span>
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
-              {m.from === "user" && <span className={`${s.avatar} ${s.avatarUser}`}>TU</span>}
+              {m.from === "user" && <span className="avatar avatar-user">TU</span>}
             </div>
           ))}
-
-          {busy && (
-            <div className={s.row} data-from="bot">
-              <span className={`${s.avatar} ${s.avatarBot}`} aria-hidden="true" />
-              <div className={`${s.bubble} ${s.bubbleBot}`}>
-                <div className={s.bubbleMeta}>{t("chat.thinking", lang)}…</div>
-                <span className={s.typing}><span /><span /><span /></span>
+          {typing && (
+            <div className="row" data-from="bot">
+              <span className="avatar avatar-bot" aria-hidden="true"/>
+              <div className="bubble bubble-bot">
+                <div className="bubble-meta"><span>Assistent · IA</span><span>·</span><span>{L.thinking}…</span></div>
+                <div className="typing"><span/><span/><span/></div>
               </div>
             </div>
           )}
-
-          {showSuggestions && (
-            <div className={s.suggest}>
-              {suggestions.map((q, i) => (
-                <button key={i} className={s.suggestBtn} onClick={() => send(q)}>
-                  <span className={s.suggestText}>{q}</span>
-                  <span className={s.suggestArrow}>→</span>
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </div>
 
-      <div className={s.composer}>
-        <div className={s.composerInner}>
-          <div className={s.field}>
+      <div className="composer">
+        <div className="composer-inner">
+          <div className="field">
             <textarea
-              ref={inputRef}
-              className={s.input}
-              placeholder={t("chat.placeholder", lang)}
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              onKeyDown={onKeyDown}
+              className="input"
+              placeholder={L.placeholder}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }}
               rows={1}
-              disabled={busy}
+              aria-label="Missatge"
             />
-            <button className={s.send} onClick={() => send()} disabled={busy || !draft.trim()}>
-              {t("chat.send", lang)} <span className={s.sendArrow}>↵</span>
+            <button className="send" onClick={() => send(input)} disabled={!input.trim() || typing}>
+              <span>{L.send}</span><span className="send-arrow">↵</span>
             </button>
           </div>
-          <p className={s.disclaimer}>{t("chat.disclaimer", lang)}</p>
+          <p className="chat-disc">{L.disc}</p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,36 +1,62 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Simulador from "./components/Simulador";
 import Xat from "./components/Xat";
+import Resources from "./components/Resources";
 import Disclaimer from "./components/Disclaimer";
-import "./styles/index.css";
+import "./styles/app.css";
 
-export default function App({ heroVariant = "split" }) {
-  const [route, setRoute] = useState("home");
+const ROUTES = ["home", "sim", "chat", "res", "disclaimer"];
+
+export default function App() {
+  const [route, setRouteRaw] = useState(() => {
+    try {
+      const h = location.hash.replace(/^#\/?/, "") || "home";
+      return ROUTES.includes(h) ? h : "home";
+    } catch { return "home"; }
+  });
+
+  const setRoute = (r) => {
+    setRouteRaw(r);
+    try { location.hash = "/" + r; } catch {}
+    window.scrollTo({ top: 0 });
+  };
+
   const [lang, setLang] = useState(() => {
-    if (typeof window === "undefined") return "ca";
-    return localStorage.getItem("dj.lang") || "ca";
+    try { return localStorage.getItem("pdj_lang") || "ca"; } catch { return "ca"; }
   });
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("dj.lang", lang);
-      document.documentElement.lang = lang;
-    }
+    try { localStorage.setItem("pdj_lang", lang); } catch {}
+    document.documentElement.lang = lang;
   }, [lang]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "instant" });
-  }, [route]);
+    const onHash = () => {
+      const h = location.hash.replace(/^#\/?/, "") || "home";
+      setRouteRaw(ROUTES.includes(h) ? h : "home");
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+
+  let page;
+  switch (route) {
+    case "sim":        page = <Simulador  lang={lang} setRoute={setRoute} />; break;
+    case "chat":       page = <Xat        lang={lang} setRoute={setRoute} />; break;
+    case "res":        page = <Resources  lang={lang} setRoute={setRoute} />; break;
+    case "disclaimer": page = <Disclaimer lang={lang} setRoute={setRoute} />; break;
+    default:           page = <Home       lang={lang} setRoute={setRoute} />;
+  }
 
   return (
     <>
+      <a className="skip-link" href="#main">Saltar al contingut</a>
       <Navbar route={route} setRoute={setRoute} lang={lang} setLang={setLang} />
-      {route === "home"       && <Home       lang={lang} setRoute={setRoute} hero={heroVariant} />}
-      {route === "simulador"  && <Simulador  lang={lang} setRoute={setRoute} />}
-      {route === "xat"        && <Xat        lang={lang} />}
-      {route === "disclaimer" && <Disclaimer lang={lang} setRoute={setRoute} />}
+      {page}
+      <Footer setRoute={setRoute} lang={lang} />
     </>
   );
 }

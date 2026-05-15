@@ -1,49 +1,33 @@
 import React from "react";
-import s from "./Disclaimer.module.css";
-import { t } from "../i18n/strings";
+import { d } from "../i18n/data";
 
 export default function Disclaimer({ lang, setRoute }) {
-  const sections = t("disc.sections", lang);
+  const L = d(lang).disc;
   return (
-    <div className={s.page}>
-      <div className={s.shell}>
-        <header className={s.head}>
-          <div>
-            <span className="eyebrow" style={{ display: "block", marginBottom: "var(--s-3)" }}>
-              {t("disc.eyebrow", lang)}
-            </span>
-            <h1 className={s.title}>
-              {t("disc.title", lang).split("—")[0]}
-              <em>—</em>
-              {t("disc.title", lang).split("—")[1]}
-            </h1>
-          </div>
-          <div className={s.metaRow}>
-            <span>{t("disc.updated", lang)}</span>
-            <span>v 1.0 · 2026</span>
-            <span>CA · ES · EN</span>
+    <main className="long-page" id="main">
+      <div className="long-shell">
+        <header className="long-head">
+          <h1 className="long-title">{L.title_a}<em>{L.title_em}</em>{L.title_b}</h1>
+          <div className="long-meta-row">
+            {L.meta.map((m, i) => <span key={i}>{m}</span>)}
           </div>
         </header>
-
-        <div className={s.list}>
-          {sections.map(([title, body], i) => (
-            <article key={i} className={s.item}>
-              <span className={s.itemNum}>{String(i + 1).padStart(2, "0")} / {String(sections.length).padStart(2, "0")}</span>
-              <h2 className={s.itemTitle}>{title}</h2>
-              <p className={s.itemBody}>{body}</p>
+        <div className="long-list">
+          {L.items.map((it, i) => (
+            <article className="long-item" key={i}>
+              <span className="long-num">{it.num}</span>
+              <h2 className="long-item-title">{it.h}</h2>
+              <p className="long-item-body">{it.body}</p>
             </article>
           ))}
         </div>
-
-        <div className={s.foot}>
-          <p className={s.footText}>
-            {t("home.footer_disc", lang)}
-          </p>
-          <button className={s.footBtn} onClick={() => setRoute("xat")}>
-            {t("nav.xat", lang)}
+        <div className="long-foot">
+          <p className="long-foot-text">{L.foot_text}</p>
+          <button className="btn btn-secondary btn-sm">
+            <span>{L.foot_cta}</span><span className="btn-arrow">→</span>
           </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

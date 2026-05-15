@@ -1,89 +1,59 @@
 import React, { useState } from "react";
-import s from "./Navbar.module.css";
-import { t } from "../i18n/strings";
+import { d } from "../i18n/data";
 
-const ROUTES = ["home", "simulador", "xat", "disclaimer"];
-const LANGS = ["ca", "es", "en"];
+function LogoMark({ size = 28 }) {
+  return <span className="brand-mark" style={{ width: size, height: size }} aria-hidden="true" />;
+}
 
 export default function Navbar({ route, setRoute, lang, setLang }) {
+  const L = d(lang);
   const [open, setOpen] = useState(false);
-  return (
-    <nav className={s.shell} aria-label="Primary">
-      <div className={s.inner}>
-        <a
-          className={s.brand}
-          href="#home"
-          onClick={(e) => { e.preventDefault(); setRoute("home"); setOpen(false); }}
-        >
-          <span className={s.brandMark} aria-hidden="true" />
-          <span className={s.brandWord}>
-            <span>Drets Juvenils</span>
-            <span>Plataforma · CAT</span>
-          </span>
-        </a>
+  const items = [
+    { id: "home",        label: L.nav.home },
+    { id: "sim",         label: L.nav.sim },
+    { id: "chat",        label: L.nav.chat },
+    { id: "res",         label: L.nav.res },
+    { id: "disclaimer",  label: L.nav.disclaimer },
+  ];
+  const go = (id) => { setRoute(id); setOpen(false); };
 
-        <div className={s.links}>
-          {ROUTES.map((r) => (
-            <button
-              key={r}
-              type="button"
-              className={`${s.link} ${route === r ? s.linkActive : ""}`}
-              onClick={() => setRoute(r)}
-            >
-              {t(`nav.${r === "home" ? "home" : r === "disclaimer" ? "disclaimer" : r}`, lang)}
+  return (
+    <header className="nav">
+      <div className="nav-inner">
+        <button className="brand" onClick={() => go("home")} aria-label={L.brand.word.join(" ")}>
+          <LogoMark />
+          <span className="brand-word">
+            <span>{L.brand.word[0]}</span>
+            <span>{L.brand.word[1]}</span>
+          </span>
+        </button>
+        <nav className="nav-links" aria-label="Principal">
+          {items.map(i => (
+            <button key={i.id} onClick={() => go(i.id)} className={"nav-link" + (route === i.id ? " active" : "")}>
+              {i.label}
             </button>
           ))}
-        </div>
-
-        <div className={s.right}>
-          <div className={s.lang} role="group" aria-label={t("nav.lang", lang)}>
-            {LANGS.map((l) => (
-              <button
-                key={l}
-                type="button"
-                onClick={() => setLang(l)}
-                className={`${s.langBtn} ${lang === l ? s.langBtnActive : ""}`}
-                aria-pressed={lang === l}
-              >
-                {l}
-              </button>
+        </nav>
+        <div className="nav-right">
+          <div className="lang" role="group" aria-label="Idioma">
+            {["ca", "es", "en"].map(l => (
+              <button key={l} className={"lang-btn" + (lang === l ? " active" : "")} onClick={() => setLang(l)} aria-pressed={lang === l}>{l}</button>
             ))}
           </div>
-
-          <a
-            href="#simulador"
-            className={s.cta}
-            onClick={(e) => { e.preventDefault(); setRoute("simulador"); }}
-          >
-            {t("nav.cta", lang)}
-          </a>
-
-          <button
-            type="button"
-            className={s.burger}
-            aria-label="Menu"
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span />
-          </button>
+          <button className="nav-cta" onClick={() => go("sim")}>{L.nav.cta}</button>
+          <button className="burger" onClick={() => setOpen(o => !o)} aria-expanded={open} aria-label="Menú"><span /></button>
         </div>
       </div>
-
       {open && (
-        <div className={s.drawer}>
-          {ROUTES.map((r) => (
-            <button
-              key={r}
-              className={s.drawerLink}
-              onClick={() => { setRoute(r); setOpen(false); }}
-            >
-              {t(`nav.${r}`, lang)}
-              <span className={s.drawerLinkArrow}>→</span>
+        <div className="drawer">
+          {items.map(i => (
+            <button key={i.id} className="drawer-link" onClick={() => go(i.id)}>
+              <span>{i.label}</span>
+              <span className="drawer-arrow">→</span>
             </button>
           ))}
         </div>
       )}
-    </nav>
+    </header>
   );
 }
