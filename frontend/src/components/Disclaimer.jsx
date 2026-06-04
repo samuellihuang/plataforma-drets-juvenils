@@ -23,9 +23,11 @@ export default function Disclaimer({ lang, setRoute }) {
         </div>
         <div className="long-foot">
           <p className="long-foot-text">{L.foot_text}</p>
-          <button className="btn btn-secondary btn-sm">
-            <span>{L.foot_cta}</span><span className="btn-arrow">→</span>
-          </button>
+          {L.foot_cta && (
+            <button className="btn btn-secondary btn-sm">
+              <span>{L.foot_cta}</span><span className="btn-arrow">→</span>
+            </button>
+          )}
         </div>
       </div>
     </main>

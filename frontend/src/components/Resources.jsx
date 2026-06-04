@@ -19,14 +19,21 @@ export default function Resources({ lang, setRoute }) {
               <span style={{ fontFamily: "var(--f-mono)", fontSize: "var(--t-eyebrow)", letterSpacing: ".14em", textTransform: "uppercase", color: "var(--c-ink-soft)" }}>{String(si + 1).padStart(2, "0")}</span>
             </div>
             <div className="res-grid">
-              {sec.items.map((it, i) => (
-                <article key={i} className={"res-card" + (it.urgent ? " urgent" : "")}>
+              {sec.items.map((it, i) => {
+                const cardClass = "res-card" + (it.urgent ? " urgent" : "") + (it.url ? " res-card-link" : "");
+                const inner = <>
                   <span className="res-meta">{it.meta}</span>
                   <h3 className="res-name">{it.name}</h3>
                   <p className="res-desc">{it.desc}</p>
-                  {it.phone && <a className="res-phone" href={`tel:${it.phone.replace(/\s/g, "")}`}>{it.phone}</a>}
-                </article>
-              ))}
+                  <div className="res-card-foot">
+                    {it.phone && <a className="res-phone" href={`tel:${it.phone.replace(/\s/g, "")}`} onClick={e => e.stopPropagation()}>{it.phone}</a>}
+                    {it.url && <span className="res-ext-arrow" aria-hidden="true">↗</span>}
+                  </div>
+                </>;
+                return it.url
+                  ? <a key={i} className={cardClass} href={it.url} target="_blank" rel="noopener noreferrer">{inner}</a>
+                  : <article key={i} className={cardClass}>{inner}</article>;
+              })}
             </div>
           </div>
         ))}

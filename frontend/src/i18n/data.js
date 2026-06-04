@@ -4,7 +4,7 @@
 
 const ca = {
   brand: { word: ["Plataforma de", "Drets Juvenils"], short: "PDJ" },
-  nav: { home: "Inici", sim: "Simulador", chat: "Xat legal", res: "Recursos", disclaimer: "Avís legal", cta: "Comença el simulador" },
+  nav: { home: "Inici", sim: "Simulador", chat: "Xat legal", res: "Recursos", forum: "Fòrum", disclaimer: "Avís legal", cta: "Comença el simulador" },
   hero: {
     eyebrow: "Iniciativa ciutadana · Barcelona, 2025",
     title_a: "Els teus drets, ",
@@ -20,15 +20,13 @@ const ca = {
       { k: "Idiomes", v: "CA · ES · EN" },
       { k: "Llicència", v: "CC BY-SA 4.0" },
     ],
-    trust: ["Sense registre", "Cap dada personal", "Codi obert al GitHub"],
+    trust: ["Sense registre", "Cap dada personal"],
   },
   stats: {
     eyebrow: "Per què existim",
     items: [
-      { num: "67%", label: "Joves enquestats", body: "diu que no sap a qui demanar ajuda legal abans d'un problema d'habitatge." },
       { num: "1 de 3", label: "Contractes laborals", body: "ofertats a menors de 25 anys presenta clàusules abusives o no s'ha registrat al SEPE." },
       { num: "0 €", label: "Cost per a l'usuari", body: "Les consultes són anònimes i gratuïtes. Cap dada queda lligada a la teva identitat." },
-      { num: "48h", label: "Resposta humana", body: "Si demanes acompanyament, una advocada col·legiada et truca en menys de dos dies hàbils." },
     ],
   },
   features: {
@@ -39,7 +37,7 @@ const ca = {
     items: [
       { num: "01", title: "Simulador de situacions", body: "Tria un escenari real (laboral, habitatge, policial, familiar…) i ves responent. Acabes amb una guia d'accions concretes i terminis.", foot: "5–8 min", cta: "Iniciar simulador", to: "sim" },
       { num: "02", title: "Xat amb assistència legal", body: "Pregunta lliurement. Et responem amb llenguatge planer i citem la llei aplicable. Si cal, t'adrecem a un servei humà.", foot: "Resposta immediata", cta: "Obrir xat", to: "chat" },
-      { num: "03", title: "Recursos verificats", body: "Telèfons d'emergència, sindicats, oficines d'habitatge i ONG revisats per advocats col·legiats i actualitzats cada mes.", foot: "Actualitzat oct '25", cta: "Veure directori", to: "res" },
+      { num: "03", title: "Recursos verificats", body: "Telèfons d'emergència, sindicats, oficines d'habitatge i ONG seleccionats per utilitat pràctica.", foot: "Octubre 2025", cta: "Veure directori", to: "res" },
     ],
   },
   topics: {
@@ -194,45 +192,45 @@ const ca = {
     title_a: "Recursos ",
     title_em: "verificats",
     title_b: ".",
-    meta: ["Actualitzat · 12 octubre 2025", "67 entitats verificades", "Cobertura: Catalunya"],
+    meta: ["Actualitzat · 12 octubre 2025", "Recursos seleccionats", "Cobertura: Catalunya"],
     sections: [
       {
         id: "urgent",
         h: "Emergència 24 h",
         items: [
           { meta: "Emergències · 24h · gratuït", name: "Telèfon d'emergències", desc: "Per a qualsevol situació de risc immediat. Operadores en català, castellà i 8 idiomes més.", phone: "112", urgent: true },
-          { meta: "Violència masclista · 24h · gratuït", name: "Atenció a víctimes de violència masclista", desc: "Atenció especialitzada per a dones, adolescents i famílies. Confidencial.", phone: "900 900 120", urgent: true },
-          { meta: "Salut mental · 24h · gratuït", name: "Crida'm · prevenció del suïcidi", desc: "Línia d'escolta i suport per a moments de crisi emocional. Sense judicis.", phone: "024", urgent: true },
+          { meta: "Violència masclista · 24h · gratuït", name: "Atenció a víctimes de violència masclista", desc: "Atenció especialitzada per a dones, adolescents i famílies. Confidencial.", phone: "900 900 120", url: "https://violenciagenere.cat", urgent: true },
+          { meta: "Salut mental · 24h · gratuït", name: "Crida'm · prevenció del suïcidi", desc: "Línia d'escolta i suport per a moments de crisi emocional. Sense judicis.", phone: "024", url: "https://estallacrisi.cat", urgent: true },
         ],
       },
       {
         id: "habitatge",
         h: "Habitatge",
         items: [
-          { meta: "Habitatge · presencial i telefònic", name: "Servei d'Habitatge de Barcelona", desc: "Mediació, ajudes al lloguer, registre de sol·licitants. Truca a 010 si vius a BCN.", phone: "010" },
-          { meta: "Habitatge · sindicat veïnal", name: "Sindicat de Llogateres", desc: "Acompanyament veïnal i estratègia col·lectiva davant pujades abusives o desnonaments." },
-          { meta: "Habitatge · gratuït", name: "Of. Habitatge Jove (Generalitat)", desc: "Informació, borsa de mediació i ajudes específiques per a menors de 35 anys." },
-          { meta: "Habitatge · joves migrats", name: "Punt de referència", desc: "Acompanyament integral per a joves extutelats i sense xarxa familiar." },
+          { meta: "Habitatge · presencial i telefònic", name: "Servei d'Habitatge de Barcelona", desc: "Mediació, ajudes al lloguer, registre de sol·licitants. Truca a 010 si vius a BCN.", phone: "010", url: "https://www.barcelona.cat/habitatge" },
+          { meta: "Habitatge · sindicat veïnal", name: "Sindicat de Llogateres", desc: "Acompanyament veïnal i estratègia col·lectiva davant pujades abusives o desnonaments.", url: "https://sindicatdellogateres.org" },
+          { meta: "Habitatge · gratuït", name: "Of. Habitatge Jove (Generalitat)", desc: "Informació, borsa de mediació i ajudes específiques per a menors de 35 anys.", url: "https://habitatge.gencat.cat" },
+          { meta: "Habitatge · joves migrats", name: "Punt de referència", desc: "Acompanyament integral per a joves extutelats i sense xarxa familiar.", url: "https://puntdereferencia.org" },
         ],
       },
       {
         id: "treball",
         h: "Treball i drets laborals",
         items: [
-          { meta: "Laboral · denúncia administrativa", name: "Inspecció de Treball", desc: "Denúncies anònimes per impagaments, hores extres no remunerades o pràctiques abusives." },
-          { meta: "Laboral · suport sindical", name: "Avalot · CCOO Joves", desc: "Atenció gratuïta a joves treballadors, formació i orientació davant acomiadaments." },
-          { meta: "Laboral · suport sindical", name: "Acció Jove · UGT", desc: "Assessorament en contractes, conveni i drets de menors de 30 anys." },
-          { meta: "Laboral · pràctiques", name: "Observatori de pràctiques abusives", desc: "Denúncia col·lectiva i informació sobre estudiants en pràctiques no remunerades." },
+          { meta: "Laboral · denúncia administrativa", name: "Inspecció de Treball", desc: "Denúncies anònimes per impagaments, hores extres no remunerades o pràctiques abusives.", url: "https://treball.gencat.cat/ca/ambits/relacions_laborals/inspeccio_treball/" },
+          { meta: "Laboral · suport sindical", name: "Avalot · CCOO Joves", desc: "Atenció gratuïta a joves treballadors, formació i orientació davant acomiadaments.", url: "https://avalot.cat" },
+          { meta: "Laboral · suport sindical", name: "Acció Jove · UGT", desc: "Assessorament en contractes, conveni i drets de menors de 30 anys.", url: "https://www.ugt.cat" },
+          { meta: "Laboral · pràctiques", name: "Observatori de pràctiques abusives", desc: "Denúncia col·lectiva i informació sobre estudiants en pràctiques no remunerades.", url: "https://practiquesdignes.cat" },
         ],
       },
       {
         id: "drets",
         h: "Drets civils i identificació",
         items: [
-          { meta: "Civils · denúncia institucional", name: "Síndic de Greuges", desc: "Per actuacions irregulars d'administracions públiques. Gratuït i en català." },
-          { meta: "Civils · advocats", name: "SOS Racisme", desc: "Assistència jurídica davant identificacions per perfil ètnic i discriminació racial." },
-          { meta: "Civils · torn d'ofici", name: "ICAB · Torn d'ofici", desc: "Advocat d'ofici gratuït si compleixes el barem (≈ 2 × IPREM). Demana cita." },
-          { meta: "LGTBI · suport", name: "Casal Lambda · Servei d'atenció", desc: "Atenció psicològica, social i jurídica davant LGTBIfòbia. Gratuït." },
+          { meta: "Civils · denúncia institucional", name: "Síndic de Greuges", desc: "Per actuacions irregulars d'administracions públiques. Gratuït i en català.", url: "https://www.sindic.cat" },
+          { meta: "Civils · advocats", name: "SOS Racisme", desc: "Assistència jurídica davant identificacions per perfil ètnic i discriminació racial.", url: "https://sosracisme.org" },
+          { meta: "Civils · torn d'ofici", name: "ICAB · Torn d'ofici", desc: "Advocat d'ofici gratuït si compleixes el barem (≈ 2 × IPREM). Demana cita.", url: "https://www.icab.cat" },
+          { meta: "LGTBI · suport", name: "Casal Lambda · Servei d'atenció", desc: "Atenció psicològica, social i jurídica davant LGTBIfòbia. Gratuït.", url: "https://www.lambdaweb.org" },
         ],
       },
     ],
@@ -248,10 +246,10 @@ const ca = {
       { num: "03", h: "Cap recopilació de dades", body: "Aquesta web no demana registre ni guarda dades personals. El xat funciona localment al teu navegador. No fem servir analítica de tercers ni cookies de seguiment." },
       { num: "04", h: "Limitació de responsabilitat", body: "Els autors i col·laboradors no es fan responsables de les conseqüències derivades d'actuacions preses únicament en base al contingut d'aquesta web." },
       { num: "05", h: "Llicència i reutilització", body: "Tot el contingut s'allibera sota llicència Creative Commons BY-SA 4.0. Pots copiar, modificar i redistribuir-lo lliurement, sempre que en citis l'autoria." },
-      { num: "06", h: "Contacte i correccions", body: "Si detectes un error legal o un canvi de normativa, escriu a contacte@plataforma-drets.cat. Les correccions s'apliquen en menys de 72 hores." },
+      { num: "06", h: "Correccions", body: "Si detectes un error legal o un canvi de normativa, consulta sempre la versió consolidada al BOE o al DOGC. Revisem els continguts periòdicament." },
     ],
     foot_text: "Aquesta plataforma està mantinguda per una col·lectiva sense ànim de lucre. No rebem finançament de partits ni administracions.",
-    foot_cta: "Veure historial de canvis",
+    foot_cta: null,
   },
   nf: {
     code: "4", code_em: "0", code_b: "4",
@@ -267,12 +265,39 @@ const ca = {
     accept: "D'acord",
     reject: "Només l'imprescindible",
   },
+  forum: {
+    eyebrow: "Comunitat · Anònim",
+    title_a: "Fòrum ",
+    title_em: "de consultes",
+    title_b: ".",
+    search_placeholder: "Cerca per títol…",
+    new_post_btn: "Nou post",
+    no_posts: "Cap publicació trobada.",
+    no_replies: "Sigues el primer a respondre.",
+    loading: "Carregant…",
+    anon: "Anònim",
+    back: "← Tornar",
+    reply_placeholder: "Escriu la teva resposta…",
+    reply_btn: "Respondre",
+    new_post_title: "Nou post anònim",
+    title_label: "Títol",
+    title_placeholder: "Descriu breument el teu problema legal…",
+    body_label: "Descripció",
+    body_placeholder: "Explica la teva situació amb detall. No incloguis dades personals (nom, DNI, adreça).",
+    cat_label: "Categoria",
+    submit_btn: "Publicar",
+    disc: "Aquest post és completament anònim. No es guarda cap dada personal.",
+    char_hint: "car.",
+    replies_label: "resposta",
+    replies_label_pl: "respostes",
+  },
 };
 
 const es = {
   ...ca,
   brand: { word: ["Plataforma de", "Derechos Juveniles"], short: "PDJ" },
-  nav: { home: "Inicio", sim: "Simulador", chat: "Chat legal", res: "Recursos", disclaimer: "Aviso legal", cta: "Empezar el simulador" },
+  nav: { home: "Inicio", sim: "Simulador", chat: "Chat legal", res: "Recursos", forum: "Foro", disclaimer: "Aviso legal", cta: "Empezar el simulador" },
+  forum: { ...ca.forum, eyebrow: "Comunidad · Anónimo", title_a: "Foro ", title_em: "de consultas", title_b: ".", search_placeholder: "Buscar por título…", new_post_btn: "Nuevo post", no_posts: "No hay publicaciones.", no_replies: "Sé el primero en responder.", loading: "Cargando…", anon: "Anónimo", back: "← Volver", reply_placeholder: "Escribe tu respuesta…", reply_btn: "Responder", new_post_title: "Nuevo post anónimo", title_label: "Título", title_placeholder: "Describe brevemente tu problema legal…", body_label: "Descripción", body_placeholder: "Explica tu situación con detalle. No incluyas datos personales.", cat_label: "Categoría", submit_btn: "Publicar", disc: "Este post es completamente anónimo. No se guarda ningún dato personal.", replies_label: "respuesta", replies_label_pl: "respuestas" },
   hero: {
     ...ca.hero,
     eyebrow: "Iniciativa ciudadana · Barcelona, 2025",
@@ -284,7 +309,7 @@ const es = {
     lede: "Una herramienta gratuita en castellano y catalán para jóvenes de 16 a 30 años. Te ayudamos a entender qué hacer ante un desahucio, un despido, una identificación policial o una situación de violencia.",
     cta_primary: "Iniciar simulador",
     cta_secondary: "Hablar con el chat",
-    trust: ["Sin registro", "Sin datos personales", "Código abierto en GitHub"],
+    trust: ["Sin registro", "Sin datos personales"],
   },
   chat: {
     ...ca.chat,
@@ -308,7 +333,8 @@ const es = {
 const en = {
   ...ca,
   brand: { word: ["Youth Rights", "Platform"], short: "YRP" },
-  nav: { home: "Home", sim: "Simulator", chat: "Legal chat", res: "Resources", disclaimer: "Disclaimer", cta: "Start the simulator" },
+  nav: { home: "Home", sim: "Simulator", chat: "Legal chat", res: "Resources", forum: "Forum", disclaimer: "Disclaimer", cta: "Start the simulator" },
+  forum: { ...ca.forum, eyebrow: "Community · Anonymous", title_a: "Legal ", title_em: "forum", title_b: ".", search_placeholder: "Search by title…", new_post_btn: "New post", no_posts: "No posts found.", no_replies: "Be the first to reply.", loading: "Loading…", anon: "Anonymous", back: "← Back", reply_placeholder: "Write your reply…", reply_btn: "Reply", new_post_title: "New anonymous post", title_label: "Title", title_placeholder: "Briefly describe your legal problem…", body_label: "Description", body_placeholder: "Explain your situation in detail. Do not include personal data.", cat_label: "Category", submit_btn: "Publish", disc: "This post is completely anonymous. No personal data is stored.", replies_label: "reply", replies_label_pl: "replies" },
   hero: {
     ...ca.hero,
     eyebrow: "Civic initiative · Barcelona, 2025",
@@ -320,7 +346,7 @@ const en = {
     lede: "A free, open tool for young people in Catalonia aged 16–30. We help you understand what to do when facing eviction, dismissal, a police stop, or a situation of violence.",
     cta_primary: "Start the simulator",
     cta_secondary: "Open the legal chat",
-    trust: ["No sign-up", "No personal data", "Open source on GitHub"],
+    trust: ["No sign-up", "No personal data"],
   },
   chat: {
     ...ca.chat,

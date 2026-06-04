@@ -1,6 +1,67 @@
 import React, { useState, useRef, useEffect } from "react";
 import { d } from "../i18n/data";
 
+function renderInline(text) {
+  const parts = [];
+  const regex = /(\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`)/g;
+  let lastIndex = 0;
+  let k = 0;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index));
+    if (match[2]) parts.push(<strong key={k++}>{match[2]}</strong>);
+    else if (match[3]) parts.push(<em key={k++}>{match[3]}</em>);
+    else if (match[4]) parts.push(<code key={k++}>{match[4]}</code>);
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return parts;
+}
+
+function MessageBody({ text }) {
+  if (!text) return null;
+  const lines = text.split("\n");
+  const blocks = [];
+  let listItems = null;
+  let listType = null;
+  let k = 0;
+
+  const flushList = () => {
+    if (!listItems) return;
+    blocks.push(listType === "ul"
+      ? <ul key={k++}>{listItems}</ul>
+      : <ol key={k++}>{listItems}</ol>);
+    listItems = null;
+    listType = null;
+  };
+
+  for (const line of lines) {
+    const h3 = line.match(/^###\s+(.+)/);
+    const h2 = line.match(/^##\s+(.+)/);
+    const h1 = line.match(/^#\s+(.+)/);
+    const ul = line.match(/^[-*]\s+(.+)/);
+    const ol = line.match(/^\d+\.\s+(.+)/);
+
+    if (h3)       { flushList(); blocks.push(<h4 key={k++}>{renderInline(h3[1])}</h4>); }
+    else if (h2)  { flushList(); blocks.push(<h4 key={k++}>{renderInline(h2[1])}</h4>); }
+    else if (h1)  { flushList(); blocks.push(<h3 key={k++}>{renderInline(h1[1])}</h3>); }
+    else if (ul)  {
+      if (listType !== "ul") { flushList(); listItems = []; listType = "ul"; }
+      listItems.push(<li key={k++}>{renderInline(ul[1])}</li>);
+    } else if (ol) {
+      if (listType !== "ol") { flushList(); listItems = []; listType = "ol"; }
+      listItems.push(<li key={k++}>{renderInline(ol[1])}</li>);
+    } else if (line.trim() === "") {
+      flushList();
+    } else {
+      flushList();
+      blocks.push(<p key={k++}>{renderInline(line)}</p>);
+    }
+  }
+  flushList();
+  return <>{blocks}</>;
+}
+
 const BACKEND = "https://plataforma-drets-juvenils.onrender.com";
 
 async function askBackend(history, lang) {
@@ -83,7 +144,7 @@ export default function Xat({ lang, setRoute }) {
                   <span>·</span>
                   <span>ara</span>
                 </div>
-                {m.text && m.text.split("\n\n").map((p, j) => <p key={j}>{p}</p>)}
+                {m.text && <MessageBody text={m.text} />}
                 {m.citations && m.citations.length > 0 && (
                   <div className="cite">
                     <span>Fonts:</span>

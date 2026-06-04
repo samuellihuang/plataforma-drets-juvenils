@@ -236,8 +236,6 @@ export default function Home({ lang, setRoute }) {
       <Stats lang={lang} />
       <Features setRoute={setRoute} lang={lang} />
       <Topics setRoute={setRoute} lang={lang} />
-      <Testimonials lang={lang} />
-      <Partners lang={lang} />
       <CTABand setRoute={setRoute} lang={lang} />
     </main>
   );

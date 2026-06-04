@@ -13,6 +13,7 @@ export default function Navbar({ route, setRoute, lang, setLang }) {
     { id: "sim",         label: L.nav.sim },
     { id: "chat",        label: L.nav.chat },
     { id: "res",         label: L.nav.res },
+    { id: "forum",       label: L.nav.forum },
     { id: "disclaimer",  label: L.nav.disclaimer },
   ];
   const go = (id) => { setRoute(id); setOpen(false); };
