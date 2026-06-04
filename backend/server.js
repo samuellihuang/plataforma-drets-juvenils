@@ -149,13 +149,18 @@ const forumReplyLimiter = rateLimit({ windowMs: 60 * 60 * 1000, max: 20, message
 app.get('/api/forum', forumGuard, async (req, res) => {
   const { search, category } = req.query;
   try {
-    let q = supabase.from('posts').select('id, title, body, category, created_at, replies(count)').order('created_at', { ascending: false }).limit(50);
+    let q = supabase.from('posts').select('id, title, body, category, created_at').order('created_at', { ascending: false }).limit(50);
     if (search) q = q.ilike('title', `%${String(search).slice(0, 100)}%`);
     if (category && category !== 'all') q = q.eq('category', String(category).slice(0, 50));
     const { data, error } = await q;
     if (error) throw error;
-    const posts = (data || []).map(p => ({ ...p, reply_count: p.replies?.[0]?.count ?? 0, replies: undefined }));
-    return res.json(posts);
+    const posts = data || [];
+    // Fetch reply counts in parallel
+    const withCounts = await Promise.all(posts.map(async (p) => {
+      const { count } = await supabase.from('replies').select('*', { count: 'exact', head: true }).eq('post_id', p.id);
+      return { ...p, reply_count: count ?? 0 };
+    }));
+    return res.json(withCounts);
   } catch (e) { return res.status(500).json({ error: e.message }); }
 });
 
