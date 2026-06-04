@@ -137,27 +137,6 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-// ── Forum diagnostics (temporal) ──────────────────────────────
-app.get('/api/forum/diag', async (req, res) => {
-  const rawUrl = process.env.SUPABASE_URL || '';
-  const urlInfo = {
-    set: !!rawUrl,
-    length: rawUrl.length,
-    ends_with_slash: rawUrl.endsWith('/'),
-    contains_rest_v1: rawUrl.includes('/rest/v1'),
-    contains_rest: rawUrl.includes('/rest'),
-    domain: rawUrl.replace(/^https?:\/\//, '').split('/')[0],
-  };
-  if (!supabase) return res.json({ ok: false, reason: 'supabase_null', url: urlInfo });
-  try {
-    const { data, error } = await supabase.from('posts').select('id').limit(1);
-    if (error) return res.json({ ok: false, error: error.message, code: error.code, url: urlInfo });
-    return res.json({ ok: true, rows: data, url: urlInfo });
-  } catch (e) {
-    return res.json({ ok: false, exception: e.message, url: urlInfo });
-  }
-});
-
 // ── Forum routes ──────────────────────────────────────────────
 const forumGuard = (_req, res, next) => {
   if (!supabase) return res.status(503).json({ error: 'Fòrum no configurat. Afegeix SUPABASE_URL i SUPABASE_SERVICE_KEY.' });
