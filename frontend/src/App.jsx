@@ -9,6 +9,7 @@ import Forum from "./components/Forum";
 import Disclaimer from "./components/Disclaimer";
 import Privacitat from "./components/Privacitat";
 import Cookies from "./components/Cookies";
+import NotFound from "./components/NotFound";
 import "./styles/app.css";
 
 const ROUTES = ["home", "sim", "chat", "res", "forum", "disclaimer", "privacitat", "cookies"];
@@ -54,7 +55,8 @@ export default function App() {
     case "disclaimer": page = <Disclaimer lang={lang} setRoute={setRoute} />; break;
     case "privacitat": page = <Privacitat lang={lang} setRoute={setRoute} />; break;
     case "cookies":    page = <Cookies   lang={lang} setRoute={setRoute} />; break;
-    default:           page = <Home       lang={lang} setRoute={setRoute} />;
+    case "home":       page = <Home       lang={lang} setRoute={setRoute} />; break;
+    default:           page = <NotFound   lang={lang} setRoute={setRoute} />;
   }
 
   return (

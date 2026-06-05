@@ -20,7 +20,7 @@ const ca = {
       { k: "Idiomes", v: "CA · ES · EN" },
       { k: "Llicència", v: "CC BY-SA 4.0" },
     ],
-    trust: ["Sense registre", "Cap dada personal"],
+    trust: ["Sense registre", "Cap dada personal", "Codi obert"],
   },
   stats: {
     eyebrow: "Per què existim",
@@ -612,7 +612,7 @@ const es = {
     lede: "Una herramienta gratuita en castellano y catalán para jóvenes de 16 a 30 años. Te ayudamos a entender qué hacer ante un desahucio, un despido, una identificación policial o una situación de violencia.",
     cta_primary: "Iniciar simulador",
     cta_secondary: "Hablar con el chat",
-    trust: ["Sin registro", "Sin datos personales"],
+    trust: ["Sin registro", "Sin datos personales", "Código abierto"],
   },
   chat: {
     ...ca.chat,
@@ -649,7 +649,7 @@ const en = {
     lede: "A free, open tool for young people in Catalonia aged 16–30. We help you understand what to do when facing eviction, dismissal, a police stop, or a situation of violence.",
     cta_primary: "Start the simulator",
     cta_secondary: "Open the legal chat",
-    trust: ["No sign-up", "No personal data"],
+    trust: ["No sign-up", "No personal data", "Open source"],
   },
   chat: {
     ...ca.chat,

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { d } from "../i18n/data";
 
-export function Cookie({ lang }) {
+export function Cookie({ lang, setRoute }) {
   const L = d(lang).cookie;
   const [show, setShow] = useState(() => {
     try { return !localStorage.getItem("pdj_cookies"); } catch { return true; }
@@ -15,7 +15,7 @@ export function Cookie({ lang }) {
     <div className="cookie" role="region" aria-label="Avís de cookies">
       <div>
         <span className="cookie-eyebrow">{L.eyebrow}</span>
-        <p className="cookie-text">{L.text}<a href="#" onClick={(e) => { e.preventDefault(); dismiss("essential"); }}>{L.link}</a>.</p>
+        <p className="cookie-text">{L.text}<button className="link-btn" onClick={() => { dismiss("essential"); setRoute("cookies"); }}>{L.link}</button>.</p>
       </div>
       <div className="cookie-actions">
         <button className="cookie-btn cookie-reject" onClick={() => dismiss("essential")}>{L.reject}</button>
@@ -56,7 +56,7 @@ export default function Footer({ setRoute, lang }) {
           <span>{L.meta_right}</span>
         </div>
       </footer>
-      <Cookie lang={lang} />
+      <Cookie lang={lang} setRoute={setRoute} />
     </>
   );
 }
