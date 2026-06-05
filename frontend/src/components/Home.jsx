@@ -130,7 +130,7 @@ function Topics({ setRoute, lang }) {
         </header>
         <div className="topic-grid">
           {L.items.map((t, i) => (
-            <button className="topic" key={i} onClick={() => setRoute("sim")}>
+            <button className="topic" key={i} onClick={() => { if (t.scenario) localStorage.setItem("pdj_sim_start", t.scenario); setRoute("sim"); }}>
               <span className="topic-num">{t.num}</span>
               <div>
                 <h3 className="topic-title">{t.title}</h3>

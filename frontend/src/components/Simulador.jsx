@@ -1001,8 +1001,9 @@ function SimResult({ lang, scenario, answers, onReset, setRoute }) {
 }
 
 export default function Simulador({ lang, setRoute }) {
-  const [phase, setPhase] = useState("intro");
-  const [scenario, setScenario] = useState(null);
+  const startScenario = (() => { try { const s = localStorage.getItem("pdj_sim_start"); localStorage.removeItem("pdj_sim_start"); return s; } catch { return null; } })();
+  const [phase, setPhase] = useState(startScenario ? "flow" : "intro");
+  const [scenario, setScenario] = useState(startScenario);
   const [answers, setAnswers] = useState([]);
   const reset = () => { setPhase("intro"); setScenario(null); setAnswers([]); };
 
