@@ -159,6 +159,227 @@ const ca = {
     disc: "Aquesta guia és informació general basada en la Llei 12/2023 d'habitatge i la LAU vigent. Si la teva situació té data fixada al jutjat, parla com més aviat millor amb un advocat del torn d'ofici.",
     actions: { primary: "Veure recursos d'habitatge", secondary: "Refer el simulador" },
   },
+  simResults: {
+    habitatge: {
+      chips: ["Habitatge", "Risc moderat", "Acció en 7 dies"],
+      title_a: "Pots ",
+      title_em: "exigir el burofax",
+      title_b: " i guanyar temps.",
+      blocks: [
+        {
+          num: "01",
+          title: "El que diu la llei",
+          items: [
+            "Un desnonament només pot fer-se per via judicial. La propietat no pot canviar el pany ni treure't les pertinences sense una resolució del jutjat.",
+            "Si el contracte és anterior al 25 de maig de 2023, la propietat ha de notificar formalment (burofax o requeriment notarial) abans d'iniciar el procés.",
+            "Tens dret a sol·licitar la suspensió del llançament si ets persona vulnerable (Reial Decret-llei 11/2020 i pròrrogues vigents).",
+          ],
+        },
+        {
+          num: "02",
+          title: "Què pots fer aquesta setmana",
+          items: [
+            "Reuneix totes les comunicacions rebudes (WhatsApp, correus, cartes). Fes captures i guarda-les fora del mòbil.",
+            "Truca al Servei d'Habitatge de l'Ajuntament (010 a Barcelona) i demana cita: tens dret a mediació gratuïta.",
+            "Si reps un burofax, no signis cap document fins a parlar amb un advocat del torn d'ofici (gratuït si compleixes el barem).",
+            "Contacta amb el Sindicat de Llogateres per acompanyament veïnal i estratègia col·lectiva.",
+          ],
+        },
+        {
+          num: "03",
+          title: "Terminis a tenir presents",
+          items: [
+            "30 dies des del burofax fins que la propietat pot interposar demanda de desnonament.",
+            "10 dies hàbils per contestar la demanda un cop notificada pel jutjat.",
+            "3 anys per reclamar la fiança si ja has marxat i no te l'han retornada.",
+          ],
+        },
+      ],
+      disc: "Aquesta guia és informació general basada en la Llei 12/2023 d'habitatge i la LAU vigent. Si la teva situació té data fixada al jutjat, parla com més aviat millor amb un advocat del torn d'ofici.",
+      actions: { primary: "Veure recursos d'habitatge", secondary: "Refer el simulador" },
+    },
+    treball: {
+      chips: ["Treball", "Drets laborals", "Acció en 20 dies"],
+      title_a: "Pots ",
+      title_em: "reclamar",
+      title_b: " el que t'han pres.",
+      blocks: [
+        {
+          num: "01",
+          title: "El que diu la llei",
+          items: [
+            "L'Estatut dels Treballadors garanteix el dret a percebre el salari íntegre i a impugnar qualsevol acomiadament.",
+            "L'acomiadament sense causa justificada és improcedent: tens dret a 33 dies per any treballat d'indemnització.",
+            "Si treballes sense contracte, la llei et protegeix igualment: la relació laboral es presumeix des que existeix la prestació real de serveis.",
+          ],
+        },
+        {
+          num: "02",
+          title: "Què pots fer",
+          items: [
+            "Presenta una denúncia anònima a la Inspecció de Treball: han de respondre en un termini màxim.",
+            "Contacta amb Avalot (CCOO Joves) o Acció Jove (UGT): assessorament laboral gratuït per a joves.",
+            "Per reclamar salaris impagats, pots anar al Servei de Mediació Laboral o directament al jutjat social.",
+          ],
+        },
+        {
+          num: "03",
+          title: "Terminis a tenir presents",
+          items: [
+            "20 dies hàbils des de l'acomiadament per impugnar-lo davant el jutjat.",
+            "1 any per reclamar salaris impagats (prescripció d'accions salarials).",
+            "3 anys per reclamar cotitzacions a la Seguretat Social no ingressades.",
+          ],
+        },
+      ],
+      disc: "Guia informativa basada en l'Estatut dels Treballadors. Per a casos complexos (ERTO, ERE, pràctiques), consulta el torn d'ofici laboral.",
+      actions: { primary: "Veure recursos laborals", secondary: "Refer el simulador" },
+    },
+    policial: {
+      chips: ["Policia", "LO 4/2015", "Drets garantits"],
+      title_a: "Coneixes els teus ",
+      title_em: "drets",
+      title_b: " davant la policia.",
+      blocks: [
+        {
+          num: "01",
+          title: "El que diu la llei",
+          items: [
+            "La policia pot demanar-te la identificació si hi ha indicis de delicte o per raons de seguretat pública, però no arbitràriament.",
+            "Tens dret a saber el motiu de la identificació. No poden portar-te a comissaria sense ordre judicial.",
+            "Gravar la policia en espai públic és legal. Únicament és il·legal difondre imatges que afectin la seguretat operativa (LO 4/2015, art. 36.23).",
+          ],
+        },
+        {
+          num: "02",
+          title: "Què pots fer",
+          items: [
+            "Anota el número de placa de l'agent i l'hora i lloc exactes. No resisteixis físicament: pots al·legar i denunciar després.",
+            "Si reps una multa que consideres injusta, tens 30 dies per presentar al·legacions per escrit.",
+            "Contacta amb SOS Racisme si creus que ha estat una identificació per perfil ètnic o discriminatori.",
+          ],
+        },
+        {
+          num: "03",
+          title: "Terminis a tenir presents",
+          items: [
+            "30 dies naturals per al·legar una sanció administrativa de la Llei Mordassa.",
+            "2 anys per presentar denúncia per tracte policial irregular davant el ministeri fiscal.",
+          ],
+        },
+      ],
+      disc: "Informació basada en la LO 4/2015 (Llei de Seguretat Ciutadana) i la LO 2/1986 de Forces i Cossos de Seguretat.",
+      actions: { primary: "Veure recursos de drets civils", secondary: "Refer el simulador" },
+    },
+    familiar: {
+      chips: ["Família", "Protecció del menor", "Suport disponible"],
+      title_a: "La llei et ",
+      title_em: "protegeix",
+      title_b: " en situacions de risc.",
+      blocks: [
+        {
+          num: "01",
+          title: "El que diu la llei",
+          items: [
+            "A partir dels 16 anys pots sol·licitar l'emancipació davant un notari o el jutjat, amb o sense el consentiment dels pares si hi ha causa justa.",
+            "En situacions de risc o abús, la DGAIA pot intervenir i garantir-te protecció immediata independentment de l'edat.",
+            "Si ets menor en risc, qualsevol professional (metge, mestre, educador) té obligació legal de notificar-ho als serveis socials.",
+          ],
+        },
+        {
+          num: "02",
+          title: "Què pots fer",
+          items: [
+            "Contacta amb els Serveis Socials municipals: el servei és gratuït, confidencial i no necessites permís dels pares.",
+            "En situació d'urgència, truca al 116 (línia europea d'ajuda a infants) o al 900 300 777 (SOS Infants Catalunya).",
+            "Si tens 16 o 17 anys i hi ha risc, pots accedir a un CRAE (Centre Residencial d'Acció Educativa) amb el suport de la DGAIA.",
+          ],
+        },
+        {
+          num: "03",
+          title: "Terminis a tenir presents",
+          items: [
+            "Les mesures de protecció urgents s'activen en 24-72 hores si hi ha risc immediat.",
+            "El procés d'emancipació amb consentiment dels pares tarda entre 1 i 3 mesos.",
+          ],
+        },
+      ],
+      disc: "Informació basada en el Codi Civil i la Llei 14/2010 dels drets i oportunitats en la infància i l'adolescència (LDOIA).",
+      actions: { primary: "Veure recursos", secondary: "Refer el simulador" },
+    },
+    digital: {
+      chips: ["Drets digitals", "LOPDGDD", "Acció en 72 h"],
+      title_a: "Tens dret a ",
+      title_em: "eliminar",
+      title_b: " el contingut sense el teu consentiment.",
+      blocks: [
+        {
+          num: "01",
+          title: "El que diu la llei",
+          items: [
+            "La LOPDGDD i el RGPD garanteixen el teu dret a la pròpia imatge: ningú pot publicar contingut teu sense consentiment exprés.",
+            "La difusió de contingut íntim sense consentiment (sextorsió) és un delicte tipificat a l'art. 197.7 del Codi Penal, amb penes de 3 mesos a 1 any.",
+            "Tens dret a sol·licitar la retirada a la plataforma i a l'AEPD si no actuen en un termini raonable.",
+          ],
+        },
+        {
+          num: "02",
+          title: "Què pots fer",
+          items: [
+            "Fes captures de pantalla com a prova ABANS de denunciar o demanar la retirada.",
+            "Utilitza el formulari de retirada urgent de la xarxa social (Instagram, TikTok…) i marca-ho com a contingut sexual no consensuat.",
+            "Presenta reclamació a l'AEPD (gratuïta, en línia) si la plataforma no retira el contingut en 72 hores.",
+          ],
+        },
+        {
+          num: "03",
+          title: "Terminis a tenir presents",
+          items: [
+            "Les plataformes han de respondre a sol·licituds urgents de retirada en 72 hores.",
+            "Tens 1 any per denunciar sextorsió o distribució de contingut íntim davant la policia.",
+          ],
+        },
+      ],
+      disc: "Informació basada en la LOPDGDD (LO 3/2018), el RGPD (UE 2016/679) i l'art. 197 del Codi Penal.",
+      actions: { primary: "Veure recursos digitals", secondary: "Refer el simulador" },
+    },
+    salut: {
+      chips: ["Salut mental", "Autonomia des dels 16", "Gratuït"],
+      title_a: "Tens dret a ",
+      title_em: "decidir",
+      title_b: " sobre la teva salut.",
+      blocks: [
+        {
+          num: "01",
+          title: "El que diu la llei",
+          items: [
+            "A Catalunya, la Llei 21/2000 reconeix l'autonomia del pacient des dels 16 anys: pots prendre decisions mèdiques sense el consentiment dels pares.",
+            "Tens dret a sol·licitar atenció psicològica al teu CAP de forma confidencial, sense que els teus pares ho sàpiguen.",
+            "L'ingrés involuntari requereix autorització judicial. Si has estat ingressat contra la teva voluntat, pots recórrer davant el jutjat en 24 hores.",
+          ],
+        },
+        {
+          num: "02",
+          title: "Què pots fer",
+          items: [
+            "Demana cita al teu CAP i sol·licita derivació al CSMA (adults) o CSMIJ (si tens menys de 18 anys).",
+            "Si necessites ajuda urgent, truca al 024 (prevenció del suïcidi i crisi) o ves a urgències del CAP.",
+            "Si no estàs d'acord amb una medicació o tractament, pots demanar una segona opinió mèdica: és el teu dret garantit.",
+          ],
+        },
+        {
+          num: "03",
+          title: "Terminis a tenir presents",
+          items: [
+            "El CAP ha de derivar-te al CSMA en un termini de 2-4 setmanes des de la sol·licitud.",
+            "Si hi ha risc vital, l'atenció és immediata: no cal esperar cita (urgències CAP o hospital).",
+          ],
+        },
+      ],
+      disc: "Informació basada en la Llei 21/2000 de Catalunya (autonomia del pacient) i la Llei 16/2003 de Cohesió i Qualitat del SNS.",
+      actions: { primary: "Veure recursos de salut", secondary: "Refer el simulador" },
+    },
+  },
   simSide: {
     eyebrow: "Visió general",
     title_a: "Et farem unes ",

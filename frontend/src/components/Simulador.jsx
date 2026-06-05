@@ -262,8 +262,16 @@ function SimFlow({ lang, scenarioId, onReset, onFinish }) {
   );
 }
 
-function SimResult({ lang, onReset, setRoute }) {
-  const L = d(lang).simResult;
+function SimResult({ lang, scenario, answers, onReset, setRoute }) {
+  const L = d(lang).simResults?.[scenario] ?? d(lang).simResults?.habitatge;
+  const flow = QUESTION_FLOWS[scenario] || QUESTION_FLOWS.habitatge;
+
+  const trail = answers.map((answerId, i) => {
+    const step = flow[i];
+    const option = step?.options.find((o) => o.id === answerId);
+    return { num: String(i + 1).padStart(2, "0"), body: option?.label || answerId };
+  });
+
   return (
     <section className="sim-shell">
       <div className="sim-progress">
@@ -309,9 +317,12 @@ function SimResult({ lang, onReset, setRoute }) {
           <h3 className="side-title">El que has dit fins ara</h3>
           <div className="side-rule"/>
           <div className="side-trail">
-            <div className="side-trail-item"><span className="side-dot">01</span><span><strong>Situació.</strong> Habitatge / lloguer.</span></div>
-            <div className="side-trail-item"><span className="side-dot">02</span><span><strong>Problema.</strong> Avís sense burofax.</span></div>
-            <div className="side-trail-item"><span className="side-dot">03</span><span><strong>Urgència.</strong> Alta — aquesta setmana.</span></div>
+            {trail.map((item, i) => (
+              <div className="side-trail-item" key={i}>
+                <span className="side-dot">{item.num}</span>
+                <span>{item.body}</span>
+              </div>
+            ))}
           </div>
           <div className="side-rule"/>
           <button className="btn btn-coral btn-sm" style={{ justifySelf: "start" }} onClick={() => setRoute("chat")}>
@@ -326,13 +337,14 @@ function SimResult({ lang, onReset, setRoute }) {
 export default function Simulador({ lang, setRoute }) {
   const [phase, setPhase] = useState("intro");
   const [scenario, setScenario] = useState(null);
-  const reset = () => { setPhase("intro"); setScenario(null); };
+  const [answers, setAnswers] = useState([]);
+  const reset = () => { setPhase("intro"); setScenario(null); setAnswers([]); };
 
   return (
     <main className="sim-page" id="main">
       {phase === "intro"  && <SimIntro lang={lang} onPick={(id) => { setScenario(id); setPhase("flow"); }} />}
-      {phase === "flow"   && <SimFlow  lang={lang} scenarioId={scenario} onReset={reset} onFinish={() => setPhase("result")} />}
-      {phase === "result" && <SimResult lang={lang} onReset={reset} setRoute={setRoute} />}
+      {phase === "flow"   && <SimFlow  lang={lang} scenarioId={scenario} onReset={reset} onFinish={(ans) => { setAnswers(ans); setPhase("result"); }} />}
+      {phase === "result" && <SimResult lang={lang} scenario={scenario} answers={answers} onReset={reset} setRoute={setRoute} />}
     </main>
   );
 }
