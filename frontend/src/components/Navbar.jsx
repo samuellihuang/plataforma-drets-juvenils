@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { d } from "../i18n/data";
 
-function LogoMark({ size = 28 }) {
-  return <span className="brand-mark" style={{ width: size, height: size }} aria-hidden="true" />;
-}
-
 export default function Navbar({ route, setRoute, lang, setLang }) {
   const L = d(lang);
   const [open, setOpen] = useState(false);
@@ -22,11 +18,7 @@ export default function Navbar({ route, setRoute, lang, setLang }) {
     <header className="nav">
       <div className="nav-inner">
         <button className="brand" onClick={() => go("home")} aria-label={L.brand.word.join(" ")}>
-          <LogoMark />
-          <span className="brand-word">
-            <span>{L.brand.word[0]}</span>
-            <span>{L.brand.word[1]}</span>
-          </span>
+          <img src="/logo-nav.png" alt="" className="brand-logo" />
         </button>
         <nav className="nav-links" aria-label="Principal">
           {items.map(i => (
