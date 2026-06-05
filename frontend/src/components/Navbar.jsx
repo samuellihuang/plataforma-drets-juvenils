@@ -18,7 +18,11 @@ export default function Navbar({ route, setRoute, lang, setLang }) {
     <header className="nav">
       <div className="nav-inner">
         <button className="brand" onClick={() => go("home")} aria-label={L.brand.word.join(" ")}>
-          <img src="/logo-nav.png" alt="" className="brand-logo" />
+          <img src="/logo-mark.png" alt="" className="brand-logo" />
+          <span className="brand-word">
+            <span>{L.brand.word[0]}</span>
+            <span>{L.brand.word[1]}</span>
+          </span>
         </button>
         <nav className="nav-links" aria-label="Principal">
           {items.map(i => (
