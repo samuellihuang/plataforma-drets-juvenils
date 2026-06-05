@@ -37,6 +37,17 @@ export default function App() {
     document.documentElement.lang = lang;
   }, [lang]);
 
+  const PAGE_TITLES = {
+    ca: { home: "Drets Juvenils — Coneix i exerceix els teus drets", sim: "Simulador de situacions — Drets Juvenils", chat: "Xat legal amb IA — Drets Juvenils", res: "Recursos verificats — Drets Juvenils", forum: "Fòrum anònim — Drets Juvenils", disclaimer: "Avís legal — Drets Juvenils", privacitat: "Política de privacitat — Drets Juvenils", cookies: "Política de cookies — Drets Juvenils" },
+    es: { home: "Derechos Juveniles — Conoce y ejerce tus derechos", sim: "Simulador de situaciones — Derechos Juveniles", chat: "Chat legal con IA — Derechos Juveniles", res: "Recursos verificados — Derechos Juveniles", forum: "Foro anónimo — Derechos Juveniles", disclaimer: "Aviso legal — Derechos Juveniles", privacitat: "Política de privacidad — Derechos Juveniles", cookies: "Política de cookies — Derechos Juveniles" },
+    en: { home: "Youth Rights — Know and exercise your rights", sim: "Situation simulator — Youth Rights", chat: "AI legal chat — Youth Rights", res: "Verified resources — Youth Rights", forum: "Anonymous forum — Youth Rights", disclaimer: "Legal notice — Youth Rights", privacitat: "Privacy policy — Youth Rights", cookies: "Cookies policy — Youth Rights" },
+  };
+
+  useEffect(() => {
+    const titles = PAGE_TITLES[lang] || PAGE_TITLES.ca;
+    document.title = titles[route] || titles.home;
+  }, [route, lang]);
+
   useEffect(() => {
     const onHash = () => {
       const h = location.hash.replace(/^#\/?/, "") || "home";

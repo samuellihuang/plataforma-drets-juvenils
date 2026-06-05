@@ -6,7 +6,7 @@ const ca = {
   brand: { word: ["Plataforma de", "Drets Juvenils"], short: "PDJ" },
   nav: { home: "Inici", sim: "Simulador", chat: "Xat legal", res: "Recursos", forum: "Fòrum", disclaimer: "Avís legal", cta: "Comença el simulador" },
   hero: {
-    eyebrow: "Iniciativa ciutadana · Barcelona, 2025",
+    eyebrow: "Iniciativa ciutadana · Barcelona, 2026",
     title_a: "Els teus drets, ",
     title_em: "explicats",
     title_b: " perquè els puguis ",
@@ -16,7 +16,7 @@ const ca = {
     cta_primary: "Inicia el simulador",
     cta_secondary: "Parla amb el xat legal",
     meta: [
-      { k: "Versió", v: "v1.4 · oct 2025" },
+      { k: "Versió", v: "v1.5 · juny 2026" },
       { k: "Idiomes", v: "CA · ES · EN" },
       { k: "Llicència", v: "CC BY-SA 4.0" },
     ],
@@ -37,7 +37,7 @@ const ca = {
     items: [
       { num: "01", title: "Simulador de situacions", body: "Tria un escenari real (laboral, habitatge, policial, familiar…) i ves responent. Acabes amb una guia d'accions concretes i terminis.", foot: "5–8 min", cta: "Iniciar simulador", to: "sim" },
       { num: "02", title: "Xat amb assistència legal", body: "Pregunta lliurement. Et responem amb llenguatge planer i citem la llei aplicable. Si cal, t'adrecem a un servei humà.", foot: "Resposta immediata", cta: "Obrir xat", to: "chat" },
-      { num: "03", title: "Recursos verificats", body: "Telèfons d'emergència, sindicats, oficines d'habitatge i ONG seleccionats per utilitat pràctica.", foot: "Octubre 2025", cta: "Veure directori", to: "res" },
+      { num: "03", title: "Recursos verificats", body: "Telèfons d'emergència, sindicats, oficines d'habitatge i ONG seleccionats per utilitat pràctica.", foot: "Juny 2026", cta: "Veure directori", to: "res" },
     ],
   },
   topics: {
@@ -82,7 +82,7 @@ const ca = {
     ],
     reviewed: "Continguts revisats per",
     reviewed_strong: "advocats col·legiats",
-    reviewed_meta: "darrera revisió · 12 octubre 2025",
+    reviewed_meta: "darrera revisió · juny 2026",
   },
   ctaBand: {
     eyebrow: "Ara mateix",
@@ -101,7 +101,7 @@ const ca = {
       { h: "Legal", items: [["Avís legal", "disclaimer"], ["Privacitat", "privacitat"], ["Cookies", "cookies"]] },
     ],
     disc: "Cap contingut d'aquesta web substitueix l'assessorament d'una advocada o un advocat. Per a decisions amb conseqüències jurídiques, demana cita amb el torn d'ofici o el SOJ.",
-    meta_left: "© 2025 · CC BY-SA 4.0",
+    meta_left: "© 2026 · CC BY-SA 4.0",
     meta_right: "Barcelona · Catalunya",
   },
   simIntro: {
@@ -415,7 +415,7 @@ const ca = {
     title_a: "Recursos ",
     title_em: "verificats",
     title_b: ".",
-    meta: ["Actualitzat · 12 octubre 2025", "Recursos seleccionats", "Cobertura: Catalunya"],
+    meta: ["Actualitzat · juny 2026", "Recursos seleccionats", "Cobertura: Catalunya"],
     sections: [
       {
         id: "urgent",
@@ -462,7 +462,7 @@ const ca = {
     title_a: "Política de ",
     title_em: "cookies",
     title_b: ".",
-    meta: ["Versió 1.0 · juny 2025", "Plataforma de Drets Juvenils", "CC BY-SA 4.0"],
+    meta: ["Versió 1.1 · juny 2026", "Plataforma de Drets Juvenils", "CC BY-SA 4.0"],
     items: [
       {
         num: "01",
@@ -495,14 +495,14 @@ const ca = {
         body: "El tractament d'aquestes cookies tècniques es basa en l'interès legítim de la plataforma per oferir un servei funcional (art. 6.1.f RGPD). No requereixen consentiment explícit per la seva naturalesa estrictament tècnica.",
       },
     ],
-    foot_text: "Política de cookies revisada el juny de 2025. Per a qualsevol consulta, consulta la nostra Política de Privacitat.",
+    foot_text: "Política de cookies revisada el juny de 2026. Per a qualsevol consulta, consulta la nostra Política de Privacitat.",
     foot_cta: null,
   },
   priv: {
     title_a: "Política de ",
     title_em: "privacitat",
     title_b: ".",
-    meta: ["Versió 1.0 · juny 2025", "Plataforma de Drets Juvenils", "CC BY-SA 4.0"],
+    meta: ["Versió 1.1 · juny 2026", "Plataforma de Drets Juvenils", "CC BY-SA 4.0"],
     items: [
       {
         num: "01",
@@ -535,14 +535,14 @@ const ca = {
         body: "Com que no emmagatzemem dades personals identificatives, no hi ha dades a sol·licitar, rectificar ni suprimir. Si tens dubtes sobre la privacitat d'aquesta plataforma, pots consultar l'Agència Espanyola de Protecció de Dades (aepd.es).",
       },
     ],
-    foot_text: "Aquesta política de privacitat es revisa periòdicament. Darrera actualització: juny de 2025.",
+    foot_text: "Aquesta política de privacitat es revisa periòdicament. Darrera actualització: juny de 2026.",
     foot_cta: null,
   },
   disc: {
     title_a: "Avís ",
     title_em: "legal",
     title_b: " i limitacions.",
-    meta: ["Versió 1.4 · 12 octubre 2025", "Aplicable a tot el contingut", "CC BY-SA 4.0"],
+    meta: ["Versió 1.5 · juny 2026", "Aplicable a tot el contingut", "CC BY-SA 4.0"],
     items: [
       { num: "01", h: "Caràcter informatiu", body: "Tot el contingut d'aquesta plataforma té caràcter exclusivament informatiu i divulgatiu. No constitueix assessorament jurídic individualitzat ni pot substituir la consulta amb una advocada o un advocat col·legiat." },
       { num: "02", h: "Vigència de les normes", body: "Les normes que citem (Lleis Orgàniques, Codi Civil, LAU, Estatut dels Treballadors…) són les vigents en la data indicada. La legislació canvia: comprova sempre la versió consolidada al BOE o al DOGC." },
@@ -603,7 +603,7 @@ const es = {
   forum: { ...ca.forum, eyebrow: "Comunidad · Anónimo", title_a: "Foro ", title_em: "de consultas", title_b: ".", search_placeholder: "Buscar por título…", new_post_btn: "Nuevo post", no_posts: "No hay publicaciones.", no_replies: "Sé el primero en responder.", loading: "Cargando…", anon: "Anónimo", back: "← Volver", reply_placeholder: "Escribe tu respuesta…", reply_btn: "Responder", new_post_title: "Nuevo post anónimo", title_label: "Título", title_placeholder: "Describe brevemente tu problema legal…", body_label: "Descripción", body_placeholder: "Explica tu situación con detalle. No incluyas datos personales.", cat_label: "Categoría", submit_btn: "Publicar", disc: "Este post es completamente anónimo. No se guarda ningún dato personal.", replies_label: "respuesta", replies_label_pl: "respuestas" },
   hero: {
     ...ca.hero,
-    eyebrow: "Iniciativa ciudadana · Barcelona, 2025",
+    eyebrow: "Iniciativa ciudadana · Barcelona, 2026",
     title_a: "Tus derechos, ",
     title_em: "explicados",
     title_b: " para que los puedas ",
@@ -640,7 +640,7 @@ const en = {
   forum: { ...ca.forum, eyebrow: "Community · Anonymous", title_a: "Legal ", title_em: "forum", title_b: ".", search_placeholder: "Search by title…", new_post_btn: "New post", no_posts: "No posts found.", no_replies: "Be the first to reply.", loading: "Loading…", anon: "Anonymous", back: "← Back", reply_placeholder: "Write your reply…", reply_btn: "Reply", new_post_title: "New anonymous post", title_label: "Title", title_placeholder: "Briefly describe your legal problem…", body_label: "Description", body_placeholder: "Explain your situation in detail. Do not include personal data.", cat_label: "Category", submit_btn: "Publish", disc: "This post is completely anonymous. No personal data is stored.", replies_label: "reply", replies_label_pl: "replies" },
   hero: {
     ...ca.hero,
-    eyebrow: "Civic initiative · Barcelona, 2025",
+    eyebrow: "Civic initiative · Barcelona, 2026",
     title_a: "Your rights, ",
     title_em: "explained",
     title_b: " so you can ",
