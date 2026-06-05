@@ -98,7 +98,7 @@ const ca = {
     tag: "Una eina gratuïta per a joves de Catalunya. Sense registre, sense rastre, codi obert.",
     cols: [
       { h: "Eines", items: [["Simulador", "sim"], ["Xat legal", "chat"], ["Recursos", "res"], ["Fòrum", "forum"]] },
-      { h: "Legal", items: [["Avís legal", "disclaimer"], ["Privacitat", "privacitat"]] },
+      { h: "Legal", items: [["Avís legal", "disclaimer"], ["Privacitat", "privacitat"], ["Cookies", "cookies"]] },
     ],
     disc: "Cap contingut d'aquesta web substitueix l'assessorament d'una advocada o un advocat. Per a decisions amb conseqüències jurídiques, demana cita amb el torn d'ofici o el SOJ.",
     meta_left: "© 2025 · CC BY-SA 4.0",
@@ -457,6 +457,46 @@ const ca = {
         ],
       },
     ],
+  },
+  cookies: {
+    title_a: "Política de ",
+    title_em: "cookies",
+    title_b: ".",
+    meta: ["Versió 1.0 · juny 2025", "Plataforma de Drets Juvenils", "CC BY-SA 4.0"],
+    items: [
+      {
+        num: "01",
+        h: "Què és una cookie?",
+        body: "Una cookie és un petit fitxer de text que un lloc web desa al teu navegador quan el visites. Les cookies poden ser tècniques (necessàries per al funcionament) o de seguiment (per analítica o publicitat).",
+      },
+      {
+        num: "02",
+        h: "Cookies que fem servir",
+        body: "Aquesta plataforma únicament utilitza una cookie tècnica anomenada 'pdj_lang' per recordar l'idioma que has seleccionat (CA, ES o EN) i 'pdj_cookies' per recordar si has acceptat aquest avís. Cap d'elles conté dades personals.",
+      },
+      {
+        num: "03",
+        h: "Cookies que NO fem servir",
+        body: "No fem servir cookies de seguiment, analítica (Google Analytics, Mixpanel, etc.), publicitat personalitzada, xarxes socials ni cap altre servei de tercers que rastregi el teu comportament en línia.",
+      },
+      {
+        num: "04",
+        h: "Durada de les cookies",
+        body: "Les cookies tècniques d'aquesta plataforma es guarden al localStorage del teu navegador i no caduquen automàticament. Pots eliminar-les en qualsevol moment des dels ajustos del teu navegador (Eines → Historial → Netejar dades).",
+      },
+      {
+        num: "05",
+        h: "Com gestionar les cookies",
+        body: "Pots bloquejar o eliminar les cookies des de la configuració del teu navegador. Tingues en compte que bloquejar la cookie d'idioma farà que la plataforma no recordi la teva preferència lingüística entre sessions.",
+      },
+      {
+        num: "06",
+        h: "Base legal",
+        body: "El tractament d'aquestes cookies tècniques es basa en l'interès legítim de la plataforma per oferir un servei funcional (art. 6.1.f RGPD). No requereixen consentiment explícit per la seva naturalesa estrictament tècnica.",
+      },
+    ],
+    foot_text: "Política de cookies revisada el juny de 2025. Per a qualsevol consulta, consulta la nostra Política de Privacitat.",
+    foot_cta: null,
   },
   priv: {
     title_a: "Política de ",

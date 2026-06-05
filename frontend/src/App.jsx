@@ -8,9 +8,10 @@ import Resources from "./components/Resources";
 import Forum from "./components/Forum";
 import Disclaimer from "./components/Disclaimer";
 import Privacitat from "./components/Privacitat";
+import Cookies from "./components/Cookies";
 import "./styles/app.css";
 
-const ROUTES = ["home", "sim", "chat", "res", "forum", "disclaimer", "privacitat"];
+const ROUTES = ["home", "sim", "chat", "res", "forum", "disclaimer", "privacitat", "cookies"];
 
 export default function App() {
   const [route, setRouteRaw] = useState(() => {
@@ -52,6 +53,7 @@ export default function App() {
     case "forum":      page = <Forum      lang={lang} setRoute={setRoute} />; break;
     case "disclaimer": page = <Disclaimer lang={lang} setRoute={setRoute} />; break;
     case "privacitat": page = <Privacitat lang={lang} setRoute={setRoute} />; break;
+    case "cookies":    page = <Cookies   lang={lang} setRoute={setRoute} />; break;
     default:           page = <Home       lang={lang} setRoute={setRoute} />;
   }
 
