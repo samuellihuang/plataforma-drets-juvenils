@@ -147,6 +147,69 @@ const QUESTION_FLOWS = {
       ],
     },
   ],
+  educacio: [
+    {
+      label: "Pregunta 1 de 2",
+      q: "Quin és el problema principal?",
+      options: [
+        { id: "beques", label: "M'han denegat una beca o ajuda" },
+        { id: "expedient", label: "Tinc un expedient disciplinari o sanció" },
+        { id: "assetjament", label: "Hi ha assetjament escolar (bullying)" },
+        { id: "matricula", label: "Problemes per matricular-me o accedir" },
+      ],
+    },
+    {
+      label: "Pregunta 2 de 2",
+      q: "On estudies?",
+      options: [
+        { id: "institut", label: "Institut o escola (ESO / Batxillerat)" },
+        { id: "fp", label: "Formació Professional (FP)" },
+        { id: "universitat", label: "Universitat" },
+      ],
+    },
+  ],
+  violencia: [
+    {
+      label: "Pregunta 1 de 2",
+      q: "Quin tipus de situació estàs vivint?",
+      options: [
+        { id: "genere", label: "Violència de gènere o de parella" },
+        { id: "lgtbi", label: "Discriminació o violència LGTBIfòbia" },
+        { id: "sexual", label: "Assetjament sexual" },
+        { id: "amenaces", label: "Amenaces o coaccions" },
+      ],
+    },
+    {
+      label: "Pregunta 2 de 2",
+      q: "Quina és la teva situació ara?",
+      options: [
+        { id: "actual", label: "Estic en la relació / situació ara" },
+        { id: "sortida", label: "He sortit però vull denunciar" },
+        { id: "ajuda", label: "Vull ajudar un familiar o amic/a" },
+      ],
+    },
+  ],
+  estrangeria: [
+    {
+      label: "Pregunta 1 de 2",
+      q: "Quina és la teva situació administrativa?",
+      options: [
+        { id: "irregular", label: "Sense documentació regularitzada" },
+        { id: "arrelament", label: "Vull sol·licitar l'arrelament social" },
+        { id: "renovacio", label: "He de renovar el permís de residència" },
+        { id: "asil", label: "Vull demanar asil o protecció internacional" },
+      ],
+    },
+    {
+      label: "Pregunta 2 de 2",
+      q: "Quant de temps portes a Espanya?",
+      options: [
+        { id: "menys2", label: "Menys de 2 anys" },
+        { id: "2a3", label: "Entre 2 i 3 anys" },
+        { id: "mes3", label: "Més de 3 anys" },
+      ],
+    },
+  ],
 };
 
 function SideArt() {
@@ -922,6 +985,358 @@ function getResult(scenario, answers) {
       ],
       "Basada en la Llei 16/2003 de Cohesió del SNS i la normativa de la Generalitat de Catalunya.",
       "Veure recursos de salut"
+    );
+  }
+
+  /* ── EDUCACIÓ ── */
+  if (scenario === 'educacio') {
+    const problem = answers[0]; // beques | expedient | assetjament | matricula
+    const centre  = answers[1]; // institut | fp | universitat
+
+    if (problem === 'beques') return R(
+      ["Educació", "Beca denegada", "Recurs en 1 mes"],
+      "Pots ", "recórrer la denegació", " de la beca.",
+      [
+        B("01", "El que diu la llei", [
+          "Tota resolució de denegació de beca ha d'estar motivada i has de rebre notificació formal amb els motius.",
+          "Tens dret a presentar un recurs d'alçada davant l'òrgan superior de l'administració en el termini indicat a la resolució (normalment 1 mes).",
+          centre === 'universitat'
+            ? "Les beques del Ministeri (MEC) i de la Generalitat es poden recórrer de forma independent si compleixes els requisits acadèmics i econòmics."
+            : "Les beques de batxillerat i FP de la Generalitat tenen un procediment de recurs específic al portal de la Generalitat.",
+        ]),
+        B("02", "Pas a pas", [
+          "Llegeix la resolució de denegació amb atenció: el motiu exacte és clau per preparar el recurs.",
+          "Recull tota la documentació que acrediti que compleixes els requisits (nota mitjana, renda familiar, matrícula).",
+          "Presenta el recurs per registre electrònic (seu.gencat.cat o sede.educacion.gob.es) o presencialment a l'oficina corresponent.",
+        ]),
+        B("03", "Terminis", [
+          "1 mes per presentar el recurs d'alçada des de la notificació de la resolució.",
+          "L'administració té 3 mesos per resoldre el recurs. Si no contesta, es considera desestimat (silenci negatiu).",
+        ]),
+      ],
+      "Basada en la Llei 39/2015 de procediment administratiu i la convocatòria específica de beques aplicable.",
+      "Veure recursos educatius"
+    );
+
+    if (problem === 'expedient') return R(
+      ["Educació", "Expedient disciplinari", "Dret a defensa"],
+      "Tens dret a ", "defensar-te", " en qualsevol expedient disciplinari.",
+      [
+        B("01", "El que diu la llei", [
+          "Cap sanció educativa pot imposar-se sense un procediment previ que garanteixi el dret a audiència i a presentar al·legacions.",
+          centre === 'universitat'
+            ? "La normativa universitària (Estatuts de la UB, UAB, etc.) estableix garanties específiques: has de ser informat dels càrrecs i tens dret a un representant."
+            : "En centres d'ESO i Batxillerat, el Reglament de Règim Interior ha de respectar el dret a audiència de l'alumne i, si és menor, dels pares.",
+          "Les sancions d'expulsió superiors a 3 dies han de ser resoltes per la direcció del centre amb notificació formal.",
+        ]),
+        B("02", "Pas a pas", [
+          "Sol·licita per escrit còpia de l'expedient i els fets que se t'imputen. Tens dret a conèixer-los.",
+          "Presenta al·legacions per escrit dins el termini indicat. Aporta proves o testimonis si en tens.",
+          "Si la resolució és desfavorable, pots recórrer davant la Inspecció d'Educació (centres no universitaris) o el Síndic de Greuges.",
+        ]),
+        B("03", "Terminis", [
+          "El termini per presentar al·legacions és el que fixi el centre (normalment 5-10 dies hàbils).",
+          "1 mes per recórrer la resolució davant la Inspecció d'Educació o la Comissió de Garanties universitària.",
+        ]),
+      ],
+      "Basada en la LO 2/2006 d'Educació (LOE) i la normativa de règim intern de cada centre.",
+      "Veure recursos educatius"
+    );
+
+    if (problem === 'assetjament') return R(
+      ["Educació", "Assetjament escolar", "Protocol obligatori"],
+      "El centre té l'obligació legal d'activar el ", "protocol antibullying", ".",
+      [
+        B("01", "El que diu la llei", [
+          "Tots els centres educatius de Catalunya han de tenir un protocol d'actuació davant l'assetjament escolar (Llei 14/2010).",
+          "La direcció del centre té l'obligació de notificar la situació a la Inspecció d'Educació i actuar en un termini màxim.",
+          "Si l'assetjament inclou agressions físiques o amenaces greus, pot ser constitutiu de delicte (art. 173 CP) i denunciable davant la policia.",
+        ]),
+        B("02", "Pas a pas", [
+          "Documenta els incidents: dates, llocs, descripcions i testimonis. Conserva captures si l'assetjament és digital.",
+          "Comunica la situació per escrit a la tutoria i a la direcció del centre, demanant activació del protocol.",
+          "Si el centre no actua en 10 dies, presenta queixa a la Inspecció d'Educació de la teva zona.",
+        ]),
+        B("03", "Suport disponible", [
+          "Telèfon contra l'assetjament escolar: 900 018 018 (gratuït i confidencial).",
+          "Si hi ha violència física: denuncia als Mossos d'Esquadra o Policia Nacional.",
+        ]),
+      ],
+      "Basada en la Llei 14/2010 (LDOIA) i el Protocol de prevenció i abordatge de l'assetjament escolar del Departament d'Educació.",
+      "Veure recursos educatius"
+    );
+
+    return R(
+      ["Educació", "Accés als estudis", "Dret a l'educació"],
+      "L'accés a l'educació ", "és un dret fonamental", " (art. 27 CE).",
+      [
+        B("01", "El que diu la llei", [
+          "L'educació fins als 16 anys és obligatòria i gratuïta. Cap centre públic pot negar la matrícula sense causa justificada.",
+          centre === 'universitat'
+            ? "L'accés a la universitat pública no pot ser denegat per motius econòmics: existeixen ajudes de matrícula i beques d'emergència."
+            : "Els centres concertats que reben finançament públic no poden cobrar quotes obligatòries ni seleccionar alumnes per criteri econòmic.",
+          "Si ets menor tutelat per la DGAIA, tens dret a continuïtat educativa independentment de la situació administrativa.",
+        ]),
+        B("02", "Pas a pas", [
+          "Sol·licita per escrit els motius de la denegació de matrícula o accés. Tens dret a una resposta formal.",
+          "Presenta reclamació a la Inspecció d'Educació de la teva zona si el centre no resol favorablement.",
+          "Consulta amb el Síndic de Greuges si creus que s'ha vulnerat el teu dret a l'educació.",
+        ]),
+        B("03", "Terminis", [
+          "Els períodes de matrícula i reclamació estan fixats anualment per la Generalitat: comprova les dates al portal.",
+          "Reclamació a la Inspecció: pots presentar-la en qualsevol moment durant el curs.",
+        ]),
+      ],
+      "Basada en la CE art. 27 i la LO 2/2006 d'Educació (LOE).",
+      "Veure recursos educatius"
+    );
+  }
+
+  /* ── VIOLÈNCIA I DISCRIMINACIÓ ── */
+  if (scenario === 'violencia') {
+    const type     = answers[0]; // genere | lgtbi | sexual | amenaces
+    const situation = answers[1]; // actual | sortida | ajuda
+
+    if (type === 'genere' && situation === 'actual') return R(
+      ["Violència de gènere", "Situació activa", "⚠️ Recursos d'emergència"],
+      "Hi ha recursos immediats per ", "sortir d'una situació de violència", ".",
+      [
+        B("01", "El que diu la llei", [
+          "La Llei Orgànica 1/2004 contra la Violència de Gènere garanteix protecció integral: assistència jurídica gratuïta, ajudes econòmiques i accés prioritari a habitatge.",
+          "Pots sol·licitar una ordre de protecció al jutjat de guàrdia en 72 hores. La policia ha de tramitar-la immediatament si hi ha risc.",
+          "No necessites denunciar per accedir als serveis d'atenció: pots demanar ajuda als Serveis Socials sense haver de passar per comissaria primer.",
+        ]),
+        B("02", "Actua ara", [
+          "Si estàs en perill immediat: truca al 112. La policia té unitats especialitzades en violència de gènere (UFAM als Mossos).",
+          "Truca al 900 900 120 (24h, gratuït, confidencial): atenció especialitzada en violència masclista.",
+          "Busca el SIAD (Servei d'Informació i Atenció a les Dones) del teu municipi: assessorament jurídic, psicològic i social gratuït.",
+        ]),
+        B("03", "Recursos d'emergència", [
+          "Xarxa d'acolliment per a dones en situació de violència: places d'emergència en cases d'acollida.",
+          "Renda activa d'inserció (RAI): ajuda econòmica específica per a víctimes de violència de gènere.",
+        ]),
+      ],
+      "Basada en la LO 1/2004 i la Llei 5/2008 del dret de les dones a eradicar la violència masclista (Catalunya).",
+      "Veure recursos"
+    );
+
+    if (type === 'genere') return R(
+      ["Violència de gènere", situation === 'sortida' ? "Vull denunciar" : "Ajudant un tercer", "Assistència gratuïta"],
+      "Tens dret a ", "assistència jurídica gratuïta", " per denunciar.",
+      [
+        B("01", "El que diu la llei", [
+          "Pots denunciar violència de gènere en qualsevol moment, fins i tot anys després dels fets. No hi ha prescripció curta.",
+          "Tens dret a advocada d'ofici especialitzada en violència de gènere des del moment de la denúncia, gratuïtament.",
+          "Com a testimoni o persona de suport, pots acompanyar la víctima a la denúncia i als serveis d'atenció.",
+        ]),
+        B("02", "Pas a pas", [
+          "La denúncia es pot presentar als Mossos d'Esquadra, Policia Nacional, jutjat de guàrdia o als Serveis Socials.",
+          "Guarda tota evidència (missatges, fotos de lesions, testimonis) abans de denunciar: reforça molt el cas.",
+          "Contacta amb el SIAD del teu municipi: t'acompanyaran durant tot el procés.",
+        ]),
+        B("03", "Suport disponible", [
+          "900 900 120: línia d'atenció a la violència masclista (24h, gratuïta).",
+          "SIAD (Servei d'Informació i Atenció a les Dones): assessorament jurídic i psicològic gratuït.",
+        ]),
+      ],
+      "Basada en la LO 1/2004 i la Llei 5/2008. La denúncia no és obligatòria per accedir als serveis.",
+      "Veure recursos"
+    );
+
+    if (type === 'lgtbi') return R(
+      ["LGTBIfòbia", "Discriminació i violència", "Protecció legal"],
+      "La discriminació per orientació sexual ", "és il·legal", " i denunciable.",
+      [
+        B("01", "El que diu la llei", [
+          "La Llei 11/2014 de Catalunya garanteix els drets de les persones LGTBI i tipifica la discriminació com a infracció administrativa greu.",
+          "Els actes de violència motivats per LGTBIfòbia poden ser considerats delictes d'odi (art. 510 CP), amb penes agreujades.",
+          "Tens dret a assistència jurídica gratuïta i suport psicològic especialitzat.",
+        ]),
+        B("02", "Pas a pas", [
+          "Documenta els fets: dates, lloc, descripció, testimonis. Si hi ha missatges o publicacions, fes captures.",
+          "Presenta denúncia als Mossos d'Esquadra (Unitat de Delictes d'Odi i Discriminació - UDOD) o a la policia local.",
+          "Contacta amb el Casal Lambda o el Col·lectiu LGTBI+ Barcelona: assessorament jurídic gratuït i acompanyament.",
+        ]),
+        B("03", "Suport disponible", [
+          "Casal Lambda (lambdaweb.org): atenció jurídica, psicològica i social gratuïta.",
+          "OBERTIC (obertic.cat): observatori de delictes d'odi LGTBIfobs a Catalunya.",
+        ]),
+      ],
+      "Basada en la Llei 11/2014 de Catalunya i el CP art. 510 (delictes d'odi).",
+      "Veure recursos"
+    );
+
+    if (type === 'sexual') return R(
+      ["Assetjament sexual", "Delicte penal", "Denúncia possible"],
+      "L'assetjament sexual és un ", "delicte penal", " (art. 184 CP).",
+      [
+        B("01", "El que diu la llei", [
+          "L'assetjament sexual (sol·licituds de favors sexuals amb intimidació o ambient hostil) és delicte (art. 184 CP), amb penes de fins a 5 anys si hi ha relació de jerarquia.",
+          "Si passa en l'àmbit laboral o educatiu, l'empresa o centre té l'obligació de tenir un protocol específic i actuar immediatament.",
+          "Pots denunciar-ho simultàniament a la policia i per la via administrativa (Inspecció de Treball, si és laboral; Inspecció Educativa, si és educatiu).",
+        ]),
+        B("02", "Pas a pas", [
+          "Documenta tot: missatges, correus, descripcions dels incidents amb data i lloc.",
+          "Si passa en el treball: comunica-ho a recursos humans i/o als representants sindicals. Si no actuen, Inspecció de Treball.",
+          "Presenta denúncia als Mossos o Policia Nacional. L'advocada d'ofici és gratuïta en casos de violència sexual.",
+        ]),
+        B("03", "Suport disponible", [
+          "SAH (Servei d'Atenció a les víctimes de violència sexual del ICS): gratuït a tot Catalunya.",
+          "SICAR (Servei d'Atenció a víctimes de violència sexual): 93 412 00 12.",
+        ]),
+      ],
+      "Basada en el CP art. 184 i la LO 10/2022 de garantia de llibertat sexual.",
+      "Veure recursos"
+    );
+
+    return R(
+      ["Amenaces i coaccions", "Delicte penal", "Ordre d'allunyament possible"],
+      "Les amenaces i coaccions ", "es poden denunciar", " i obtenir protecció.",
+      [
+        B("01", "El que diu la llei", [
+          "Les amenaces (art. 169 CP) i les coaccions (art. 172 CP) són delictes penals, fins i tot si no s'han executat.",
+          "Pots sol·licitar una ordre d'allunyament al jutjat de guàrdia si hi ha risc per a la teva seguretat.",
+          "L'stalking o assetjament persistent (art. 172 ter CP) també és delicte, fins i tot si les amenaces semblen 'petites'.",
+        ]),
+        B("02", "Pas a pas", [
+          "Guarda tots els missatges, trucades i evidències. No esborris res: és la teva prova principal.",
+          "Presenta denúncia als Mossos o Policia Nacional. Demana expressament una ordre de protecció.",
+          "Si coneixes l'agressor, aporta totes les dades possibles: nom, telèfon, xarxes socials.",
+        ]),
+        B("03", "Terminis", [
+          "L'ordre de protecció es pot obtenir en 72 hores si hi ha risc imminent.",
+          "El jutjat de guàrdia atén sol·licituds d'ordre de protecció les 24 hores.",
+        ]),
+      ],
+      "Basada en el CP arts. 169, 172 i 172 ter. Si les amenaces són per motius discriminatoris, aplica l'art. 510 (delictes d'odi).",
+      "Veure recursos"
+    );
+  }
+
+  /* ── ESTRANGERIA ── */
+  if (scenario === 'estrangeria') {
+    const situation = answers[0]; // irregular | arrelament | renovacio | asil
+    const temps     = answers[1]; // menys2 | 2a3 | mes3
+
+    if (situation === 'irregular' && temps === 'menys2') return R(
+      ["Estrangeria", "Menys de 2 anys", "Opcions molt limitades"],
+      "Amb menys de 2 anys, les opcions legals ", "són molt limitades", " però existeixen.",
+      [
+        B("01", "El que diu la llei", [
+          "Sense documentació i amb menys de 2 anys a Espanya, l'arrelament social no és possible (requereix 3 anys).",
+          "En situació d'urgència (malaltia greu, risc per a la vida), es pot sol·licitar una autorització de residència per raons humanitàries.",
+          "Si ets menor d'edat, tens dret a escolarització i atenció sanitària independentment de la situació administrativa.",
+        ]),
+        B("02", "Opcions disponibles", [
+          "Empadronar-te és un dret independent de la situació administrativa: et dona accés a serveis bàsics i comença a comptar el temps de residència.",
+          "Consulta amb una entitat especialitzada (ACSAR, CITE-CCOO, SOS Racisme) per valorar si tens dret a protecció internacional.",
+          "Si treballes de forma irregular, documentar-ho (contractes verbals, nòmines) pot ser útil per a l'arrelament laboral.",
+        ]),
+        B("03", "Proper pas", [
+          "Empadronar-te ara: el padró és la base per a molts tràmits futurs i comença el còmput de temps.",
+          "En 2 anys podràs sol·licitar l'arrelament laboral si pots acreditar relació laboral.",
+        ]),
+      ],
+      "Basada en la LO 4/2000 (Llei d'Estrangeria) i el RD 557/2011. Consulta una entitat especialitzada per al teu cas concret.",
+      "Veure recursos d'estrangeria"
+    );
+
+    if (situation === 'irregular') return R(
+      ["Estrangeria", temps === '2a3' ? "2-3 anys" : "+3 anys", "Arrelament possible"],
+      temps === 'mes3' ? "Amb més de 3 anys pots demanar " : "Prepara la documentació per a ",
+      "l'arrelament social",
+      temps === 'mes3' ? "." : " quan arribi el moment.",
+      [
+        B("01", "El que diu la llei", [
+          temps === 'mes3'
+            ? "L'arrelament social requereix 3 anys de permanència a Espanya, empadronament i acreditar vincles socials (treball, família, integració)."
+            : "Amb 2-3 anys de permanència, pots sol·licitar l'arrelament laboral si pots acreditar relació laboral d'almenys 6 mesos.",
+          "L'arrelament dona dret a una autorització de residència i treball d'1 any, renovable.",
+          "Durant la tramitació de l'arrelament, no pots ser expulsat (situació d'arraigo en tràmit).",
+        ]),
+        B("02", "Documentació necessària", [
+          "Certificat d'empadronament que acrediti el temps de residència.",
+          temps === 'mes3'
+            ? "Informe d'integració social emès pels Serveis Socials municipals (necessites sol·licitar-lo amb antelació)."
+            : "Contracte de treball o nòmines que acreditin relació laboral d'almenys 6 mesos.",
+          "Antecedents penals dels països de residència dels últims 5 anys (apostillats i traduïts).",
+        ]),
+        B("03", "Terminis", [
+          "La resolució de l'arrelament pot tardar entre 3 i 9 mesos des de la presentació.",
+          "Durant la tramitació, guarda sempre el justificant de presentació de la sol·licitud.",
+        ]),
+      ],
+      "Basada en la LO 4/2000 i el RD 557/2011. Consulta ACSAR o CITE-CCOO per acompanyament en el tràmit.",
+      "Veure recursos d'estrangeria"
+    );
+
+    if (situation === 'arrelament') return R(
+      ["Estrangeria", "Arrelament social", "Procés pas a pas"],
+      "L'arrelament social et dona dret a ", "residir i treballar legalment", ".",
+      [
+        B("01", "Requisits legals", [
+          "3 anys de permanència a Espanya acreditada (padró municipal o altres documents).",
+          "No tenir antecedents penals a Espanya ni als països de residència dels últims 5 anys.",
+          "Informe d'integració social emès pels Serveis Socials del teu ajuntament (demana'l amb 2-3 mesos d'antelació).",
+        ]),
+        B("02", "Pas a pas", [
+          "Sol·licita l'informe d'integració social als Serveis Socials del teu ajuntament: és gratuït però tarda.",
+          "Reuneix tota la documentació: certificat de padró, passaport, antecedents penals dels països de residència (apostillats).",
+          "Presenta la sol·licitud a la Oficina d'Estrangeria de la teva província (amb cita prèvia).",
+        ]),
+        B("03", "Terminis", [
+          "L'informe d'integració social tarda 1-3 mesos: sol·licita'l amb antelació.",
+          "La resolució de la sol·licitud: entre 3 i 9 mesos. T'autoritzen a treballar mentre esperes.",
+        ]),
+      ],
+      "Basada en la LO 4/2000 i el RD 557/2011, art. 124. ACSAR i CITE-CCOO ofereixen acompanyament gratuït.",
+      "Veure recursos d'estrangeria"
+    );
+
+    if (situation === 'renovacio') return R(
+      ["Estrangeria", "Renovació del permís", "Inicia el tràmit 60 dies abans"],
+      "Has d'iniciar la renovació ", "60 dies abans del venciment", ".",
+      [
+        B("01", "El que diu la llei", [
+          "La sol·licitud de renovació presentada abans del venciment prorroga automàticament l'autorització fins a la resolució.",
+          "Si el permís ja ha vençut, tens fins a 90 dies per renovar sense ser considerat en situació irregular.",
+          "La no-renovació per causes no imputables a tu (llista d'espera, problemes de cita) pot ser al·legada en el procediment.",
+        ]),
+        B("02", "Documentació necessària", [
+          "Passaport vigent, formulari EX-17 o EX-03 (segons el tipus de permís), taxes abonades i contracte de treball o justificació econòmica.",
+          "Si has canviat d'empresa o situació laboral, aporta la nova documentació laboral.",
+          "Cita prèvia obligatòria a la Oficina d'Estrangeria: reserva amb 2-3 mesos d'antelació (seuelectronica.mjusticia.gob.es).",
+        ]),
+        B("03", "Terminis", [
+          "Sol·licita la cita 60-90 dies abans del venciment.",
+          "Resolució: 3-6 mesos. Durant la tramitació, el permís es considera prorrogat.",
+        ]),
+      ],
+      "Basada en la LO 4/2000 i el RD 557/2011. Si tens dificultats per obtenir cita, CITE-CCOO pot assessorar-te.",
+      "Veure recursos d'estrangeria"
+    );
+
+    return R(
+      ["Estrangeria", "Asil i protecció internacional", "Sol·licita en 1 mes"],
+      "Pots sol·licitar ", "protecció internacional", " en qualsevol punt d'entrada.",
+      [
+        B("01", "El que diu la llei", [
+          "La Llei 12/2009 regula el dret d'asil i la protecció subsidiària a Espanya. Pots sol·licitar-la en qualsevol moment.",
+          "Durant la tramitació (que pot durar anys), no pots ser expulsat i tens dret a accedir al sistema sanitari i educatiu.",
+          "Si has entrat de forma irregular, pots igualment sol·licitar asil: no et penalitzen per l'entrada.",
+        ]),
+        B("02", "Com sol·licitar-ho", [
+          "Presenta la sol·licitud a la Oficina d'Asil i Refugi (OAR) a Madrid, o a la comissaria de policia designada de la teva província.",
+          "Contacta ASAP (Associació per a l'Asil i la Protecció) o ACNUR per acompanyament gratuït durant el procés.",
+          "La sol·licitud s'ha de presentar en el termini d'1 mes des de l'entrada al país o des que van ocórrer els fets que la motiven.",
+        ]),
+        B("03", "Terminis", [
+          "1 mes per sol·licitar des de l'entrada o dels fets. Fora d'aquest termini cal justificació.",
+          "La resolució pot tardar entre 1 i 5 anys. Durant tot el procés tens dret a residir i treballar (a partir dels 6 mesos).",
+        ]),
+      ],
+      "Basada en la Llei 12/2009 del dret d'asil i protecció subsidiària. ACNUR i CEAR ofereixen assessorament gratuït.",
+      "Veure recursos d'estrangeria"
     );
   }
 
