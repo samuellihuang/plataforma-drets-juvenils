@@ -410,6 +410,10 @@ const ca = {
     send: "Enviar",
     disc: "Sense registre · cap missatge surt del teu navegador",
     thinking: "Pensant",
+    bot_label: "Assistent · IA",
+    user_label: "Tu",
+    now: "ara",
+    sources: "Fonts:",
   },
   res: {
     title_a: "Recursos ",
@@ -629,7 +633,12 @@ const es = {
     ],
     placeholder: "Escribe tu pregunta…",
     send: "Enviar",
+    disc: "Sin registro · ningún mensaje sale de tu navegador",
     thinking: "Pensando",
+    bot_label: "Asistente · IA",
+    user_label: "Tú",
+    now: "ahora",
+    sources: "Fuentes:",
   },
 };
 
@@ -666,7 +675,12 @@ const en = {
     ],
     placeholder: "Type your question…",
     send: "Send",
+    disc: "No account needed · messages stay in your browser",
     thinking: "Thinking",
+    bot_label: "Assistant · AI",
+    user_label: "You",
+    now: "now",
+    sources: "Sources:",
   },
 };
 

@@ -134,20 +134,20 @@ export default function Xat({ lang, setRoute }) {
       </header>
 
       <div className="chat-body" ref={bodyRef}>
-        <div className="chat-body-inner">
+        <div className="chat-body-inner" aria-live="polite" aria-label={L.title_a + L.title_em + L.title_b} role="log">
           {messages.map((m, i) => (
             <div className="row" data-from={m.from} key={i}>
               {m.from === "bot" && <span className="avatar avatar-bot" aria-hidden="true"/>}
               <div className={"bubble " + (m.from === "bot" ? "bubble-bot" : "bubble-user")}>
-                <div className="bubble-meta">
-                  <span>{m.from === "bot" ? "Assistent · IA" : "Tu"}</span>
+                <div className="bubble-meta" aria-hidden="true">
+                  <span>{m.from === "bot" ? L.bot_label : L.user_label}</span>
                   <span>·</span>
-                  <span>ara</span>
+                  <span>{L.now}</span>
                 </div>
                 {m.text && <MessageBody text={m.text} />}
                 {m.citations && m.citations.length > 0 && (
                   <div className="cite">
-                    <span>Fonts:</span>
+                    <span>{L.sources}</span>
                     {m.citations.map((c, j) => <span className="cite-chip" key={j}>{c}</span>)}
                   </div>
                 )}
@@ -162,15 +162,15 @@ export default function Xat({ lang, setRoute }) {
                   </div>
                 )}
               </div>
-              {m.from === "user" && <span className="avatar avatar-user">TU</span>}
+              {m.from === "user" && <span className="avatar avatar-user" aria-hidden="true">TU</span>}
             </div>
           ))}
           {typing && (
             <div className="row" data-from="bot">
               <span className="avatar avatar-bot" aria-hidden="true"/>
               <div className="bubble bubble-bot">
-                <div className="bubble-meta"><span>Assistent · IA</span><span>·</span><span>{L.thinking}…</span></div>
-                <div className="typing"><span/><span/><span/></div>
+                <div className="bubble-meta" aria-hidden="true"><span>{L.bot_label}</span><span>·</span><span>{L.thinking}…</span></div>
+                <div className="typing" aria-label={L.thinking + "…"}><span/><span/><span/></div>
               </div>
             </div>
           )}
@@ -187,7 +187,7 @@ export default function Xat({ lang, setRoute }) {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }}
               rows={1}
-              aria-label="Missatge"
+              aria-label={L.placeholder}
             />
             <button className="send" onClick={() => send(input)} disabled={!input.trim() || typing}>
               <span>{L.send}</span><span className="send-arrow" aria-hidden="true">↵</span>
