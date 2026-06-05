@@ -97,9 +97,8 @@ const ca = {
     org: "Plataforma de Drets Juvenils",
     tag: "Una eina gratuïta per a joves de Catalunya. Sense registre, sense rastre, codi obert.",
     cols: [
-      { h: "Eines", items: [["Simulador", "sim"], ["Xat legal", "chat"], ["Recursos", "res"]] },
-      { h: "Sobre", items: [["Qui som", null], ["Metodologia", null], ["Codi al GitHub", null]] },
-      { h: "Legal", items: [["Avís legal", "disclaimer"], ["Privacitat", null], ["Cookies", null]] },
+      { h: "Eines", items: [["Simulador", "sim"], ["Xat legal", "chat"], ["Recursos", "res"], ["Fòrum", "forum"]] },
+      { h: "Legal", items: [["Avís legal", "disclaimer"], ["Privacitat", "privacitat"]] },
     ],
     disc: "Cap contingut d'aquesta web substitueix l'assessorament d'una advocada o un advocat. Per a decisions amb conseqüències jurídiques, demana cita amb el torn d'ofici o el SOJ.",
     meta_left: "© 2025 · CC BY-SA 4.0",
@@ -458,6 +457,46 @@ const ca = {
         ],
       },
     ],
+  },
+  priv: {
+    title_a: "Política de ",
+    title_em: "privacitat",
+    title_b: ".",
+    meta: ["Versió 1.0 · juny 2025", "Plataforma de Drets Juvenils", "CC BY-SA 4.0"],
+    items: [
+      {
+        num: "01",
+        h: "No recollim dades personals",
+        body: "Aquesta plataforma no demana registre, nom, correu electrònic ni cap altra dada d'identificació. Pots fer servir totes les funcionalitats de forma completament anònima.",
+      },
+      {
+        num: "02",
+        h: "Dades emmagatzemades localment",
+        body: "La plataforma guarda al teu navegador (localStorage) únicament la preferència d'idioma (CA/ES/EN) i si has acceptat l'avís de cookies. Aquestes dades no es transmeten mai a cap servidor extern.",
+      },
+      {
+        num: "03",
+        h: "El xat legal",
+        body: "Les converses del xat es processen a través del nostre servidor per generar respostes, però no es guarden ni s'associen a cap identitat. Cada sessió és independent i desapareix en tancar el navegador.",
+      },
+      {
+        num: "04",
+        h: "Cookies",
+        body: "Només fem servir una cookie tècnica per recordar l'idioma seleccionat. No fem servir cookies de seguiment, analítica de tercers (Google Analytics, etc.) ni publicitat personalitzada.",
+      },
+      {
+        num: "05",
+        h: "Serveis externs",
+        body: "La plataforma carrega fonts tipogràfiques de Google Fonts, la qual cosa pot transmetre la teva adreça IP a Google. Si vols evitar-ho, pots bloquejar connexions a fonts.googleapis.com amb una extensió de privacitat (uBlock Origin, etc.).",
+      },
+      {
+        num: "06",
+        h: "Els teus drets (RGPD)",
+        body: "Com que no emmagatzemem dades personals identificatives, no hi ha dades a sol·licitar, rectificar ni suprimir. Si tens dubtes sobre la privacitat d'aquesta plataforma, pots consultar l'Agència Espanyola de Protecció de Dades (aepd.es).",
+      },
+    ],
+    foot_text: "Aquesta política de privacitat es revisa periòdicament. Darrera actualització: juny de 2025.",
+    foot_cta: null,
   },
   disc: {
     title_a: "Avís ",
