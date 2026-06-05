@@ -142,7 +142,7 @@ button:focus-visible, a:focus-visible {
   gap: var(--s-5);
 }
 .brand { display: inline-flex; align-items: center; text-decoration: none; color: var(--c-ink); background: none; border: none; padding: 0; cursor: pointer; }
-.brand-logo { height: 44px; width: auto; display: block; }
+.brand-logo { height: 64px; width: auto; display: block; }
 .nav-links { display: none; justify-content: center; gap: var(--s-5); }
 @media (min-width: 900px) { .nav-links { display: flex; } }
 .nav-link { font-size: var(--t-sm); font-weight: 500; background: none; border: 0; padding: 4px 0; position: relative; color: var(--c-ink); letter-spacing: -.005em; }
