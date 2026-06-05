@@ -41,10 +41,10 @@ export default function Resources({ lang, setRoute }) {
           <p className="long-foot-text">Falta algun recurs? Si coneixes una entitat que hauria de ser-hi, escriu-nos i la revisarem.</p>
           <div style={{ display: "flex", gap: "var(--s-3)", flexWrap: "wrap" }}>
             <button className="btn btn-secondary btn-sm" onClick={() => setRoute("chat")}>
-              <span>Suggerir un recurs</span><span className="btn-arrow">→</span>
+              <span>Suggerir un recurs</span><span className="btn-arrow" aria-hidden="true">→</span>
             </button>
             <button className="btn btn-primary btn-sm" onClick={() => setRoute("sim")}>
-              <span>Inicia el simulador</span><span className="btn-arrow">→</span>
+              <span>Inicia el simulador</span><span className="btn-arrow" aria-hidden="true">→</span>
             </button>
           </div>
         </div>

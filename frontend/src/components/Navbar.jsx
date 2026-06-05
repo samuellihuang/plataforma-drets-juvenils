@@ -50,7 +50,7 @@ export default function Navbar({ route, setRoute, lang, setLang }) {
           {items.map(i => (
             <button key={i.id} className="drawer-link" onClick={() => go(i.id)}>
               <span>{i.label}</span>
-              <span className="drawer-arrow">→</span>
+              <span className="drawer-arrow" aria-hidden="true">→</span>
             </button>
           ))}
         </div>

@@ -24,7 +24,7 @@ export default function Cookies({ lang, setRoute }) {
         <div className="long-foot">
           <p className="long-foot-text">{L.foot_text}</p>
           <button className="btn btn-secondary btn-sm" style={{ marginTop: "var(--s-4)" }} onClick={() => setRoute("privacitat")}>
-            <span>Llegir la política de privacitat</span><span className="btn-arrow">→</span>
+            <span>Llegir la política de privacitat</span><span className="btn-arrow" aria-hidden="true">→</span>
           </button>
         </div>
       </div>

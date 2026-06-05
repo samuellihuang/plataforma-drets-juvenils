@@ -43,14 +43,14 @@ function Hero({ setRoute, lang }) {
           <p className="hero-lede">{L.lede}</p>
           <div className="hero-ctas">
             <button className="btn btn-primary" onClick={() => setRoute("sim")}>
-              <span>{L.cta_primary}</span><span className="btn-arrow">→</span>
+              <span>{L.cta_primary}</span><span className="btn-arrow" aria-hidden="true">→</span>
             </button>
             <button className="btn btn-secondary" onClick={() => setRoute("chat")}>
-              <span>{L.cta_secondary}</span><span className="btn-arrow">→</span>
+              <span>{L.cta_secondary}</span><span className="btn-arrow" aria-hidden="true">→</span>
             </button>
           </div>
           <div className="hero-trust">
-            <span><span className="dot" />{L.trust[0]}</span>
+            <span><span className="dot" aria-hidden="true" />{L.trust[0]}</span>
             <span>{L.trust[1]}</span>
             <span>{L.trust[2]}</span>
           </div>
@@ -218,7 +218,7 @@ function CTABand({ setRoute, lang }) {
         </div>
         <div className="cta-band-actions">
           <button className="btn btn-primary" onClick={() => setRoute("sim")}>
-            <span>{L.primary}</span><span className="btn-arrow">→</span>
+            <span>{L.primary}</span><span className="btn-arrow" aria-hidden="true">→</span>
           </button>
           <button className="btn btn-secondary" onClick={() => setRoute("disclaimer")}>
             <span>{L.secondary}</span>

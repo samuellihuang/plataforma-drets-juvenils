@@ -162,8 +162,9 @@ export default function Forum({ lang }) {
           </header>
           <div className="forum-form">
             <div className="forum-field">
-              <label className="forum-label">{L.title_label}</label>
+              <label className="forum-label" htmlFor="forum-title">{L.title_label}</label>
               <input
+                id="forum-title"
                 className="forum-input"
                 placeholder={L.title_placeholder}
                 value={form.title}
@@ -173,8 +174,9 @@ export default function Forum({ lang }) {
               <span className="forum-hint">{form.title.length}/150 {L.char_hint}</span>
             </div>
             <div className="forum-field">
-              <label className="forum-label">{L.cat_label}</label>
+              <label className="forum-label" htmlFor="forum-cat">{L.cat_label}</label>
               <select
+                id="forum-cat"
                 className="forum-select"
                 value={form.category}
                 onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
@@ -185,8 +187,9 @@ export default function Forum({ lang }) {
               </select>
             </div>
             <div className="forum-field">
-              <label className="forum-label">{L.body_label}</label>
+              <label className="forum-label" htmlFor="forum-body">{L.body_label}</label>
               <textarea
+                id="forum-body"
                 className="forum-textarea"
                 placeholder={L.body_placeholder}
                 value={form.body}
@@ -205,7 +208,7 @@ export default function Forum({ lang }) {
                 disabled={submitting || !form.title.trim() || !form.body.trim()}
               >
                 <span>{submitting ? L.loading : L.submit_btn}</span>
-                <span className="btn-arrow">→</span>
+                <span className="btn-arrow" aria-hidden="true">→</span>
               </button>
             </div>
           </div>
@@ -258,6 +261,7 @@ export default function Forum({ lang }) {
               onChange={e => setReplyText(e.target.value)}
               maxLength={1000}
               rows={4}
+              aria-label={L.reply_placeholder}
             />
             <div className="reply-form-foot">
               <span className="forum-hint">{replyText.length}/1000 {L.char_hint}</span>
@@ -268,7 +272,7 @@ export default function Forum({ lang }) {
                 disabled={submitting || !replyText.trim()}
               >
                 <span>{submitting ? L.loading : L.reply_btn}</span>
-                <span className="btn-arrow">↵</span>
+                <span className="btn-arrow" aria-hidden="true">↵</span>
               </button>
             </div>
           </div>
@@ -288,7 +292,7 @@ export default function Forum({ lang }) {
           </div>
           <button className="btn btn-primary" onClick={() => { setError(null); setView("new"); window.scrollTo({ top: 0 }); }}>
             <span>{L.new_post_btn}</span>
-            <span className="btn-arrow">+</span>
+            <span className="btn-arrow" aria-hidden="true">+</span>
           </button>
         </header>
 
@@ -300,6 +304,8 @@ export default function Forum({ lang }) {
               placeholder={L.search_placeholder}
               value={search}
               onChange={e => setSearch(e.target.value)}
+              aria-label={L.search_placeholder}
+              type="search"
             />
             {search && (
               <button className="forum-search-clear" onClick={() => setSearch("")} aria-label="Esborrar cerca">×</button>

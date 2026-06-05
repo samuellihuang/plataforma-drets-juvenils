@@ -15,7 +15,7 @@ export default function NotFound({ lang, setRoute }) {
         <p style={{ color: "var(--c-ink-soft)", marginBottom: "var(--s-5)" }}>{L.body}</p>
         <div style={{ display: "flex", gap: "var(--s-3)", justifyContent: "center", flexWrap: "wrap" }}>
           <button className="btn btn-primary" onClick={() => setRoute("home")}>
-            <span>{L.home}</span><span className="btn-arrow">→</span>
+            <span>{L.home}</span><span className="btn-arrow" aria-hidden="true">→</span>
           </button>
           <button className="btn btn-secondary" onClick={() => setRoute("sim")}>
             <span>{L.sim}</span>

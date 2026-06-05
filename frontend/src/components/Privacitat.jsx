@@ -24,7 +24,7 @@ export default function Privacitat({ lang, setRoute }) {
         <div className="long-foot">
           <p className="long-foot-text">{L.foot_text}</p>
           <button className="btn btn-secondary btn-sm" style={{ marginTop: "var(--s-4)" }} onClick={() => setRoute("disclaimer")}>
-            <span>Llegir l'avís legal</span><span className="btn-arrow">→</span>
+            <span>Llegir l'avís legal</span><span className="btn-arrow" aria-hidden="true">→</span>
           </button>
         </div>
       </div>

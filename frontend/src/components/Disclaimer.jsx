@@ -25,7 +25,7 @@ export default function Disclaimer({ lang, setRoute }) {
           <p className="long-foot-text">{L.foot_text}</p>
           {L.foot_cta && (
             <button className="btn btn-secondary btn-sm">
-              <span>{L.foot_cta}</span><span className="btn-arrow">→</span>
+              <span>{L.foot_cta}</span><span className="btn-arrow" aria-hidden="true">→</span>
             </button>
           )}
         </div>

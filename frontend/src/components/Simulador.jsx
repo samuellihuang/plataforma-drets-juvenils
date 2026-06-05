@@ -1386,7 +1386,7 @@ function SimResult({ lang, scenario, answers, onReset, setRoute }) {
           <p className="result-disc">{L.disc}</p>
           <div className="result-actions">
             <button className="btn btn-primary" onClick={() => setRoute("res")}>
-              <span>{L.actions.primary}</span><span className="btn-arrow">→</span>
+              <span>{L.actions.primary}</span><span className="btn-arrow" aria-hidden="true">→</span>
             </button>
             <button className="btn btn-secondary" onClick={onReset}>
               <span>{L.actions.secondary}</span>
@@ -1407,7 +1407,7 @@ function SimResult({ lang, scenario, answers, onReset, setRoute }) {
           </div>
           <div className="side-rule"/>
           <button className="btn btn-coral btn-sm" style={{ justifySelf: "start" }} onClick={() => setRoute("chat")}>
-            <span>Sol·licitar acompanyament</span><span className="btn-arrow">→</span>
+            <span>Sol·licitar acompanyament</span><span className="btn-arrow" aria-hidden="true">→</span>
           </button>
         </aside>
       </div>

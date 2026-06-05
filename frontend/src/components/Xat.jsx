@@ -190,7 +190,7 @@ export default function Xat({ lang, setRoute }) {
               aria-label="Missatge"
             />
             <button className="send" onClick={() => send(input)} disabled={!input.trim() || typing}>
-              <span>{L.send}</span><span className="send-arrow">↵</span>
+              <span>{L.send}</span><span className="send-arrow" aria-hidden="true">↵</span>
             </button>
           </div>
           <p className="chat-disc">{L.disc}</p>
