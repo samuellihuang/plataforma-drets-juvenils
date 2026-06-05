@@ -262,8 +262,674 @@ function SimFlow({ lang, scenarioId, onReset, onFinish }) {
   );
 }
 
+function getResult(scenario, answers) {
+  const R = (chips, title_a, title_em, title_b, blocks, disc, primary) => ({
+    chips, title_a, title_em, title_b, blocks, disc,
+    actions: { primary, secondary: "Refer el simulador" },
+  });
+  const B = (num, title, items) => ({ num, title, items });
+
+  /* ── TREBALL ── */
+  if (scenario === 'treball') {
+    const problem = answers[1]; // comiat | salaris | hores | abus
+    const timing  = answers[2]; // menys20 | menys1y | mes1y
+
+    if (problem === 'comiat' && timing === 'menys20') return R(
+      ["Treball", "Acomiadament", "⚠️ Urgent: 20 dies"],
+      "Tens ", "20 dies hàbils", " per impugnar l'acomiadament.",
+      [
+        B("01", "El que diu la llei", [
+          "L'acomiadament és impugnable davant el jutjat social en 20 dies hàbils des de la comunicació de la baixa.",
+          "Si l'empresa no et dóna carta d'acomiadament per escrit, l'acomiadament és nul per defecte de forma.",
+          "Pots reclamar la readmissió o una indemnització de 33 dies per any treballat si es declara improcedent.",
+        ]),
+        B("02", "Fes-ho aquesta setmana", [
+          "Recull la carta d'acomiadament, nòmines i contracte. Sense documents el procés es complica molt.",
+          "Contacta amb Avalot (CCOO Joves) o Acció Jove (UGT) per assessorament laboral gratuït i immediat.",
+          "Presenta una papereta de conciliació al SMAC/CMAC: és el pas previ obligatori a la demanda judicial.",
+        ]),
+        B("03", "Terminis crítics", [
+          "20 dies hàbils per presentar la papereta de conciliació — el rellotge ja corre!",
+          "El SMAC ha de citar-te en un termini màxim de 15 dies.",
+          "Si no hi ha acord en conciliació, tens 20 dies més per presentar demanda judicial.",
+        ]),
+      ],
+      "Basada en l'ET, arts. 49-57. Si el contracte és de pràctiques, contacta igualment: els drets es mantenen.",
+      "Veure recursos laborals"
+    );
+
+    if (problem === 'comiat') return R(
+      ["Treball", "Acomiadament", "Termini exhaurit"],
+      "El termini per impugnar ha passat, però ", "pots reclamar la liquidació", ".",
+      [
+        B("01", "El que diu la llei", [
+          "El termini de 20 dies hàbils per impugnar l'acomiadament ha expirat, cosa que tanca la via judicial directa.",
+          "Tot i això, pots reclamar salaris pendents, vacances no gaudides i dies de liquidació que et puguin deure.",
+          "Si la liquidació és incorrecta, tens 1 any per reclamar-la davant el jutjat social.",
+        ]),
+        B("02", "Què pots fer ara", [
+          "Revisa la teva liquidació: has de rebre els dies treballats, les vacances proporcionals i la indemnització si escau.",
+          "Si la liquidació és incorrecta, presenta demanda al jutjat social (fins a 6.000 € no cal advocat).",
+          "Presenta denúncia a la Inspecció de Treball si l'empresa ha incomplert el conveni col·lectiu.",
+        ]),
+        B("03", "Terminis que tens oberts", [
+          "1 any per reclamar salaris i liquidació impagats.",
+          "3 anys per reclamar cotitzacions no ingressades a la Seguretat Social.",
+        ]),
+      ],
+      "Basada en l'ET i la Llei de Jurisdicció Social. Consulta el torn d'ofici si tens dubtes sobre la liquidació.",
+      "Veure recursos laborals"
+    );
+
+    if (problem === 'salaris') return R(
+      ["Treball", "Salaris impagats", "Acció en 1 any"],
+      "Tens dret a cobrar ", "tot el que et deuen", ".",
+      [
+        B("01", "El que diu la llei", [
+          "El no-pagament del salari és un incompliment greu. Pots reclamar l'import degut més els interessos de demora.",
+          "Si l'empresa no paga durant 2 mesos seguits, pots extingir el contracte i cobrar indemnització per acomiadament improcedent (art. 50 ET).",
+          "El FOGASA cobreix fins a 120 dies de salari si l'empresa és insolvente o en concurs de creditors.",
+        ]),
+        B("02", "Pas a pas", [
+          "Recopila tots els justificants: nòmines, transferències, missatges. Guarda-ho tot fora del mòbil de feina.",
+          "Presenta papereta de conciliació al SMAC per reclamar els salaris impagats de forma ràpida i gratuïta.",
+          "Paral·lelament, presenta denúncia anònima a la Inspecció de Treball: poden obligar l'empresa a pagar en terminis curts.",
+        ]),
+        B("03", "Terminis", [
+          "1 any per reclamar salaris impagats des que s'haurien d'haver pagat.",
+          "2 mesos sense cobrar → pots extingir el contracte (art. 50 ET) i cobrar 33 dies/any.",
+        ]),
+      ],
+      "Basada en l'ET, arts. 29 i 50. Per a empreses en concurs de creditors, consulta la via del FOGASA.",
+      "Veure recursos laborals"
+    );
+
+    if (problem === 'hores') return R(
+      ["Treball", "Hores extres", "Denúncia anònima"],
+      "Les hores extra no pagades ", "es poden reclamar", ".",
+      [
+        B("01", "El que diu la llei", [
+          "Les hores extres s'han de compensar econòmicament o amb descansos. Mai poden ser obligatòries sense pacte escrit.",
+          "El límit legal és 80 hores extres anuals. Superar-lo és una infracció greu sancionable per la Inspecció.",
+          "L'empresa ha de dur un registre horari diari obligatori i conservar-lo 4 anys. Si no existeix, és prova a favor teu.",
+        ]),
+        B("02", "Què pots fer", [
+          "Comença a registrar les teves hores amb una app: data, hora d'entrada i sortida cada dia.",
+          "Presenta denúncia anònima a la Inspecció de Treball: han de comprovar el registre horari de l'empresa.",
+          "Pots reclamar les hores extres impagades dels darrers 12 mesos davant el jutjat social o via conciliació.",
+        ]),
+        B("03", "Terminis", [
+          "1 any per reclamar hores extres no pagades des que s'haurien d'haver abonat.",
+          "4 anys: temps que l'empresa ha de conservar el registre horari.",
+        ]),
+      ],
+      "Basada en l'ET, art. 35, i el RD-llei 8/2019 de registre horari obligatori.",
+      "Veure recursos laborals"
+    );
+
+    return R(
+      ["Treball", "Tracte abusiu", "Múltiples vies"],
+      "El tracte abusiu en el treball ", "no és acceptable", ".",
+      [
+        B("01", "El que diu la llei", [
+          "L'assetjament moral o laboral (mobbing) pot ser constitutiu de delicte contra la integritat moral (art. 173 CP).",
+          "L'empresa té l'obligació legal de garantir un entorn de treball digne. Si no actua, respon per danys.",
+          "Pots sol·licitar l'extinció del contracte per incompliment greu de l'empresa (art. 50 ET) i cobrar indemnització.",
+        ]),
+        B("02", "Actua ara", [
+          "Documenta tot: correus, missatges, incidents amb data, hora i testimonis.",
+          "Si tens representació sindical, comunica-ho. Si no, contacta amb CCOO o UGT per assessorament.",
+          "Presenta denúncia a la Inspecció de Treball per condicions de treball inadequades.",
+        ]),
+        B("03", "Terminis", [
+          "Pots demanar mesures correctores en qualsevol moment mentre estiguis a l'empresa.",
+          "Si vols extingir el contracte per causa, cal acreditar l'incompliment greu de l'empresa.",
+        ]),
+      ],
+      "Basada en l'ET, art. 50, i el CP, art. 173. En casos greus, considera la via penal.",
+      "Veure recursos laborals"
+    );
+  }
+
+  /* ── HABITATGE ── */
+  if (scenario === 'habitatge') {
+    const situation = answers[1]; // burofax_no | burofax_si | fianza | subida
+
+    if (situation === 'burofax_no') return R(
+      ["Habitatge", "Sense burofax", "Tens temps"],
+      "Sense burofax oficial, ", "no et poden desnonar", ".",
+      [
+        B("01", "El que diu la llei", [
+          "Un avís per WhatsApp o verbal NO té validesa legal per iniciar un procés de desnonament.",
+          "La propietat ha d'enviar un requeriment formal (burofax o notarial) per iniciar el compte enrere legal.",
+          "Fins que no rebs el burofax tens temps per preparar-te i buscar alternatives.",
+        ]),
+        B("02", "Fes-ho ara", [
+          "No marxis del pis voluntàriament: perdries drets i tindries menys temps per buscar alternativa.",
+          "Truca al Servei d'Habitatge (010 a BCN) i demana mediació gratuïta amb la propietat.",
+          "Contacta amb el Sindicat de Llogateres per assessorament i estratègia col·lectiva.",
+        ]),
+        B("03", "Quan arribi el burofax", [
+          "30 dies des del burofax fins que la propietat pot presentar demanda judicial.",
+          "No signis cap document sense consultar un advocat del torn d'ofici (gratuït).",
+        ]),
+      ],
+      "Basada en la LAU i la Llei 12/2023. La situació varia segons el tipus de contracte.",
+      "Veure recursos d'habitatge"
+    );
+
+    if (situation === 'burofax_si') return R(
+      ["Habitatge", "Burofax rebut", "⚠️ Acció urgent"],
+      "Has rebut el burofax: el ", "compte enrere ha començat", ".",
+      [
+        B("01", "El que diu la llei", [
+          "Des del burofax, la propietat pot presentar demanda de desnonament al cap de 30 dies.",
+          "Un cop presentada la demanda, el jutjat et notificarà i tindràs 10 dies hàbils per contestar-la.",
+          "Si ets persona vulnerable (renda baixa, fills menors, discapacitat) pots sol·licitar la suspensió del llançament.",
+        ]),
+        B("02", "Fes-ho AVUI", [
+          "Contacta avui amb el torn d'ofici o el SOJ (Servei d'Orientació Jurídica): és gratuït i urgent.",
+          "Sol·licita cita als Serveis Socials municipals per acreditar vulnerabilitat si és el teu cas.",
+          "No signis cap document ni acord sense consultar primer un advocat.",
+        ]),
+        B("03", "Terminis crítics", [
+          "30 dies des del burofax per a presentació de demanda.",
+          "10 dies hàbils per contestar la demanda un cop notificada.",
+          "Pots demanar pròrroga si ets vulnerable: fins a 2 anys en alguns casos.",
+        ]),
+      ],
+      "Basada en la LAU i la Llei 12/2023. Actua ràpid: cada dia compta.",
+      "Veure recursos d'habitatge"
+    );
+
+    if (situation === 'fianza') return R(
+      ["Habitatge", "Fiança no retornada", "3 anys per reclamar"],
+      "Tens dret a recuperar ", "la fiança íntegra", ".",
+      [
+        B("01", "El que diu la llei", [
+          "La propietat té 30 dies des que marxes per retornar la fiança. Passat aquest termini genera interessos legals.",
+          "Únicament pot retenir part de la fiança si hi ha danys documentats. El desgast normal de l'ús NO es pot descomptar.",
+          "Si la propietat no va dipositar la fiança a l'INCASOL, et pot deure el doble de l'import.",
+        ]),
+        B("02", "Pas a pas", [
+          "Envia un burofax a la propietat demanant la devolució en 10 dies. Guarda el resguard.",
+          "Si no respon, presenta demanda al jutjat de primera instància (fins a 2.000 € no cal advocat ni procurador).",
+          "Comprova si la fiança estava dipositada: l'INCASOL de Catalunya et pot informar.",
+        ]),
+        B("03", "Terminis", [
+          "30 dies des que marxes perquè la propietat et retorni la fiança.",
+          "3 anys per reclamar-la judicialment si no te la tornen.",
+        ]),
+      ],
+      "Basada en la LAU, art. 36, i la normativa de l'INCASOL. Per a imports elevats, considera advocat.",
+      "Veure recursos d'habitatge"
+    );
+
+    return R(
+      ["Habitatge", "Pujada del lloguer", "Límit legal IPC"],
+      "La pujada del lloguer ", "té un límit legal", " que pots exigir.",
+      [
+        B("01", "El que diu la llei", [
+          "La Llei 12/2023 limita la pujada del lloguer a l'IPC o, en zones tensionades, a l'índex de contenció de rendes.",
+          "La propietat ha de notificar la pujada amb almenys 30 dies d'antelació a la renovació del contracte.",
+          "Si vius en una zona declarada tensionada, la pujada pot estar limitada per sota de l'IPC.",
+        ]),
+        B("02", "Pas a pas", [
+          "Comprova si la teva zona és 'àrea de mercat tensionat' al portal de l'INCASOL o l'Agència de l'Habitatge.",
+          "Calcula la pujada màxima legal amb el simulador de l'INE (índex IPC interanual del teu contracte).",
+          "Si la pujada supera el límit, envia un escrit a la propietat negant-t'hi i documentant el límit legal aplicable.",
+        ]),
+        B("03", "Terminis", [
+          "30 dies d'antelació mínims per a qualsevol modificació de renda.",
+          "Pots denunciar pujades il·legals a l'Agència de l'Habitatge de Catalunya.",
+        ]),
+      ],
+      "Basada en la Llei 12/2023 i la LAU vigent. La normativa pot variar si el contracte és anterior a 2023.",
+      "Veure recursos d'habitatge"
+    );
+  }
+
+  /* ── POLICIAL ── */
+  if (scenario === 'policial') {
+    const incident = answers[0]; // ident | multa | escorco | grav
+
+    if (incident === 'ident') return R(
+      ["Policia", "Identificació", "Drets garantits"],
+      "Tens dret a saber ", "per què t'identifiquen", ".",
+      [
+        B("01", "El que diu la llei", [
+          "La policia pot identificar-te si hi ha indicis d'haver comès una infracció o per raons de seguretat pública. No per qualsevol motiu.",
+          "Tens dret a saber el motiu de la identificació i la llei en que es basa. Has de facilitar el DNI, però res més.",
+          "Si no portes el DNI, la policia pot portar-te a comissaria 'per al temps imprescindible' per identificar-te (màxim 6 hores).",
+        ]),
+        B("02", "Durant la identificació", [
+          "Mantén la calma. Facilita les dades però pots demanar el número de placa i el motiu de la identificació.",
+          "Anota tot un cop acabat: hora, lloc, número de placa dels agents, testimonis.",
+          "Si creus que ha estat per perfil ètnic, posa-t'en contacte amb SOS Racisme.",
+        ]),
+        B("03", "Terminis", [
+          "2 anys per presentar queixa per identificació il·legal davant el ministeri fiscal o el Síndic de Greuges.",
+        ]),
+      ],
+      "Basada en la LO 4/2015 i la LO 2/1986. La parada per identificació sense motiu és una pràctica il·legal.",
+      "Veure recursos de drets civils"
+    );
+
+    if (incident === 'multa') return R(
+      ["Policia", "Multa", "30 dies per al·legar"],
+      "Tens 30 dies per ", "impugnar la multa", ".",
+      [
+        B("01", "El que diu la llei", [
+          "Les sancions de la Llei Mordassa van de 100 € fins a 600.000 € i sovint s'apliquen de forma abusiva.",
+          "Tens dret a veure l'acta d'infracció i a presentar al·legacions per escrit en un termini de 10-30 dies hàbils.",
+          "Si el recurs administratiu és denegat, pots recórrer judicialment.",
+        ]),
+        B("02", "Pas a pas", [
+          "Llegeix l'acta amb atenció: errors en les dades (hora, lloc, nom) poden anul·lar la sanció.",
+          "Presenta al·legacions per escrit. No pagis mentre tant: pagar implica acceptar els fets.",
+          "Contacta amb col·lectius especialitzats (Irídia, SOS Racisme) si és per actuació en protesta o motiu discriminatori.",
+        ]),
+        B("03", "Terminis", [
+          "10-30 dies hàbils per presentar al·legacions (comprova el termini exacte al document de la sanció).",
+          "Si no al·legues i no pagues, la multa pot incrementar-se per recàrrecs.",
+        ]),
+      ],
+      "Basada en la LO 4/2015 i la Llei 39/2015 de procediment administratiu.",
+      "Veure recursos de drets civils"
+    );
+
+    if (incident === 'escorco') return R(
+      ["Policia", "Escorcoll / Retenció", "Drets fonamentals"],
+      "Un escorcoll sense causa ", "pot ser il·legal", ".",
+      [
+        B("01", "El que diu la llei", [
+          "La policia només pot escorcollar-te si hi ha causa justificada (indicis de delicte, seguretat). Té uns límits legals clars.",
+          "Una detenció ha de ser comunicada als teus familiars i tens dret a advocat des del primer moment.",
+          "Tens dret al silenci: no estàs obligat a declarar contra tu mateix (art. 24 CE).",
+        ]),
+        B("02", "Durant i després", [
+          "No resisteixis físicament: pots protestar verbalment però de forma tranquil·la.",
+          "Un cop lliure, anota tot: hora, lloc, número de placa dels agents i el que ha passat exactament.",
+          "Presenta denúncia als Mossos o al jutjat si creus que hi ha hagut abús o irregularitat.",
+        ]),
+        B("03", "Terminis", [
+          "Detenció sense càrrecs: màxim 72 hores (art. 17 CE). Passat aquest temps has de quedar lliure o ser presentat al jutge.",
+          "2 anys per presentar denúncia per tracte irregular o lesions.",
+        ]),
+      ],
+      "Basada en la CE art. 17, la LO 4/2015 i la LECr. Si hi ha hagut violència, documenta les lesions immediatament.",
+      "Veure recursos de drets civils"
+    );
+
+    return R(
+      ["Policia", "Gravar la policia", "Legal en espai públic"],
+      "Gravar la policia en espai públic ", "és legal", ".",
+      [
+        B("01", "El que diu la llei", [
+          "Gravar agents de policia en l'exercici de les seves funcions en espai públic és legal (art. 20 CE).",
+          "Els agents NO poden confiscar-te el mòbil sense ordre judicial.",
+          "Difondre el contingut és legal sempre que no reveli dades que posin en risc operacions concretes.",
+        ]),
+        B("02", "Si t'ho impedeixen", [
+          "Mantén la calma. Pots indicar verbalment que és un dret legal, però no provoquis una escalada.",
+          "Si et confisquen el mòbil sense ordre judicial, denuncia-ho immediatament a la fiscalia.",
+          "Les gravacions poden ser prova en un judici: guarda-les en un lloc segur.",
+        ]),
+        B("03", "Terminis", [
+          "Si t'han multat per gravar: 30 dies per al·legar la sanció.",
+          "Contacta amb el Grup de Drets Civils d'Irídia per assessorament especialitzat.",
+        ]),
+      ],
+      "Basada en la CE art. 20 i la LO 4/2015. La jurisprudència reforça el dret a gravar policia en acte de servei.",
+      "Veure recursos de drets civils"
+    );
+  }
+
+  /* ── FAMILIAR ── */
+  if (scenario === 'familiar') {
+    const problem = answers[0]; // marxar | conflicte | risc
+    const age     = answers[1]; // 14-15 | 16-17 | 18+
+
+    if (problem === 'risc') return R(
+      ["Família", "Situació de risc", "Protecció immediata"],
+      "Si estàs en risc, ", "hi ha protecció immediata", " disponible.",
+      [
+        B("01", "El que diu la llei", [
+          "La DGAIA pot activar mesures de protecció en menys de 24 hores si hi ha risc per a un menor.",
+          "Qualsevol professional (metge, mestre) té l'obligació legal de denunciar situacions de risc a menors.",
+          "En risc immediat, la policia pot separar-te de l'entorn perillós sense ordre judicial prèvia.",
+        ]),
+        B("02", "Actua ara", [
+          "Truca al 112 si estàs en perill físic immediat.",
+          "Truca al 116 (línia europea d'ajuda a infants) o al 900 300 777 (SOS Infants Catalunya): confidencial i gratuït.",
+          "Pots anar directament a qualsevol CAP, escola o comissaria: estan obligats a activar el protocol de protecció.",
+        ]),
+        B("03", "Terminis", [
+          "Mesures de protecció urgents: s'activen en 24-72 hores.",
+          "No esperes si hi ha risc físic o psicològic: actua avui.",
+        ]),
+      ],
+      "Basada en la Llei 14/2010 (LDOIA) i el protocol d'atenció a menors en risc de Catalunya.",
+      "Veure recursos"
+    );
+
+    if (problem === 'marxar' && age === '14-15') return R(
+      ["Família", "14-15 anys", "Via serveis socials"],
+      "Amb 14-15 anys, ", "marxar de casa", " passa pels serveis socials.",
+      [
+        B("01", "El que diu la llei", [
+          "Als 14-15 anys no pots emancipar-te legalment. Necessites el suport d'adults o institucions.",
+          "Si la situació a casa és insegura o hi ha negligència, els Serveis Socials i la DGAIA han d'intervenir.",
+          "Existeixen CRAE (centres residencials) i famílies d'acollida per a menors que no poden viure amb la família.",
+        ]),
+        B("02", "Vies disponibles", [
+          "Parla amb un adult de confiança a l'escola (orientador, tutor): estan obligats a ajudar-te.",
+          "Truca al 116 o al 900 300 777 per parlar de forma anònima amb professionals.",
+          "Si hi ha violència o abús, contacta directament amb la policia o qualsevol CAP.",
+        ]),
+        B("03", "El futur", [
+          "Als 16 anys podràs sol·licitar l'emancipació judicial si demostres capacitat de vida independent.",
+        ]),
+      ],
+      "Basada en la Llei 14/2010 (LDOIA) i el Codi Civil. La teva seguretat és la prioritat.",
+      "Veure recursos"
+    );
+
+    if (problem === 'marxar' && age === '16-17') return R(
+      ["Família", "16-17 anys", "Emancipació possible"],
+      "Als 16 anys pots ", "emancipar-te", " legalment.",
+      [
+        B("01", "El que diu la llei", [
+          "A partir dels 16 anys pots sol·licitar l'emancipació davant un notari (amb consentiment dels pares) o davant el jutjat (sense, per causa justa).",
+          "Un cop emancipat/da pots signar contractes, llogar un pis i prendre decisions de forma autònoma.",
+          "Si no vols emancipar-te però necessites sortir de casa, els Serveis Socials poden buscar alternatives residencials.",
+        ]),
+        B("02", "Pas a pas", [
+          "Parla amb un advocat del torn d'ofici (gratuït) per valorar quin tipus d'emancipació és viable.",
+          "Si els teus pares no hi estan d'acord, hauràs d'acreditar davant el jutjat capacitat de vida independent.",
+          "Contacta amb Serveis Socials: poden orientar-te sobre recursos residencials per a joves.",
+        ]),
+        B("03", "Terminis", [
+          "Emancipació notarial (amb consentiment): 1-2 setmanes.",
+          "Emancipació judicial (sense consentiment): 1-3 mesos.",
+        ]),
+      ],
+      "Basada en el Codi Civil, arts. 314-321. Considera els aspectes pràctics (feina, habitatge) abans de sol·licitar-la.",
+      "Veure recursos"
+    );
+
+    if (problem === 'marxar') return R(
+      ["Família", "+18 anys", "Plena autonomia"],
+      "Amb 18 anys tens ", "plena autonomia", " per marxar.",
+      [
+        B("01", "El que diu la llei", [
+          "Amb 18 anys ets major d'edat: pots marxar quan vulguis, sense demanar permís ni justificació.",
+          "No existeix cap obligació legal de continuar vivint amb la família.",
+          "Els teus pares no estan legalment obligats a mantenir-te si tens capacitat per treballar.",
+        ]),
+        B("02", "Recursos pràctics", [
+          "Busca habitació o pis compartit: Idealista, Habitaclia, o grups locals de Facebook.",
+          "Consulta les ajudes al lloguer per a joves de la Generalitat i el teu ajuntament.",
+          "Si estàs en situació de vulnerabilitat, contacta amb Serveis Socials per a orientació i possibles ajudes.",
+        ]),
+        B("03", "Ajudes disponibles", [
+          "Ajuda al lloguer per a joves (fins a 35 anys) de la Generalitat de Catalunya.",
+          "Borsa Jove d'Habitatge: pisos a preus assequibles per a joves.",
+        ]),
+      ],
+      "Amb 18 anys la decisió és teva. Si tens una situació complexa, consulta Serveis Socials.",
+      "Veure recursos d'habitatge"
+    );
+
+    return R(
+      ["Família", "Conflicte familiar", "Mediació disponible"],
+      "La mediació familiar ", "pot resoldre el conflicte", " sense arribar al jutjat.",
+      [
+        B("01", "El que diu la llei", [
+          "El Centre de Mediació de Catalunya ofereix mediació familiar gratuïta o de baix cost per a conflictes familiars.",
+          "Si hi ha violència o abús, la via és la protecció, no la mediació.",
+          "La mediació és voluntària i confidencial: el que es parla no pot ser usat judicialment.",
+        ]),
+        B("02", "Opcions disponibles", [
+          "Sol·licita mediació familiar al Centre de Mediació de Catalunya (gratuïta en molts casos).",
+          "Si ets menor i el conflicte és greu, parla amb el teu centre educatiu: poden activar protocols d'ajuda.",
+          "El servei SAIA (Servei d'Atenció Integral a Adolescents) ofereix suport específic per a joves en conflicte familiar.",
+        ]),
+        B("03", "Quan és urgent", [
+          "Si hi ha violència física o amenaces: 112 immediatament.",
+          "Si hi ha violència psicològica persistent: Serveis Socials i DGAIA.",
+        ]),
+      ],
+      "Basada en la Llei 15/2009 de mediació en l'àmbit del dret privat de Catalunya.",
+      "Veure recursos"
+    );
+  }
+
+  /* ── DIGITAL ── */
+  if (scenario === 'digital') {
+    const problem = answers[0]; // fotos | xantatge | petjada | assetjament
+
+    if (problem === 'fotos') return R(
+      ["Digital", "Fotos sense permís", "Retirada urgent"],
+      "Tens dret a ", "retirar les teves fotos", " de qualsevol plataforma.",
+      [
+        B("01", "El que diu la llei", [
+          "El dret a la pròpia imatge (LO 1/1982) protegeix la teva foto: ningú pot publicar-la sense el teu consentiment exprés.",
+          "El RGPD et dóna el dret d'oposició i dret a l'oblit: pots sol·licitar la retirada immediata.",
+          "Si ets menor d'edat, la protecció és absoluta: cap imatge teva pot publicar-se sense consentiment.",
+        ]),
+        B("02", "Pas a pas", [
+          "Fes captures de pantalla com a prova ABANS de sol·licitar la retirada.",
+          "Usa el formulari de 'contingut que viola drets de privacitat' de cada xarxa (Instagram, TikTok, X) per reportar.",
+          "Si la plataforma no actua en 72 hores, presenta reclamació gratuïta a l'AEPD (aepd.es).",
+        ]),
+        B("03", "Terminis", [
+          "72 hores: termini per a retirada urgent a les principals plataformes.",
+          "1 mes: termini de resposta a una reclamació formal davant l'AEPD.",
+        ]),
+      ],
+      "Basada en la LO 1/1982, la LOPDGDD i el RGPD. Si les fotos són de caràcter sexual, consulta la via de sextorsió.",
+      "Veure recursos digitals"
+    );
+
+    if (problem === 'xantatge') return R(
+      ["Digital", "Sextorsió", "⚠️ Delicte penal"],
+      "La sextorsió és un ", "delicte penal", ": no paguis i denuncia.",
+      [
+        B("01", "El que diu la llei", [
+          "La distribució o amenaça de distribució de contingut íntim sense consentiment és un delicte (art. 197.7 CP), amb penes de fins a 5 anys.",
+          "El xantatge i la coacció també estan tipificats penalment. Pagar no garanteix que no ho publiquin.",
+          "La policia té unitats especialitzades (UDEF - Policia Nacional, Mossos Ciberdelictes) per a aquests casos.",
+        ]),
+        B("02", "Actua ara: NO paguis", [
+          "No pagis: el pagament no atura el xantatge i sovint l'incentiva a continuar.",
+          "Guarda totes les proves: captures dels missatges, noms d'usuari, URL de perfils.",
+          "Denuncia a la Policia Nacional (Grup de Delictes Telemàtics) o als Mossos (Unitat de Ciberdelictes).",
+        ]),
+        B("03", "Suport disponible", [
+          "L'AEPD té un canal d'urgència per a contingut íntim no consensuat: actuen en hores.",
+          "Stop Sextorsión (stopsextorsion.com) ofereix suport i orientació gratuïts.",
+        ]),
+      ],
+      "Basada en el CP, arts. 172 i 197.7. Denuncia immediatament: la policia actua ràpid en casos de sextorsió.",
+      "Veure recursos digitals"
+    );
+
+    if (problem === 'petjada') return R(
+      ["Digital", "Petjada digital", "Dret a l'oblit"],
+      "Pots ", "esborrar la teva petjada digital", " legalment.",
+      [
+        B("01", "El que diu la llei", [
+          "El RGPD reconeix el 'dret a l'oblit' (art. 17): pots sol·licitar l'eliminació de dades personals que ja no siguin necessàries.",
+          "Google i altres cercadors han de processar sol·licituds de retirada de resultats que afectin la teva privacitat.",
+          "Les xarxes socials han d'eliminar el teu compte i totes les dades associades si ho sol·licites.",
+        ]),
+        B("02", "Pas a pas", [
+          "Google: usa el formulari 'eliminació de contingut de Google' per a resultats de cerca.",
+          "Xarxes socials: sol·licita la eliminació de compte des de la configuració. Descarrega les teves dades primer.",
+          "Si una web de tercers no retira el contingut, presenta reclamació a l'AEPD.",
+        ]),
+        B("03", "Terminis", [
+          "30 dies per a resposta de la plataforma o cercador a la teva sol·licitud.",
+          "3 mesos per a resolució de l'AEPD en casos de reclamació formal.",
+        ]),
+      ],
+      "Basada en el RGPD, art. 17, i la LOPDGDD. El dret a l'oblit té límits: no s'aplica a informació d'interès públic.",
+      "Veure recursos digitals"
+    );
+
+    return R(
+      ["Digital", "Assetjament en línia", "Acció immediata"],
+      "L'assetjament digital ", "té solució", ": no estàs sol/a.",
+      [
+        B("01", "El que diu la llei", [
+          "L'assetjament en línia persistent pot constituir un delicte de stalking (art. 172 ter CP) o de coaccions.",
+          "Les plataformes estan obligades a actuar davant l'assetjament reportat.",
+          "Si l'assetjador és conegut i la situació és greu, pots sol·licitar una ordre d'allunyament.",
+        ]),
+        B("02", "Actua", [
+          "Bloqueja i reporta l'usuari a la plataforma. Guarda captures ABANS de bloquejar.",
+          "Si coneixes la identitat de l'assetjador, presenta denúncia a la Policia Nacional o als Mossos.",
+          "Contacta amb el Casal Lambda si l'assetjament és per motiu de gènere o identitat sexual.",
+        ]),
+        B("03", "Suport", [
+          "Línia d'ajuda contra l'assetjament escolar i digital: 900 018 018.",
+          "Si ets menor, parla amb un adult de confiança o el teu centre educatiu.",
+        ]),
+      ],
+      "Basada en el CP, arts. 172 ter i 173. Si ets menor, els adults del teu entorn estan obligats a ajudar-te.",
+      "Veure recursos digitals"
+    );
+  }
+
+  /* ── SALUT ── */
+  if (scenario === 'salut') {
+    const type = answers[0]; // psicoleg | ingres | medicacio | general
+    const age  = answers[1]; // menys16 | 16-17 | 18+
+
+    if (type === 'psicoleg' && age === 'menys16') return R(
+      ["Salut mental", "Menys de 16", "Acompanyament necessari"],
+      "Amb menys de 16 anys pots ", "accedir al psicòleg", " amb suport d'un adult.",
+      [
+        B("01", "El que diu la llei", [
+          "Amb menys de 16 anys, en principi cal el consentiment dels pares per a atenció psicològica reglada.",
+          "En situacions de risc, els professionals poden atendre un menor sense consentiment parental.",
+          "El CSMIJ (Centre de Salut Mental Infanto-Juvenil) és el recurs específic per a menors de 18 anys.",
+        ]),
+        B("02", "Alternatives", [
+          "Parla amb el teu metge de capçalera al CAP: pot fer una derivació al CSMIJ.",
+          "El servei de 'consell de joves' d'alguns ajuntaments ofereix atenció psicològica sense permís parental.",
+          "En situació de crisi: truca al 024 (gratuït, confidencial, 24h).",
+        ]),
+        B("03", "Temps d'espera", [
+          "Derivació CAP → CSMIJ: 4-12 setmanes.",
+          "Atenció en crisi: immediata (024 o urgències).",
+        ]),
+      ],
+      "Basada en la Llei 21/2000 de Catalunya. En situació d'urgència, truca sempre al 024.",
+      "Veure recursos de salut"
+    );
+
+    if (type === 'psicoleg') return R(
+      ["Salut mental", age === '16-17' ? "16-17 anys" : "+18 anys", "Autonomia garantida"],
+      "Pots anar al psicòleg ", "sense permís", " dels teus pares.",
+      [
+        B("01", "El que diu la llei", [
+          age === '16-17'
+            ? "La Llei 21/2000 de Catalunya reconeix la teva autonomia per a decisions mèdiques als 16 anys. No necessites permís parental."
+            : "Amb 18 anys tens plena autonomia: pots accedir a qualsevol servei de salut mental sense cap restricció.",
+          "Tens dret a la confidencialitat: el metge no pot compartir informació amb els teus pares sense el teu consentiment.",
+          "El sistema públic ofereix psicòleg clínic al CSMA (adults) o CSMIJ (menors de 18) per derivació del CAP.",
+        ]),
+        B("02", "Com accedir-hi", [
+          "Demana cita al teu CAP i sol·licita derivació al CSMA/CSMIJ per atenció psicològica.",
+          "Hi ha psicòlegs al Col·legi Oficial de Psicòlegs amb primera visita gratuïta o reduïda.",
+          "El CJAS ofereix atenció psicològica i de salut sexual per a joves de forma gratuïta o molt assequible.",
+        ]),
+        B("03", "Temps d'espera", [
+          "CAP → CSMA: 4-12 setmanes. Pots demanar urgència si la situació ho requereix.",
+          "En crisi: 024 (gratuït, 24h) o urgències del CAP.",
+        ]),
+      ],
+      "Basada en la Llei 21/2000 (Catalunya). La llista d'espera pot ser llarga: el 024 és immediat.",
+      "Veure recursos de salut"
+    );
+
+    if (type === 'ingres') return R(
+      ["Salut mental", "Ingrés involuntari", "Dret a recórrer"],
+      "L'ingrés involuntari ", "requereix autorització judicial", ".",
+      [
+        B("01", "El que diu la llei", [
+          "L'ingrés psiquiàtric involuntari ha de ser autoritzat pel jutjat en 24 hores des que es produeix (art. 763 LEC).",
+          "Tens dret a un advocat des del moment de l'ingrés. Si no en tens, el torn d'ofici t'assigna un gratuïtament.",
+          "El jutge ha de verificar que l'ingrés és necessari i proporcional. Pots presentar al·legacions.",
+        ]),
+        B("02", "Els teus drets", [
+          "Tens dret a comunicar-te amb l'exterior (família, advocat) des del primer moment.",
+          "Pots demanar una segona opinió mèdica sobre el diagnòstic i el tractament.",
+          "Si creus que el teu ingrés és il·legal o s'ha prolongat injustificadament, l'advocat pot presentar recurs urgent.",
+        ]),
+        B("03", "Terminis", [
+          "24 hores per a autorització judicial de l'ingrés involuntari.",
+          "Revisió judicial periòdica (cada 6 mesos com a màxim).",
+        ]),
+      ],
+      "Basada en la LEC, art. 763, i el Conveni de Drets de les Persones amb Discapacitat (ONU).",
+      "Veure recursos de salut"
+    );
+
+    if (type === 'medicacio') return R(
+      ["Salut mental", "Medicació", "Dret a decidir"],
+      "Tens dret a ", "refusar o qüestionar", " qualsevol medicació.",
+      [
+        B("01", "El que diu la llei", [
+          "El consentiment informat és un dret fonamental: cap medicament pot administrar-se sense la teva aprovació (si tens capacitat de decisió).",
+          "Als 16 anys (Catalunya) tens autonomia mèdica: pots refusar un tractament excepte en situació de perill vital immediat.",
+          "Tens dret a rebre informació completa sobre el medicament, els efectes secundaris i les alternatives.",
+        ]),
+        B("02", "Pas a pas", [
+          "Demana al metge una explicació completa del diagnòstic i per què proposa aquell medicament concret.",
+          "Sol·licita una segona opinió mèdica: és el teu dret i el metge no pot negar-s'hi.",
+          "Si no estàs d'acord i el metge insisteix, pots presentar una queixa al Servei d'Atenció al Pacient del centre.",
+        ]),
+        B("03", "Recursos", [
+          "Pots contactar amb el Defensor del Pacient de Catalunya per a situacions de vulneració de drets.",
+          "Si ets menor i els pares prenen la decisió sense escoltar-te, un advocat del torn d'ofici pot assessorar-te.",
+        ]),
+      ],
+      "Basada en la Llei 21/2000 (autonomia del pacient) i la Llei 41/2002.",
+      "Veure recursos de salut"
+    );
+
+    return R(
+      ["Salut mental", "Consulta general", "Sistema públic"],
+      "El sistema públic de salut mental ", "és gratuït", " i accessible.",
+      [
+        B("01", "El que diu la llei", [
+          "L'atenció a la salut mental és un dret garantit pel sistema sanitari públic de Catalunya.",
+          "El CAP és el primer punt d'accés: el metge de capçalera pot derivar-te al CSMA o CSMIJ.",
+          "Als 16 anys (Catalunya) tens autonomia per accedir als serveis de salut sense consentiment parental.",
+        ]),
+        B("02", "Recursos disponibles", [
+          "CAP → derivació al CSMA (adults) o CSMIJ (menors de 18): gratuït amb targeta sanitària.",
+          "El CJAS ofereix atenció integral per a joves de forma gratuïta o molt assequible.",
+          "En crisi emocional: 024 gratuït i disponible les 24 hores.",
+        ]),
+        B("03", "Temps d'espera", [
+          "CAP → CSMA: 4-12 setmanes de mitjana.",
+          "Si és urgent: urgències de qualsevol hospital o 024.",
+        ]),
+      ],
+      "Basada en la Llei 16/2003 de Cohesió del SNS i la normativa de la Generalitat de Catalunya.",
+      "Veure recursos de salut"
+    );
+  }
+
+  return d('ca').simResults?.[scenario] ?? d('ca').simResults?.habitatge;
+}
+
 function SimResult({ lang, scenario, answers, onReset, setRoute }) {
-  const L = d(lang).simResults?.[scenario] ?? d(lang).simResults?.habitatge;
+  const L = getResult(scenario, answers);
   const flow = QUESTION_FLOWS[scenario] || QUESTION_FLOWS.habitatge;
 
   const trail = answers.map((answerId, i) => {
