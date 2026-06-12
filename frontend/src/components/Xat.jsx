@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { d } from "../i18n/data";
 
 function renderInline(text) {
@@ -100,14 +100,36 @@ function parseResponse(text) {
   return { content: body, citations };
 }
 
+function getSessionMessages(langCode) {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(`pdj_chat_${langCode}`) || "null");
+    if (Array.isArray(saved) && saved.length > 0) return saved;
+  } catch {}
+  const L = d(langCode).chat;
+  return [{ from: "bot", text: L.greeting, suggestions: L.suggest }];
+}
+
 export default function Xat({ lang, setRoute }) {
   const L = d(lang).chat;
-  const [messages, setMessages] = useState([
-    { from: "bot", text: L.greeting, suggestions: L.suggest },
-  ]);
+  const prevLangRef = useRef(null);
+
+  const [messages, setMessages] = useState(() => getSessionMessages(lang));
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const bodyRef = useRef(null);
+
+  // Persist to sessionStorage on every messages change
+  useEffect(() => {
+    try { sessionStorage.setItem(`pdj_chat_${lang}`, JSON.stringify(messages)); } catch {}
+  }, [messages, lang]);
+
+  // Restore per-language session (or greeting) when lang prop changes
+  useEffect(() => {
+    if (prevLangRef.current !== null && prevLangRef.current !== lang) {
+      setMessages(getSessionMessages(lang));
+    }
+    prevLangRef.current = lang;
+  }, [lang]);
 
   useEffect(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;

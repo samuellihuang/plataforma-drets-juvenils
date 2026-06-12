@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { d } from "../i18n/data";
 
 function HeroMark() {
@@ -12,16 +12,33 @@ function HeroMark() {
         </defs>
         <rect width="400" height="300" fill="#0E1B3D"/>
         <rect width="400" height="300" fill="url(#grid)"/>
-        <rect x="198" y="60" width="4" height="180" fill="#F5F1E8"/>
-        <circle cx="200" cy="60" r="6" fill="#E8553D"/>
-        <rect x="170" y="232" width="60" height="3" fill="#F5F1E8"/>
-        <rect x="80" y="98" width="240" height="2" fill="#F5F1E8"/>
-        <line x1="120" y1="100" x2="120" y2="150" stroke="#F5F1E8" strokeWidth="1"/>
-        <path d="M 90 150 Q 120 175 150 150 Z" fill="none" stroke="#F5F1E8" strokeWidth="1.5"/>
-        <line x1="90" y1="150" x2="150" y2="150" stroke="#F5F1E8" strokeWidth="1.5"/>
-        <line x1="280" y1="100" x2="280" y2="160" stroke="#E8553D" strokeWidth="1"/>
-        <path d="M 250 160 Q 280 188 310 160 Z" fill="#E8553D" fillOpacity="0.18" stroke="#E8553D" strokeWidth="1.5"/>
-        <line x1="250" y1="160" x2="310" y2="160" stroke="#E8553D" strokeWidth="1.5"/>
+
+        {/* Constel·lació d'escenaris — 8 àmbits orbitant la plataforma (node central) */}
+        <line x1="200" y1="150" x2="200" y2="72"  stroke="rgba(245,241,232,0.32)" strokeWidth="1"/>
+        <line x1="200" y1="150" x2="255" y2="95"  stroke="rgba(245,241,232,0.32)" strokeWidth="1"/>
+        <line x1="200" y1="150" x2="278" y2="150" stroke="rgba(245,241,232,0.32)" strokeWidth="1"/>
+        <line x1="200" y1="150" x2="255" y2="205" stroke="rgba(245,241,232,0.32)" strokeWidth="1"/>
+        <line x1="200" y1="150" x2="200" y2="228" stroke="rgba(245,241,232,0.32)" strokeWidth="1"/>
+        <line x1="200" y1="150" x2="145" y2="205" stroke="rgba(245,241,232,0.32)" strokeWidth="1"/>
+        <line x1="200" y1="150" x2="122" y2="150" stroke="rgba(245,241,232,0.32)" strokeWidth="1"/>
+        <line x1="200" y1="150" x2="145" y2="95"  stroke="rgba(245,241,232,0.32)" strokeWidth="1"/>
+
+        <line x1="200" y1="72"  x2="255" y2="95"  stroke="rgba(245,241,232,0.14)" strokeWidth="1"/>
+        <line x1="278" y1="150" x2="255" y2="205" stroke="rgba(245,241,232,0.14)" strokeWidth="1"/>
+        <line x1="200" y1="228" x2="145" y2="205" stroke="rgba(245,241,232,0.14)" strokeWidth="1"/>
+        <line x1="122" y1="150" x2="145" y2="95"  stroke="rgba(245,241,232,0.14)" strokeWidth="1"/>
+
+        <circle cx="200" cy="150" r="15" fill="#E8553D" fillOpacity="0.14"/>
+        <circle cx="200" cy="150" r="6" fill="#E8553D"/>
+        <circle cx="200" cy="72"  r="3" fill="#F5F1E8" fillOpacity="0.85"/>
+        <circle cx="255" cy="95"  r="3" fill="#F5F1E8" fillOpacity="0.85"/>
+        <circle cx="278" cy="150" r="3" fill="#F5F1E8" fillOpacity="0.85"/>
+        <circle cx="255" cy="205" r="3" fill="#F5F1E8" fillOpacity="0.85"/>
+        <circle cx="200" cy="228" r="3" fill="#F5F1E8" fillOpacity="0.85"/>
+        <circle cx="145" cy="205" r="3" fill="#F5F1E8" fillOpacity="0.85"/>
+        <circle cx="122" cy="150" r="3" fill="#F5F1E8" fillOpacity="0.85"/>
+        <circle cx="145" cy="95"  r="3" fill="#F5F1E8" fillOpacity="0.85"/>
+
         <text x="32" y="34" fill="rgba(245,241,232,0.6)" fontFamily="JetBrains Mono, monospace" fontSize="10" letterSpacing="2">01 · BCN</text>
         <text x="32" y="280" fill="rgba(245,241,232,0.6)" fontFamily="JetBrains Mono, monospace" fontSize="10" letterSpacing="2">PLATAFORMA · DRETS</text>
         <text x="370" y="280" fill="rgba(245,241,232,0.6)" fontFamily="JetBrains Mono, monospace" fontSize="10" letterSpacing="2" textAnchor="end">2025</text>
@@ -73,9 +90,26 @@ function Hero({ setRoute, lang }) {
 
 function Stats({ lang }) {
   const L = d(lang).stats;
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll(".stat").forEach((s, i) => {
+            setTimeout(() => s.classList.add("revealed"), i * 120);
+          });
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
   return (
     <section className="stats" aria-label={L.eyebrow}>
-      <div className="stats-inner">
+      <div className="stats-inner" ref={ref}>
         {L.items.map((s, i) => (
           <div className="stat" key={i}>
             <span className="stat-num">{s.num}</span>
@@ -138,65 +172,6 @@ function Topics({ setRoute, lang }) {
               </div>
               <span className="topic-arrow" aria-hidden="true">→</span>
             </button>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Testimonials({ lang }) {
-  const L = d(lang).testimonials;
-  return (
-    <section className="section testimonials">
-      <div className="section-inner">
-        <header className="section-head">
-          <div>
-            <div className="eyebrow-row"><span className="eyebrow">{L.eyebrow}</span></div>
-          </div>
-          <h2 className="section-title">{L.title_a}<em>{L.title_em}</em>{L.title_b}</h2>
-        </header>
-        <div className="tm-grid">
-          {L.items.map((t, i) => (
-            <article className="tm" key={i}>
-              <p className="tm-quote">{t.quote}</p>
-              <div className="tm-attr">
-                <span className="tm-name">{t.name}</span>
-                <span className="tm-role">{t.role}</span>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Partners({ lang }) {
-  const L = d(lang).partners;
-  return (
-    <section className="partners" aria-label={L.eyebrow}>
-      <div className="partners-inner">
-        <div className="partners-head">
-          <div className="eyebrow-row"><span className="eyebrow">{L.eyebrow}</span></div>
-          <h2 className="partners-title">{L.title_a}<em>{L.title_em}</em>{L.title_b}</h2>
-          <p style={{ fontSize: "var(--t-sm)", color: "var(--c-ink-soft)", marginTop: "var(--s-3)", maxWidth: "42ch" }}>{L.body}</p>
-          <div className="reviewed" style={{ marginTop: "var(--s-4)" }}>
-            <span className="reviewed-mark" aria-hidden="true">✓</span>
-            <span>
-              <span>{L.reviewed}</span> <strong>{L.reviewed_strong}</strong><br />
-              <span style={{ fontFamily: "var(--f-mono)", fontSize: "var(--t-eyebrow)", letterSpacing: ".14em", textTransform: "uppercase" }}>{L.reviewed_meta}</span>
-            </span>
-          </div>
-        </div>
-        <div className="partners-list">
-          {L.items.map((p, i) => (
-            <div className="partner" key={i}>
-              <div className="partner-mark">
-                <span className="partner-name">{p.name}</span>
-                <span className="partner-tag">{p.tag}</span>
-              </div>
-            </div>
           ))}
         </div>
       </div>

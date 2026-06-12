@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { d } from "../i18n/data";
 
 const QUESTION_FLOWS = {
@@ -1347,6 +1347,17 @@ function SimResult({ lang, scenario, answers, onReset, setRoute }) {
   const L = getResult(scenario, answers);
   const flow = QUESTION_FLOWS[scenario] || QUESTION_FLOWS.habitatge;
 
+  const [scrollPct, setScrollPct] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollPct(max > 0 ? Math.min(100, Math.round((window.scrollY / max) * 100)) : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const trail = answers.map((answerId, i) => {
     const step = flow[i];
     const option = step?.options.find((o) => o.id === answerId);
@@ -1355,6 +1366,7 @@ function SimResult({ lang, scenario, answers, onReset, setRoute }) {
 
   return (
     <section className="sim-shell">
+      <div className="scroll-progress" style={{ "--scroll-pct": scrollPct + "%" }} aria-hidden="true" />
       <div className="sim-progress">
         <span>Resultat</span>
         <div className="sim-bar"><div className="sim-bar-fill" style={{ transform: "scaleX(1)" }}/></div>
@@ -1384,6 +1396,11 @@ function SimResult({ lang, scenario, answers, onReset, setRoute }) {
             </div>
           ))}
           <p className="result-disc">{L.disc}</p>
+          <p style={{ fontFamily: "var(--f-mono)", fontSize: "var(--t-eyebrow)", letterSpacing: ".12em", color: "var(--c-ink-soft)", marginTop: "var(--s-3)", display: "flex", gap: "var(--s-3)", flexWrap: "wrap", textTransform: "uppercase" }}>
+            <span>Elaborat per voluntaris amb formació jurídica</span>
+            <span aria-hidden="true">·</span>
+            <span>Darrera revisió: juny 2026</span>
+          </p>
           <div className="result-actions">
             <button className="btn btn-primary" onClick={() => setRoute("res")}>
               <span>{L.actions.primary}</span><span className="btn-arrow" aria-hidden="true">→</span>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(245,241,232,0.06)" stroke-width="0.8"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0E1B3D"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Accent stripe left -->
+  <rect x="0" y="0" width="6" height="630" fill="#E8553D"/>
+
+  <!-- Vertical rule center-left -->
+  <line x1="520" y1="80" x2="520" y2="550" stroke="rgba(245,241,232,0.12)" stroke-width="1"/>
+
+  <!-- Decorative circle -->
+  <circle cx="900" cy="315" r="220" fill="none" stroke="rgba(232,85,61,0.10)" stroke-width="1.5"/>
+  <circle cx="900" cy="315" r="140" fill="none" stroke="rgba(232,85,61,0.08)" stroke-width="1"/>
+
+  <!-- PDJ monogram -->
+  <text x="80" y="180" font-family="Georgia, serif" font-size="96" font-weight="300" fill="#F5F1E8" letter-spacing="-2" opacity="0.95">PDJ</text>
+
+  <!-- Main title -->
+  <text x="80" y="270" font-family="Georgia, serif" font-size="52" font-weight="400" fill="#F5F1E8" letter-spacing="-1">Plataforma de</text>
+  <text x="80" y="340" font-family="Georgia, serif" font-size="52" font-weight="400" fill="#E8553D" font-style="italic" letter-spacing="-1">Drets Juvenils</text>
+
+  <!-- Lede -->
+  <text x="80" y="410" font-family="Arial, sans-serif" font-size="22" fill="rgba(245,241,232,0.70)" letter-spacing="0">Simulador interactiu · Xat legal amb IA · Recursos verificats</text>
+
+  <!-- Meta pills -->
+  <rect x="80" y="448" width="120" height="32" rx="16" fill="rgba(232,85,61,0.18)"/>
+  <text x="140" y="469" font-family="Arial, sans-serif" font-size="13" fill="#E8553D" text-anchor="middle" letter-spacing="1.5" font-weight="600">GRATUÏT</text>
+
+  <rect x="214" y="448" width="150" height="32" rx="16" fill="rgba(245,241,232,0.08)"/>
+  <text x="289" y="469" font-family="Arial, sans-serif" font-size="13" fill="rgba(245,241,232,0.7)" text-anchor="middle" letter-spacing="1.5">SENSE REGISTRE</text>
+
+  <rect x="378" y="448" width="130" height="32" rx="16" fill="rgba(245,241,232,0.08)"/>
+  <text x="443" y="469" font-family="Arial, sans-serif" font-size="13" fill="rgba(245,241,232,0.7)" text-anchor="middle" letter-spacing="1.5">CA · ES · EN</text>
+
+  <!-- URL bottom -->
+  <text x="80" y="590" font-family="monospace" font-size="16" fill="rgba(245,241,232,0.35)" letter-spacing="1">plataforma-drets-juvenils.vercel.app</text>
+</svg>

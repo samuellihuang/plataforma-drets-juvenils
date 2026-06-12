@@ -57,33 +57,6 @@ const ca = {
       { num: "09", title: "Conflicte familiar", body: "Emancipació als 16, situacions de risc i opcions segons l'edat.", scenario: "familiar" },
     ],
   },
-  testimonials: {
-    eyebrow: "Veus reals",
-    title_a: "Què en diuen els qui ",
-    title_em: "ho han fet servir",
-    title_b: ".",
-    items: [
-      { quote: "Em volien fer fora del pis sense burofax. El simulador em va dir què exigir i en 30 minuts l'advocada del col·legi em va trucar. No vaig haver de pagar res.", name: "Júlia M., 22 anys", role: "Estudiant · Sabadell" },
-      { quote: "Vaig fer servir el xat per entendre una multa per fumar maria al parc. Em va explicar la Llei Mordassa i com presentar al·legacions. Vaig estalviar-me 300 €.", name: "Karim B., 19 anys", role: "Cambrer · Badalona" },
-      { quote: "Treballo amb joves migrats sense família. Aquesta plataforma m'ha permès donar-los explicacions clares sobre l'arrelament sense haver d'improvisar.", name: "Mireia C., 34 anys", role: "Educadora social · Granollers" },
-    ],
-  },
-  partners: {
-    eyebrow: "Amb el suport de",
-    title_a: "Una iniciativa ",
-    title_em: "independent",
-    title_b: ", revisada per professionals col·legiats.",
-    body: "Els continguts són revisats per advocats del Col·legi de l'Advocacia de Barcelona i col·laboradors d'entitats socials. No rebem finançament de partits ni administracions amb interessos en la matèria.",
-    items: [
-      { name: "ICAB", tag: "Col·legi Advocacia" },
-      { name: "Sindicat de Llogateres", tag: "Habitatge" },
-      { name: "SOS Racisme", tag: "Drets civils" },
-      { name: "Casal Lambda", tag: "LGTBI+" },
-    ],
-    reviewed: "Continguts revisats per",
-    reviewed_strong: "advocats col·legiats",
-    reviewed_meta: "darrera revisió · juny 2026",
-  },
   ctaBand: {
     eyebrow: "Ara mateix",
     title_a: "Si tens un dubte, ",
@@ -98,7 +71,7 @@ const ca = {
     tag: "Una eina gratuïta per a joves de Catalunya. Sense registre, sense rastre, codi obert.",
     cols: [
       { h: "Eines", items: [["Simulador", "sim"], ["Xat legal", "chat"], ["Recursos", "res"], ["Fòrum", "forum"]] },
-      { h: "Legal", items: [["Avís legal", "disclaimer"], ["Privacitat", "privacitat"], ["Cookies", "cookies"]] },
+      { h: "Legal", items: [["Avís legal", "disclaimer"], ["Privacitat", "privacitat"], ["Cookies", "cookies"], ["Qui som", "qui-som"]] },
     ],
     disc: "Cap contingut d'aquesta web substitueix l'assessorament d'una advocada o un advocat. Per a decisions amb conseqüències jurídiques, demana cita amb el torn d'ofici o el SOJ.",
     meta_left: "© 2026 · CC BY-SA 4.0",
@@ -419,15 +392,15 @@ const ca = {
     title_a: "Recursos ",
     title_em: "verificats",
     title_b: ".",
-    meta: ["Actualitzat · juny 2026", "Recursos seleccionats", "Cobertura: Catalunya"],
+    meta: ["URLs verificades · juny 2026", "Recursos seleccionats", "Cobertura: Catalunya"],
     sections: [
       {
         id: "urgent",
         h: "Emergència 24 h",
         items: [
           { meta: "Emergències · 24h · gratuït", name: "Telèfon d'emergències", desc: "Per a qualsevol situació de risc immediat. Operadores en català, castellà i 8 idiomes més.", phone: "112", urgent: true },
-          { meta: "Violència masclista · 24h · gratuït", name: "Atenció a víctimes de violència masclista", desc: "Atenció especialitzada per a dones, adolescents i famílies. Confidencial.", phone: "900 900 120", url: "https://violenciagenere.cat", urgent: true },
-          { meta: "Salut mental · 24h · gratuït", name: "Crida'm · prevenció del suïcidi", desc: "Línia d'escolta i suport per a moments de crisi emocional. Sense judicis.", phone: "024", url: "https://estallacrisi.cat", urgent: true },
+          { meta: "Violència masclista · 24h · gratuït", name: "Atenció a víctimes de violència masclista", desc: "Atenció especialitzada per a dones, adolescents i famílies. Confidencial.", phone: "900 900 120", url: "https://dones.gencat.cat/ca/serveis/violencia-masclista/", urgent: true },
+          { meta: "Salut mental · 24h · gratuït", name: "024 · Línia de prevenció del suïcidi", desc: "Línia d'escolta i suport per a moments de crisi emocional. Gratuïta, les 24 hores.", phone: "024", url: "https://www.sanidad.gob.es/linea024", urgent: true },
         ],
       },
       {
@@ -542,6 +515,46 @@ const ca = {
     foot_text: "Aquesta política de privacitat es revisa periòdicament. Darrera actualització: juny de 2026.",
     foot_cta: null,
   },
+  quisom: {
+    title_a: "Qui ",
+    title_em: "som",
+    title_b: ".",
+    meta: ["Projecte educatiu · 2025–2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    items: [
+      {
+        num: "01",
+        h: "L'equip",
+        body: "La Plataforma de Drets Juvenils ha estat creada per Oriol Chertó, Samuel Li, Martina Casas i Keila Sánchez, estudiants del Col·legi La Salle Reus. El projecte va néixer el 2025 com a iniciativa per apropar el coneixement dels drets als joves de Catalunya de manera accessible, anònima i totalment gratuïta.",
+      },
+      {
+        num: "02",
+        h: "La missió",
+        body: "Volem que cap jove es quedi sense exercir els seus drets per desconeixement. Per això hem creat eines pràctiques —un simulador de situacions, un xat legal i una guia de recursos— perquè qualsevol persona de 16 a 30 anys pugui entendre i actuar davant de qualsevol situació legal.",
+      },
+      {
+        num: "03",
+        h: "Autoria i propietat intel·lectual",
+        body: "El codi font, el disseny, els textos i tota la propietat intel·lectual d'aquesta plataforma pertanyen als seus autors originals: Oriol Chertó, Samuel Li, Martina Casas i Keila Sánchez. El projecte està documentat des del seu inici i l'autoria queda registrada sota la llicència CC BY-SA 4.0.",
+      },
+      {
+        num: "04",
+        h: "Llicència d'ús",
+        body: "Els continguts es publiquen sota la llicència Creative Commons BY-SA 4.0. Podeu copiar, modificar i redistribuir el material lliurement, sempre que citeu l'autoria —Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez— i mantingueu la mateixa llicència en les obres derivades.",
+      },
+      {
+        num: "05",
+        h: "Col·laboracions institucionals",
+        body: "Qualsevol proposta de col·laboració, difusió o incorporació del projecte en programes institucionals —UNICEF, ONG, centres educatius o administracions— ha de comptar amb el consentiment exprés de l'equip autor. Les condicions es negocien directament amb els creadors del projecte.",
+      },
+      {
+        num: "06",
+        h: "Valors",
+        body: "Privacitat total, accessibilitat, neutralitat política i no lucre. Aquesta plataforma no rep finançament de partits ni d'administracions, no fa publicitat i no comercialitza cap dada. El nostre únic interès és que els joves coneguin i puguin exercir els seus drets.",
+      },
+    ],
+    foot_text: "Projecte original creat el 2025 al Col·legi La Salle Reus. Qualsevol ús institucional o comercial d'aquesta plataforma requereix l'autorització expressa dels seus autors.",
+    cta: "Provar el simulador",
+  },
   disc: {
     title_a: "Avís ",
     title_em: "legal",
@@ -555,7 +568,7 @@ const ca = {
       { num: "05", h: "Llicència i reutilització", body: "Tot el contingut s'allibera sota llicència Creative Commons BY-SA 4.0. Pots copiar, modificar i redistribuir-lo lliurement, sempre que en citis l'autoria." },
       { num: "06", h: "Correccions", body: "Si detectes un error legal o un canvi de normativa, consulta sempre la versió consolidada al BOE o al DOGC. Revisem els continguts periòdicament." },
     ],
-    foot_text: "Aquesta plataforma està mantinguda per una col·lectiva sense ànim de lucre. No rebem finançament de partits ni administracions.",
+    foot_text: "Plataforma mantinguda per voluntaris sense ànim de lucre. Els continguts s'han elaborat amb base en formació jurídica però no han estat revisats per un advocat col·legiat: consulta sempre un professional per a decisions amb conseqüències jurídiques. No rebem finançament de partits ni administracions.",
     foot_cta: null,
   },
   nf: {
@@ -597,6 +610,8 @@ const ca = {
     char_hint: "car.",
     replies_label: "resposta",
     replies_label_pl: "respostes",
+    toast_post: "Post publicat correctament",
+    toast_reply: "Resposta enviada",
   },
 };
 
@@ -604,7 +619,7 @@ const es = {
   ...ca,
   brand: { word: ["Plataforma de", "Derechos Juveniles"], short: "PDJ" },
   nav: { home: "Inicio", sim: "Simulador", chat: "Chat legal", res: "Recursos", forum: "Foro", disclaimer: "Aviso legal", cta: "Empezar el simulador" },
-  forum: { ...ca.forum, eyebrow: "Comunidad · Anónimo", title_a: "Foro ", title_em: "de consultas", title_b: ".", search_placeholder: "Buscar por título…", new_post_btn: "Nuevo post", no_posts: "No hay publicaciones.", no_replies: "Sé el primero en responder.", loading: "Cargando…", anon: "Anónimo", back: "← Volver", reply_placeholder: "Escribe tu respuesta…", reply_btn: "Responder", new_post_title: "Nuevo post anónimo", title_label: "Título", title_placeholder: "Describe brevemente tu problema legal…", body_label: "Descripción", body_placeholder: "Explica tu situación con detalle. No incluyas datos personales.", cat_label: "Categoría", submit_btn: "Publicar", disc: "Este post es completamente anónimo. No se guarda ningún dato personal.", replies_label: "respuesta", replies_label_pl: "respuestas" },
+  forum: { ...ca.forum, eyebrow: "Comunidad · Anónimo", title_a: "Foro ", title_em: "de consultas", title_b: ".", search_placeholder: "Buscar por título…", new_post_btn: "Nuevo post", no_posts: "No hay publicaciones.", no_replies: "Sé el primero en responder.", loading: "Cargando…", anon: "Anónimo", back: "← Volver", reply_placeholder: "Escribe tu respuesta…", reply_btn: "Responder", new_post_title: "Nuevo post anónimo", title_label: "Título", title_placeholder: "Describe brevemente tu problema legal…", body_label: "Descripción", body_placeholder: "Explica tu situación con detalle. No incluyas datos personales.", cat_label: "Categoría", submit_btn: "Publicar", disc: "Este post es completamente anónimo. No se guarda ningún dato personal.", replies_label: "respuesta", replies_label_pl: "respuestas", toast_post: "Post publicado correctamente", toast_reply: "Respuesta enviada" },
   hero: {
     ...ca.hero,
     eyebrow: "Iniciativa ciudadana · Barcelona, 2026",
@@ -617,6 +632,23 @@ const es = {
     cta_primary: "Iniciar simulador",
     cta_secondary: "Hablar con el chat",
     trust: ["Sin registro", "Sin datos personales", "Código abierto"],
+  },
+  quisom: {
+    ...ca.quisom,
+    title_a: "Quiénes ",
+    title_em: "somos",
+    title_b: ".",
+    meta: ["Proyecto educativo · 2025–2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    items: [
+      { num: "01", h: "El equipo", body: "La Plataforma de Derechos Juveniles ha sido creada por Oriol Chertó, Samuel Li, Martina Casas y Keila Sánchez, estudiantes del Col·legi La Salle Reus. El proyecto nació en 2025 como una iniciativa para acercar el conocimiento de los derechos a los jóvenes de Cataluña de forma accesible, anónima y completamente gratuita." },
+      { num: "02", h: "La misión", body: "Queremos que ningún joven se quede sin ejercer sus derechos por desconocimiento. Por eso hemos creado herramientas prácticas —un simulador de situaciones, un chat legal y una guía de recursos— para que cualquier persona de 16 a 30 años pueda entender y actuar ante cualquier situación legal." },
+      { num: "03", h: "Autoría y propiedad intelectual", body: "El código fuente, el diseño, los textos y toda la propiedad intelectual de esta plataforma pertenecen a sus autores originales: Oriol Chertó, Samuel Li, Martina Casas y Keila Sánchez. El proyecto está documentado desde su inicio y la autoría queda registrada bajo la licencia CC BY-SA 4.0." },
+      { num: "04", h: "Licencia de uso", body: "Los contenidos se publican bajo la licencia Creative Commons BY-SA 4.0. Podéis copiar, modificar y redistribuir el material libremente, siempre que citéis la autoría —Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez— y mantengáis la misma licencia en las obras derivadas." },
+      { num: "05", h: "Colaboraciones institucionales", body: "Cualquier propuesta de colaboración, difusión o incorporación del proyecto en programas institucionales —UNICEF, ONG, centros educativos o administraciones— debe contar con el consentimiento expreso del equipo autor. Las condiciones se negocian directamente con los creadores del proyecto." },
+      { num: "06", h: "Valores", body: "Privacidad total, accesibilidad, neutralidad política y sin ánimo de lucro. Esta plataforma no recibe financiación de partidos ni administraciones, no hace publicidad y no comercializa ningún dato. Nuestro único interés es que los jóvenes conozcan y puedan ejercer sus derechos." },
+    ],
+    foot_text: "Proyecto original creado en 2025 en el Col·legi La Salle Reus. Cualquier uso institucional o comercial de esta plataforma requiere la autorización expresa de sus autores.",
+    cta: "Probar el simulador",
   },
   chat: {
     ...ca.chat,
@@ -646,7 +678,7 @@ const en = {
   ...ca,
   brand: { word: ["Youth Rights", "Platform"], short: "YRP" },
   nav: { home: "Home", sim: "Simulator", chat: "Legal chat", res: "Resources", forum: "Forum", disclaimer: "Disclaimer", cta: "Start the simulator" },
-  forum: { ...ca.forum, eyebrow: "Community · Anonymous", title_a: "Legal ", title_em: "forum", title_b: ".", search_placeholder: "Search by title…", new_post_btn: "New post", no_posts: "No posts found.", no_replies: "Be the first to reply.", loading: "Loading…", anon: "Anonymous", back: "← Back", reply_placeholder: "Write your reply…", reply_btn: "Reply", new_post_title: "New anonymous post", title_label: "Title", title_placeholder: "Briefly describe your legal problem…", body_label: "Description", body_placeholder: "Explain your situation in detail. Do not include personal data.", cat_label: "Category", submit_btn: "Publish", disc: "This post is completely anonymous. No personal data is stored.", replies_label: "reply", replies_label_pl: "replies" },
+  forum: { ...ca.forum, eyebrow: "Community · Anonymous", title_a: "Legal ", title_em: "forum", title_b: ".", search_placeholder: "Search by title…", new_post_btn: "New post", no_posts: "No posts found.", no_replies: "Be the first to reply.", loading: "Loading…", anon: "Anonymous", back: "← Back", reply_placeholder: "Write your reply…", reply_btn: "Reply", new_post_title: "New anonymous post", title_label: "Title", title_placeholder: "Briefly describe your legal problem…", body_label: "Description", body_placeholder: "Explain your situation in detail. Do not include personal data.", cat_label: "Category", submit_btn: "Publish", disc: "This post is completely anonymous. No personal data is stored.", replies_label: "reply", replies_label_pl: "replies", toast_post: "Post published successfully", toast_reply: "Reply sent" },
   hero: {
     ...ca.hero,
     eyebrow: "Civic initiative · Barcelona, 2026",
@@ -659,6 +691,23 @@ const en = {
     cta_primary: "Start the simulator",
     cta_secondary: "Open the legal chat",
     trust: ["No sign-up", "No personal data", "Open source"],
+  },
+  quisom: {
+    ...ca.quisom,
+    title_a: "Who ",
+    title_em: "we are",
+    title_b: ".",
+    meta: ["Educational project · 2025–2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    items: [
+      { num: "01", h: "The team", body: "The Youth Rights Platform was created by Oriol Chertó, Samuel Li, Martina Casas and Keila Sánchez, students at Col·legi La Salle Reus. The project was born in 2025 as an initiative to bring knowledge of rights to young people in Catalonia in an accessible, anonymous and completely free way." },
+      { num: "02", h: "The mission", body: "We want no young person to be left without exercising their rights out of ignorance. That is why we built practical tools — a situation simulator, a legal chat and a resource guide — so that anyone aged 16 to 30 can understand and act in any legal situation." },
+      { num: "03", h: "Authorship and intellectual property", body: "The source code, design, texts and all intellectual property of this platform belong to its original authors: Oriol Chertó, Samuel Li, Martina Casas and Keila Sánchez. The project has been documented since its inception and authorship is registered under the CC BY-SA 4.0 licence." },
+      { num: "04", h: "Licence", body: "Content is published under the Creative Commons BY-SA 4.0 licence. You may copy, modify and redistribute the material freely, provided you credit the authors — Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez — and keep the same licence on derivative works." },
+      { num: "05", h: "Institutional collaborations", body: "Any proposal to collaborate, share or incorporate the project into institutional programmes — UNICEF, NGOs, educational centres or public administrations — requires the express consent of the authoring team. Terms are negotiated directly with the project's creators." },
+      { num: "06", h: "Values", body: "Full privacy, accessibility, political neutrality and non-profit. This platform receives no funding from political parties or public bodies, does not advertise and does not sell any data. Our only interest is that young people know and can exercise their rights." },
+    ],
+    foot_text: "Original project created in 2025 at Col·legi La Salle Reus. Any institutional or commercial use of this platform requires the express authorisation of its authors.",
+    cta: "Try the simulator",
   },
   chat: {
     ...ca.chat,

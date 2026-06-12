@@ -601,3 +601,56 @@ button:focus-visible, a:focus-visible {
 .nf-title { font-family: var(--f-display); font-size: var(--t-2xl); font-weight: 400; letter-spacing: -.02em; margin: 0; }
 .nf-body { font-size: var(--t-base); color: var(--c-ink-soft); margin: 0 0 var(--s-3); max-width: 44ch; line-height: 1.55; }
 .nf-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; }
+
+/* ============== UX IMPROVEMENTS (#23-28) ============== */
+
+/* #23 — Hero entrance animation */
+@keyframes fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+.hero-inner > div   { animation: fade-up .7s var(--ease-out) .05s both; }
+.hero-inner > aside { animation: fade-up .7s var(--ease-out) .22s both; }
+.stats-inner > .stat { opacity: 0; transition: opacity .5s var(--ease-out), transform .5s var(--ease-out); transform: translateY(16px); }
+.stats-inner > .stat.revealed { opacity: 1; transform: translateY(0); }
+
+/* #24 — Forum loading skeleton */
+@keyframes shimmer { 0% { background-position: -500px 0; } 100% { background-position: 500px 0; } }
+.skeleton-card { background: var(--c-paper); border: 1px solid var(--c-line-soft); border-radius: var(--r-md); padding: var(--s-5); }
+.skeleton-line { border-radius: 4px; background: linear-gradient(90deg, var(--c-cream-2) 25%, var(--c-paper) 50%, var(--c-cream-2) 75%); background-size: 1000px 100%; animation: shimmer 1.5s infinite linear; }
+
+/* #25 — Toast notification */
+.toast {
+  position: fixed; bottom: var(--s-7); left: 50%; z-index: 300;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--c-ink); color: var(--c-cream);
+  padding: 10px 22px; border-radius: var(--r-pill);
+  font-family: var(--f-mono); font-size: var(--t-sm); letter-spacing: .04em;
+  box-shadow: 0 8px 28px rgba(14,27,61,.32);
+  opacity: 0; pointer-events: none;
+  transition: opacity .22s var(--ease-out), transform .22s var(--ease-out);
+  white-space: nowrap;
+}
+.toast.toast-show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+/* #26 — Scroll progress bar (simulator result) */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--c-accent); z-index: 200;
+  width: var(--scroll-pct, 0%);
+  transition: width .06s linear;
+  pointer-events: none;
+}
+
+/* #28 — Back-to-top button */
+.back-top {
+  position: fixed; bottom: var(--s-6); right: var(--s-5); z-index: 150;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--c-ink); color: var(--c-cream);
+  border: none; cursor: pointer; font-size: 1.05rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px rgba(14,27,61,.28);
+  opacity: 0; pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity .22s var(--ease-out), transform .22s var(--ease-out), background var(--dur-fast);
+}
+.back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.back-top:hover   { background: var(--c-ink-2); transform: translateY(-2px); }
+@media (max-width: 480px) { .back-top { bottom: var(--s-8); right: var(--s-4); width: 40px; height: 40px; } }

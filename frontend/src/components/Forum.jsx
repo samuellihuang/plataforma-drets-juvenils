@@ -43,6 +43,28 @@ function timeAgo(dateStr, lang) {
   return `fa ${days}d`;
 }
 
+function ForumSkeleton() {
+  return (
+    <div className="forum-list" aria-hidden="true">
+      {[1, 2, 3].map(i => (
+        <div key={i} className="skeleton-card">
+          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:"var(--s-3)" }}>
+            <div className="skeleton-line" style={{ height:"18px", width:"22%", borderRadius:"999px" }} />
+            <div className="skeleton-line" style={{ height:"10px", width:"12%", marginTop:"4px" }} />
+          </div>
+          <div className="skeleton-line" style={{ height:"18px", width:"80%", marginBottom:"var(--s-2)" }} />
+          <div className="skeleton-line" style={{ height:"12px", width:"95%", marginBottom:"6px" }} />
+          <div className="skeleton-line" style={{ height:"12px", width:"60%", marginBottom:"var(--s-3)" }} />
+          <div style={{ display:"flex", justifyContent:"space-between" }}>
+            <div className="skeleton-line" style={{ height:"10px", width:"15%" }} />
+            <div className="skeleton-line" style={{ height:"10px", width:"12%" }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Forum({ lang }) {
   const L = d(lang).forum;
   const [view, setView] = useState("list");
@@ -55,6 +77,12 @@ export default function Forum({ lang }) {
   const [error, setError] = useState(null);
   const [form, setForm] = useState({ title: "", body: "", category: "habitatge" });
   const [replyText, setReplyText] = useState("");
+  const [toast, setToast] = useState(null);
+
+  const showToast = useCallback((msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  }, []);
 
   const fetchPosts = useCallback(async (q, c) => {
     setLoading(true);
@@ -115,6 +143,7 @@ export default function Forum({ lang }) {
       setForm({ title: "", body: "", category: "habitatge" });
       setView("list");
       fetchPosts("", cat);
+      showToast(L.toast_post);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -136,6 +165,7 @@ export default function Forum({ lang }) {
       if (!res.ok) throw new Error(data.error || "Error");
       setActivePost(p => ({ ...p, replies: [...(p.replies || []), data] }));
       setReplyText("");
+      showToast(L.toast_reply);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -149,6 +179,8 @@ export default function Forum({ lang }) {
     setError(null);
     window.scrollTo({ top: 0 });
   };
+
+  const ToastEl = toast ? <div className="toast toast-show" role="status" aria-live="polite">{toast}</div> : null;
 
   // ── NEW POST ──────────────────────────────────────────────────
   if (view === "new") {
@@ -213,11 +245,13 @@ export default function Forum({ lang }) {
             </div>
           </div>
         </div>
+        {ToastEl}
       </main>
     );
   }
 
   // ── POST DETAIL ───────────────────────────────────────────────
+
   if (view === "detail" && activePost) {
     const replies = activePost.replies || [];
     return (
@@ -277,6 +311,7 @@ export default function Forum({ lang }) {
             </div>
           </div>
         </div>
+        {ToastEl}
       </main>
     );
   }
@@ -328,7 +363,7 @@ export default function Forum({ lang }) {
         {error && <p className="forum-error">{error}</p>}
 
         {loading ? (
-          <div className="forum-loading"><span className="forum-spinner" aria-label={L.loading} /></div>
+          <ForumSkeleton />
         ) : posts.length === 0 ? (
           <p className="forum-empty">{L.no_posts}</p>
         ) : (
@@ -354,6 +389,7 @@ export default function Forum({ lang }) {
           </div>
         )}
       </div>
+      {ToastEl}
     </main>
   );
 }
