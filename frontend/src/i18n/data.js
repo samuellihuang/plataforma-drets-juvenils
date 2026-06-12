@@ -519,17 +519,17 @@ const ca = {
     title_a: "Qui ",
     title_em: "som",
     title_b: ".",
-    meta: ["Projecte educatiu · 2025–2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    meta: ["Projecte educatiu · 2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
     items: [
       {
         num: "01",
         h: "L'equip",
-        body: "La Plataforma de Drets Juvenils ha estat creada per Oriol Chertó, Samuel Li, Martina Casas i Keila Sánchez, estudiants del Col·legi La Salle Reus. El projecte va néixer el 2025 com a iniciativa per apropar el coneixement dels drets als joves de Catalunya de manera accessible, anònima i totalment gratuïta.",
+        body: "La Plataforma de Drets Juvenils ha estat creada per Oriol Chertó, Samuel Li, Martina Casas i Keila Sánchez, estudiants del Col·legi La Salle Reus. El projecte va néixer el 2026 com a iniciativa per apropar el coneixement dels drets als joves de Catalunya de manera accessible, anònima i totalment gratuïta.",
       },
       {
         num: "02",
         h: "La missió",
-        body: "Volem que cap jove es quedi sense exercir els seus drets per desconeixement. Per això hem creat eines pràctiques —un simulador de situacions, un xat legal i una guia de recursos— perquè qualsevol persona de 16 a 30 anys pugui entendre i actuar davant de qualsevol situació legal.",
+        body: "Volem que cap jove es quedi sense exercir els seus drets per desconeixement. Per això hem creat eines pràctiques —un simulador de situacions, un xat legal i una guia de recursos— perquè qualsevol persona de 12 a 22 anys pugui entendre i actuar davant de qualsevol situació legal.",
       },
       {
         num: "03",
@@ -544,7 +544,7 @@ const ca = {
       {
         num: "05",
         h: "Col·laboracions institucionals",
-        body: "Qualsevol proposta de col·laboració, difusió o incorporació del projecte en programes institucionals —UNICEF, ONG, centres educatius o administracions— ha de comptar amb el consentiment exprés de l'equip autor. Les condicions es negocien directament amb els creadors del projecte.",
+        body: "Qualsevol proposta de col·laboració, difusió o incorporació del projecte en programes institucionals ha de comptar amb el consentiment exprés de l'equip autor. Les condicions es negocien directament amb els creadors del projecte.",
       },
       {
         num: "06",
@@ -552,7 +552,7 @@ const ca = {
         body: "Privacitat total, accessibilitat, neutralitat política i no lucre. Aquesta plataforma no rep finançament de partits ni d'administracions, no fa publicitat i no comercialitza cap dada. El nostre únic interès és que els joves coneguin i puguin exercir els seus drets.",
       },
     ],
-    foot_text: "Projecte original creat el 2025 al Col·legi La Salle Reus. Qualsevol ús institucional o comercial d'aquesta plataforma requereix l'autorització expressa dels seus autors.",
+    foot_text: "Projecte original creat el 2026 al Col·legi La Salle Reus. Qualsevol ús institucional o comercial d'aquesta plataforma requereix l'autorització expressa dels seus autors.",
     cta: "Provar el simulador",
   },
   disc: {
@@ -638,16 +638,16 @@ const es = {
     title_a: "Quiénes ",
     title_em: "somos",
     title_b: ".",
-    meta: ["Proyecto educativo · 2025–2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    meta: ["Proyecto educativo · 2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
     items: [
-      { num: "01", h: "El equipo", body: "La Plataforma de Derechos Juveniles ha sido creada por Oriol Chertó, Samuel Li, Martina Casas y Keila Sánchez, estudiantes del Col·legi La Salle Reus. El proyecto nació en 2025 como una iniciativa para acercar el conocimiento de los derechos a los jóvenes de Cataluña de forma accesible, anónima y completamente gratuita." },
-      { num: "02", h: "La misión", body: "Queremos que ningún joven se quede sin ejercer sus derechos por desconocimiento. Por eso hemos creado herramientas prácticas —un simulador de situaciones, un chat legal y una guía de recursos— para que cualquier persona de 16 a 30 años pueda entender y actuar ante cualquier situación legal." },
+      { num: "01", h: "El equipo", body: "La Plataforma de Derechos Juveniles ha sido creada por Oriol Chertó, Samuel Li, Martina Casas y Keila Sánchez, estudiantes del Col·legi La Salle Reus. El proyecto nació en 2026 como una iniciativa para acercar el conocimiento de los derechos a los jóvenes de Cataluña de forma accesible, anónima y completamente gratuita." },
+      { num: "02", h: "La misión", body: "Queremos que ningún joven se quede sin ejercer sus derechos por desconocimiento. Por eso hemos creado herramientas prácticas —un simulador de situaciones, un chat legal y una guía de recursos— para que cualquier persona de 12 a 22 años pueda entender y actuar ante cualquier situación legal." },
       { num: "03", h: "Autoría y propiedad intelectual", body: "El código fuente, el diseño, los textos y toda la propiedad intelectual de esta plataforma pertenecen a sus autores originales: Oriol Chertó, Samuel Li, Martina Casas y Keila Sánchez. El proyecto está documentado desde su inicio y la autoría queda registrada bajo la licencia CC BY-SA 4.0." },
       { num: "04", h: "Licencia de uso", body: "Los contenidos se publican bajo la licencia Creative Commons BY-SA 4.0. Podéis copiar, modificar y redistribuir el material libremente, siempre que citéis la autoría —Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez— y mantengáis la misma licencia en las obras derivadas." },
-      { num: "05", h: "Colaboraciones institucionales", body: "Cualquier propuesta de colaboración, difusión o incorporación del proyecto en programas institucionales —UNICEF, ONG, centros educativos o administraciones— debe contar con el consentimiento expreso del equipo autor. Las condiciones se negocian directamente con los creadores del proyecto." },
+      { num: "05", h: "Colaboraciones institucionales", body: "Cualquier propuesta de colaboración, difusión o incorporación del proyecto en programas institucionales debe contar con el consentimiento expreso del equipo autor. Las condiciones se negocian directamente con los creadores del proyecto." },
       { num: "06", h: "Valores", body: "Privacidad total, accesibilidad, neutralidad política y sin ánimo de lucro. Esta plataforma no recibe financiación de partidos ni administraciones, no hace publicidad y no comercializa ningún dato. Nuestro único interés es que los jóvenes conozcan y puedan ejercer sus derechos." },
     ],
-    foot_text: "Proyecto original creado en 2025 en el Col·legi La Salle Reus. Cualquier uso institucional o comercial de esta plataforma requiere la autorización expresa de sus autores.",
+    foot_text: "Proyecto original creado en 2026 en el Col·legi La Salle Reus. Cualquier uso institucional o comercial de esta plataforma requiere la autorización expresa de sus autores.",
     cta: "Probar el simulador",
   },
   chat: {
@@ -697,16 +697,16 @@ const en = {
     title_a: "Who ",
     title_em: "we are",
     title_b: ".",
-    meta: ["Educational project · 2025–2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    meta: ["Educational project · 2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
     items: [
-      { num: "01", h: "The team", body: "The Youth Rights Platform was created by Oriol Chertó, Samuel Li, Martina Casas and Keila Sánchez, students at Col·legi La Salle Reus. The project was born in 2025 as an initiative to bring knowledge of rights to young people in Catalonia in an accessible, anonymous and completely free way." },
-      { num: "02", h: "The mission", body: "We want no young person to be left without exercising their rights out of ignorance. That is why we built practical tools — a situation simulator, a legal chat and a resource guide — so that anyone aged 16 to 30 can understand and act in any legal situation." },
+      { num: "01", h: "The team", body: "The Youth Rights Platform was created by Oriol Chertó, Samuel Li, Martina Casas and Keila Sánchez, students at Col·legi La Salle Reus. The project was born in 2026 as an initiative to bring knowledge of rights to young people in Catalonia in an accessible, anonymous and completely free way." },
+      { num: "02", h: "The mission", body: "We want no young person to be left without exercising their rights out of ignorance. That is why we built practical tools — a situation simulator, a legal chat and a resource guide — so that anyone aged 12 to 22 can understand and act in any legal situation." },
       { num: "03", h: "Authorship and intellectual property", body: "The source code, design, texts and all intellectual property of this platform belong to its original authors: Oriol Chertó, Samuel Li, Martina Casas and Keila Sánchez. The project has been documented since its inception and authorship is registered under the CC BY-SA 4.0 licence." },
       { num: "04", h: "Licence", body: "Content is published under the Creative Commons BY-SA 4.0 licence. You may copy, modify and redistribute the material freely, provided you credit the authors — Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez — and keep the same licence on derivative works." },
-      { num: "05", h: "Institutional collaborations", body: "Any proposal to collaborate, share or incorporate the project into institutional programmes — UNICEF, NGOs, educational centres or public administrations — requires the express consent of the authoring team. Terms are negotiated directly with the project's creators." },
+      { num: "05", h: "Institutional collaborations", body: "Any proposal to collaborate, share or incorporate the project into institutional programmes requires the express consent of the authoring team. Terms are negotiated directly with the project's creators." },
       { num: "06", h: "Values", body: "Full privacy, accessibility, political neutrality and non-profit. This platform receives no funding from political parties or public bodies, does not advertise and does not sell any data. Our only interest is that young people know and can exercise their rights." },
     ],
-    foot_text: "Original project created in 2025 at Col·legi La Salle Reus. Any institutional or commercial use of this platform requires the express authorisation of its authors.",
+    foot_text: "Original project created in 2026 at Col·legi La Salle Reus. Any institutional or commercial use of this platform requires the express authorisation of its authors.",
     cta: "Try the simulator",
   },
   chat: {
