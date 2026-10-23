@@ -2,6 +2,14 @@
    Catalan is primary. Spanish and English inherit from Catalan
    with targeted overrides. */
 
+// Correu de contacte del projecte. Quan existeixi, posa'l aquí i apareixerà a tota la web.
+const CONTACT_EMAIL = "";
+const contacte = {
+  ca: CONTACT_EMAIL ? `escrivint a ${CONTACT_EMAIL}` : "a través del correu de contacte del projecte, que publicarem properament",
+  es: CONTACT_EMAIL ? `escribiendo a ${CONTACT_EMAIL}` : "a través del correo de contacto del proyecto, que publicaremos próximamente",
+  en: CONTACT_EMAIL ? `by writing to ${CONTACT_EMAIL}` : "through the project's contact email, which we will publish soon",
+};
+
 const ca = {
   brand: { word: ["Plataforma de", "Drets Juvenils"], short: "PDJ" },
   nav: { home: "Inici", sim: "Simulador", chat: "Xat legal", res: "Recursos", forum: "Fòrum", disclaimer: "Avís legal", cta: "Comença el simulador" },
@@ -18,15 +26,15 @@ const ca = {
     meta: [
       { k: "Versió", v: "v1.5 · juny 2026" },
       { k: "Idiomes", v: "CA · ES · EN" },
-      { k: "Llicència", v: "CC BY-SA 4.0" },
+      { k: "Llicència", v: "CC BY-NC-SA 4.0" },
     ],
-    trust: ["Sense registre", "Cap dada personal", "Codi obert"],
+    trust: ["Sense registre", "Sense publicitat", "Gratuït"],
   },
   stats: {
     eyebrow: "Per què existim",
     items: [
       { num: "1 de 3", label: "Contractes laborals", body: "ofertats a menors de 25 anys presenta clàusules abusives o no s'ha registrat al SEPE." },
-      { num: "0 €", label: "Cost per a l'usuari", body: "Les consultes són anònimes i gratuïtes. Cap dada queda lligada a la teva identitat." },
+      { num: "0 €", label: "Cost per a l'usuari", body: "Les consultes són gratuïtes i no et demanem cap compte ni dada identificativa." },
     ],
   },
   features: {
@@ -62,19 +70,19 @@ const ca = {
     title_a: "Si tens un dubte, ",
     title_em: "comença pel principi",
     title_b: ".",
-    lede: "Sense formulari, sense compte, sense rastre. Tot el contingut funciona també offline un cop la pàgina ha carregat.",
+    lede: "Sense formulari i sense compte. El simulador i els recursos funcionen sense enviar cap dada.",
     primary: "Inicia el simulador",
     secondary: "Llegeix l'avís legal",
   },
   footer: {
     org: "Plataforma de Drets Juvenils",
-    tag: "Una eina gratuïta per a joves de Catalunya. Sense registre, sense rastre, codi obert.",
+    tag: "Una eina gratuïta per a joves de Catalunya. Sense registre i sense publicitat.",
     cols: [
       { h: "Eines", items: [["Simulador", "sim"], ["Xat legal", "chat"], ["Recursos", "res"], ["Fòrum", "forum"]] },
       { h: "Legal", items: [["Avís legal", "disclaimer"], ["Privacitat", "privacitat"], ["Cookies", "cookies"], ["Qui som", "qui-som"]] },
     ],
     disc: "Cap contingut d'aquesta web substitueix l'assessorament d'una advocada o un advocat. Per a decisions amb conseqüències jurídiques, demana cita amb el torn d'ofici o el SOJ.",
-    meta_left: "© 2026 · CC BY-SA 4.0",
+    meta_left: "© 2026 · Contingut CC BY-NC-SA 4.0",
     meta_right: "Barcelona · Catalunya",
   },
   simIntro: {
@@ -371,7 +379,7 @@ const ca = {
     title_a: "Xat ",
     title_em: "legal",
     title_b: ", en català planer.",
-    lede: "Pregunta lliurement. Cito la llei concreta i, si la cosa es complica, t'adreço a una persona humana. Cap missatge surt del teu navegador.",
+    lede: "Pregunta lliurement. Cito la llei concreta i, si la cosa es complica, t'adreço a una persona humana.",
     greeting: "Hola! Sóc l'assistent de la Plataforma de Drets Juvenils. Et puc ajudar amb dubtes sobre habitatge, feina, identificacions policials, drets digitals, salut mental, estrangeria, violència masclista i més.\n\nPregunta com vulguis.",
     suggest: [
       "Em pot identificar la policia si no porto el DNI?",
@@ -381,7 +389,7 @@ const ca = {
     ],
     placeholder: "Escriu la teva pregunta…",
     send: "Enviar",
-    disc: "Sense registre · cap missatge surt del teu navegador",
+    disc: "Sense registre · no hi escriguis dades personals",
     thinking: "Pensant",
     bot_label: "Assistent · IA",
     user_label: "Tu",
@@ -439,7 +447,7 @@ const ca = {
     title_a: "Política de ",
     title_em: "cookies",
     title_b: ".",
-    meta: ["Versió 1.1 · juny 2026", "Plataforma de Drets Juvenils", "CC BY-SA 4.0"],
+    meta: ["Versió 1.1 · juny 2026", "Plataforma de Drets Juvenils", "CC BY-NC-SA 4.0"],
     items: [
       {
         num: "01",
@@ -449,7 +457,7 @@ const ca = {
       {
         num: "02",
         h: "Cookies que fem servir",
-        body: "Aquesta plataforma únicament utilitza una cookie tècnica anomenada 'pdj_lang' per recordar l'idioma que has seleccionat (CA, ES o EN) i 'pdj_cookies' per recordar si has acceptat aquest avís. Cap d'elles conté dades personals.",
+        body: "No fem servir cookies pròpiament dites. Desem al teu navegador: 'pdj_lang' (l'idioma triat), 'pdj_cookies' (si has vist l'avís), 'pdj_sim_start' (l'escenari que obres des de l'inici, s'esborra en fer-lo servir) i, només mentre la pestanya és oberta, l'historial del xat. Cap d'aquestes dades s'envia als nostres servidors.",
       },
       {
         num: "03",
@@ -459,7 +467,7 @@ const ca = {
       {
         num: "04",
         h: "Durada de les cookies",
-        body: "Les cookies tècniques d'aquesta plataforma es guarden al localStorage del teu navegador i no caduquen automàticament. Pots eliminar-les en qualsevol moment des dels ajustos del teu navegador (Eines → Historial → Netejar dades).",
+        body: "L'idioma i l'avís es guarden al localStorage i no caduquen sols; l'historial del xat es guarda al sessionStorage i s'esborra en tancar la pestanya. Pots eliminar-les en qualsevol moment des dels ajustos del teu navegador (Eines → Historial → Netejar dades).",
       },
       {
         num: "05",
@@ -469,57 +477,72 @@ const ca = {
       {
         num: "06",
         h: "Base legal",
-        body: "El tractament d'aquestes cookies tècniques es basa en l'interès legítim de la plataforma per oferir un servei funcional (art. 6.1.f RGPD). No requereixen consentiment explícit per la seva naturalesa estrictament tècnica.",
+        body: "Són dades estrictament necessàries perquè la web funcioni com has triat, i per això no requereixen consentiment (art. 22.2 de la LSSI).",
       },
     ],
-    foot_text: "Política de cookies revisada el juny de 2026. Per a qualsevol consulta, consulta la nostra Política de Privacitat.",
+    foot_text: "Política de cookies revisada l'octubre de 2026. Per a qualsevol consulta, consulta la nostra Política de Privacitat.",
     foot_cta: null,
   },
   priv: {
     title_a: "Política de ",
     title_em: "privacitat",
     title_b: ".",
-    meta: ["Versió 1.1 · juny 2026", "Plataforma de Drets Juvenils", "CC BY-SA 4.0"],
+    meta: ["Versió 2.0 · octubre 2026", "Plataforma de Drets Juvenils", "RGPD · LOPDGDD"],
     items: [
       {
         num: "01",
-        h: "No recollim dades personals",
-        body: "Aquesta plataforma no demana registre, nom, correu electrònic ni cap altra dada d'identificació. Pots fer servir totes les funcionalitats de forma completament anònima.",
+        h: "Qui és responsable de les dades",
+        body: `Els responsables del tractament són els autors del projecte: Oriol Chertó, Samuel Li, Martina Casas i Keila Sánchez, estudiants del Col·legi La Salle Reus. Pots contactar-nos ${contacte.ca}.`,
       },
       {
         num: "02",
-        h: "Dades emmagatzemades localment",
-        body: "La plataforma guarda al teu navegador (localStorage) únicament la preferència d'idioma (CA/ES/EN) i si has acceptat l'avís de cookies. Aquestes dades no es transmeten mai a cap servidor extern.",
+        h: "No cal registre",
+        body: "No et demanem nom, correu ni cap compte. El simulador i els recursos funcionen dins del teu navegador i no envien cap dada a cap servidor.",
       },
       {
         num: "03",
-        h: "El xat legal",
-        body: "Les converses del xat es processen a través del nostre servidor per generar respostes, però no es guarden ni s'associen a cap identitat. Cada sessió és independent i desapareix en tancar el navegador.",
+        h: "El xat",
+        body: "Quan escrius al xat, el missatge s'envia al nostre servidor (Render) i d'allà a Google (Gemini) per generar la resposta. Nosaltres no guardem les converses. Google pot conservar els missatges segons les seves condicions i, en alguns plans, fer-los servir per millorar els seus serveis. Per això, no hi escriguis el teu nom, DNI, adreça ni res que t'identifiqui.",
       },
       {
         num: "04",
-        h: "Cookies",
-        body: "Només fem servir una cookie tècnica per recordar l'idioma seleccionat. No fem servir cookies de seguiment, analítica de tercers (Google Analytics, etc.) ni publicitat personalitzada.",
+        h: "El fòrum",
+        body: "Els posts i les respostes (títol, text, categoria i data) es guarden a la nostra base de dades (Supabase) i són públics. No guardem el nom ni l'adreça IP de qui publica. Es conserven fins que s'esborren, i pots demanar que n'eliminem qualsevol.",
       },
       {
         num: "05",
-        h: "Serveis externs",
-        body: "La plataforma carrega fonts tipogràfiques de Google Fonts, la qual cosa pot transmetre la teva adreça IP a Google. Si vols evitar-ho, pots bloquejar connexions a fonts.googleapis.com amb una extensió de privacitat (uBlock Origin, etc.).",
+        h: "Dades tècniques",
+        body: "Com qualsevol web, els proveïdors d'allotjament (Vercel i Render) reben la teva adreça IP per servir la pàgina i per seguretat. El nostre servidor la fa servir de manera temporal per evitar abusos (com a màxim 1 hora) i no la guarda. La web també carrega tipografies de Google Fonts, cosa que envia la teva IP a Google.",
       },
       {
         num: "06",
-        h: "Els teus drets (RGPD)",
-        body: "Com que no emmagatzemem dades personals identificatives, no hi ha dades a sol·licitar, rectificar ni suprimir. Si tens dubtes sobre la privacitat d'aquesta plataforma, pots consultar l'Agència Espanyola de Protecció de Dades (aepd.es).",
+        h: "Al teu navegador",
+        body: "Guardem al teu navegador l'idioma triat, si has vist l'avís de cookies i, mentre la pestanya està oberta, l'historial del xat. Res d'això s'envia als nostres servidors. Ho detallem a la Política de cookies.",
+      },
+      {
+        num: "07",
+        h: "Proveïdors i transferències",
+        body: "Vercel, Render, Supabase i Google poden tractar dades fora de la Unió Europea, amb les garanties que preveu el RGPD (clàusules contractuals tipus o el Marc de Privacitat de Dades UE-EUA). No venem ni cedim dades a ningú més.",
+      },
+      {
+        num: "08",
+        h: "Menors d'edat",
+        body: "Si tens menys de 14 anys, fes servir el xat i el fòrum amb el coneixement del teu pare, mare o tutor legal.",
+      },
+      {
+        num: "09",
+        h: "Els teus drets",
+        body: `Pots demanar l'accés, la rectificació o la supressió de les teves dades, o oposar-te al seu tractament, ${contacte.ca}. També pots presentar una reclamació a l'Agència Espanyola de Protecció de Dades (aepd.es).`,
       },
     ],
-    foot_text: "Aquesta política de privacitat es revisa periòdicament. Darrera actualització: juny de 2026.",
+    foot_text: "Aquesta política es revisa quan canvia el funcionament de la plataforma. Darrera actualització: octubre de 2026.",
     foot_cta: null,
   },
   quisom: {
     title_a: "Qui ",
     title_em: "som",
     title_b: ".",
-    meta: ["Projecte educatiu · 2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    meta: ["Projecte educatiu · 2026", "Col·legi La Salle Reus", "CC BY-NC-SA 4.0"],
     items: [
       {
         num: "01",
@@ -534,17 +557,17 @@ const ca = {
       {
         num: "03",
         h: "Autoria i propietat intel·lectual",
-        body: "El codi font, el disseny, els textos i tota la propietat intel·lectual d'aquesta plataforma pertanyen als seus autors originals: Oriol Chertó, Samuel Li, Martina Casas i Keila Sánchez. El projecte està documentat des del seu inici i l'autoria queda registrada sota la llicència CC BY-SA 4.0.",
+        body: "El codi font, el disseny, els textos i tota la propietat intel·lectual d'aquesta plataforma pertanyen als seus autors originals: Oriol Chertó, Samuel Li, Martina Casas i Keila Sánchez. L'autoria consta a l'historial del projecte des del primer dia.",
       },
       {
         num: "04",
         h: "Llicència d'ús",
-        body: "Els continguts es publiquen sota la llicència Creative Commons BY-SA 4.0. Podeu copiar, modificar i redistribuir el material lliurement, sempre que citeu l'autoria —Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez— i mantingueu la mateixa llicència en les obres derivades.",
+        body: "Els textos i continguts informatius es publiquen sota llicència Creative Commons BY-NC-SA 4.0: es poden compartir i adaptar citant l'autoria —Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez—, sense finalitat comercial i mantenint la mateixa llicència. El codi font, el disseny i la marca no estan inclosos en aquesta llicència: tots els drets reservats.",
       },
       {
         num: "05",
         h: "Col·laboracions institucionals",
-        body: "Qualsevol proposta de col·laboració, difusió o incorporació del projecte en programes institucionals ha de comptar amb el consentiment exprés de l'equip autor. Les condicions es negocien directament amb els creadors del projecte.",
+        body: "Incorporar la plataforma —el seu codi, disseny o marca— en programes institucionals, o qualsevol altra proposta de col·laboració, ha de comptar amb el consentiment exprés de l'equip autor. Les condicions es negocien directament amb els creadors del projecte.",
       },
       {
         num: "06",
@@ -552,23 +575,23 @@ const ca = {
         body: "Privacitat total, accessibilitat, neutralitat política i no lucre. Aquesta plataforma no rep finançament de partits ni d'administracions, no fa publicitat i no comercialitza cap dada. El nostre únic interès és que els joves coneguin i puguin exercir els seus drets.",
       },
     ],
-    foot_text: "Projecte original creat el 2026 al Col·legi La Salle Reus. Qualsevol ús institucional o comercial d'aquesta plataforma requereix l'autorització expressa dels seus autors.",
+    foot_text: "Projecte original creat el 2026 al Col·legi La Salle Reus. L'ús comercial dels continguts, i qualsevol ús del codi, el disseny o la marca, requereix l'autorització expressa dels autors.",
     cta: "Provar el simulador",
   },
   disc: {
     title_a: "Avís ",
     title_em: "legal",
     title_b: " i limitacions.",
-    meta: ["Versió 1.5 · juny 2026", "Aplicable a tot el contingut", "CC BY-SA 4.0"],
+    meta: ["Versió 1.5 · juny 2026", "Aplicable a tot el contingut", "CC BY-NC-SA 4.0"],
     items: [
       { num: "01", h: "Caràcter informatiu", body: "Tot el contingut d'aquesta plataforma té caràcter exclusivament informatiu i divulgatiu. No constitueix assessorament jurídic individualitzat ni pot substituir la consulta amb una advocada o un advocat col·legiat." },
       { num: "02", h: "Vigència de les normes", body: "Les normes que citem (Lleis Orgàniques, Codi Civil, LAU, Estatut dels Treballadors…) són les vigents en la data indicada. La legislació canvia: comprova sempre la versió consolidada al BOE o al DOGC." },
-      { num: "03", h: "Cap recopilació de dades", body: "Aquesta web no demana registre ni guarda dades personals. El xat funciona localment al teu navegador. No fem servir analítica de tercers ni cookies de seguiment." },
+      { num: "03", h: "Dades personals", body: "No cal registre. Els missatges del xat s'envien al nostre servidor i a Google per generar la resposta, i els posts del fòrum es publiquen i es guarden. No fem servir analítica ni cookies de seguiment. Tots els detalls són a la Política de privacitat." },
       { num: "04", h: "Limitació de responsabilitat", body: "Els autors i col·laboradors no es fan responsables de les conseqüències derivades d'actuacions preses únicament en base al contingut d'aquesta web." },
-      { num: "05", h: "Llicència i reutilització", body: "Tot el contingut s'allibera sota llicència Creative Commons BY-SA 4.0. Pots copiar, modificar i redistribuir-lo lliurement, sempre que en citis l'autoria." },
+      { num: "05", h: "Llicència i reutilització", body: "Els textos i continguts informatius es publiquen sota llicència Creative Commons BY-NC-SA 4.0: els pots compartir i adaptar citant l'autoria, sense finalitat comercial i amb la mateixa llicència. El codi font, el disseny i la marca no hi estan inclosos: tots els drets reservats." },
       { num: "06", h: "Correccions", body: "Si detectes un error legal o un canvi de normativa, consulta sempre la versió consolidada al BOE o al DOGC. Revisem els continguts periòdicament." },
     ],
-    foot_text: "Plataforma mantinguda per voluntaris sense ànim de lucre. Els continguts s'han elaborat amb base en formació jurídica però no han estat revisats per un advocat col·legiat: consulta sempre un professional per a decisions amb conseqüències jurídiques. No rebem finançament de partits ni administracions.",
+    foot_text: "Plataforma creada per estudiants del Col·legi La Salle Reus, sense ànim de lucre. Els continguts s'han elaborat amb base en formació jurídica però no han estat revisats per un advocat col·legiat: consulta sempre un professional per a decisions amb conseqüències jurídiques. No rebem finançament de partits ni administracions.",
     foot_cta: null,
   },
   nf: {
@@ -606,7 +629,7 @@ const ca = {
     body_placeholder: "Explica la teva situació amb detall. No incloguis dades personals (nom, DNI, adreça).",
     cat_label: "Categoria",
     submit_btn: "Publicar",
-    disc: "Aquest post és completament anònim. No es guarda cap dada personal.",
+    disc: "Els posts són anònims i públics: no hi posis el teu nom, telèfon, adreça ni res que t'identifiqui.",
     char_hint: "car.",
     replies_label: "resposta",
     replies_label_pl: "respostes",
@@ -619,7 +642,7 @@ const es = {
   ...ca,
   brand: { word: ["Plataforma de", "Derechos Juveniles"], short: "PDJ" },
   nav: { home: "Inicio", sim: "Simulador", chat: "Chat legal", res: "Recursos", forum: "Foro", disclaimer: "Aviso legal", cta: "Empezar el simulador" },
-  forum: { ...ca.forum, eyebrow: "Comunidad · Anónimo", title_a: "Foro ", title_em: "de consultas", title_b: ".", search_placeholder: "Buscar por título…", new_post_btn: "Nuevo post", no_posts: "No hay publicaciones.", no_replies: "Sé el primero en responder.", loading: "Cargando…", anon: "Anónimo", back: "← Volver", reply_placeholder: "Escribe tu respuesta…", reply_btn: "Responder", new_post_title: "Nuevo post anónimo", title_label: "Título", title_placeholder: "Describe brevemente tu problema legal…", body_label: "Descripción", body_placeholder: "Explica tu situación con detalle. No incluyas datos personales.", cat_label: "Categoría", submit_btn: "Publicar", disc: "Este post es completamente anónimo. No se guarda ningún dato personal.", replies_label: "respuesta", replies_label_pl: "respuestas", toast_post: "Post publicado correctamente", toast_reply: "Respuesta enviada" },
+  forum: { ...ca.forum, eyebrow: "Comunidad · Anónimo", title_a: "Foro ", title_em: "de consultas", title_b: ".", search_placeholder: "Buscar por título…", new_post_btn: "Nuevo post", no_posts: "No hay publicaciones.", no_replies: "Sé el primero en responder.", loading: "Cargando…", anon: "Anónimo", back: "← Volver", reply_placeholder: "Escribe tu respuesta…", reply_btn: "Responder", new_post_title: "Nuevo post anónimo", title_label: "Título", title_placeholder: "Describe brevemente tu problema legal…", body_label: "Descripción", body_placeholder: "Explica tu situación con detalle. No incluyas datos personales.", cat_label: "Categoría", submit_btn: "Publicar", disc: "Los posts son anónimos y públicos: no pongas tu nombre, teléfono, dirección ni nada que te identifique.", replies_label: "respuesta", replies_label_pl: "respuestas", toast_post: "Post publicado correctamente", toast_reply: "Respuesta enviada" },
   hero: {
     ...ca.hero,
     eyebrow: "Iniciativa ciudadana · Barcelona, 2026",
@@ -631,23 +654,23 @@ const es = {
     lede: "Una herramienta gratuita en castellano y catalán para jóvenes de 16 a 30 años. Te ayudamos a entender qué hacer ante un desahucio, un despido, una identificación policial o una situación de violencia.",
     cta_primary: "Iniciar simulador",
     cta_secondary: "Hablar con el chat",
-    trust: ["Sin registro", "Sin datos personales", "Código abierto"],
+    trust: ["Sin registro", "Sin publicidad", "Gratuito"],
   },
   quisom: {
     ...ca.quisom,
     title_a: "Quiénes ",
     title_em: "somos",
     title_b: ".",
-    meta: ["Proyecto educativo · 2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    meta: ["Proyecto educativo · 2026", "Col·legi La Salle Reus", "CC BY-NC-SA 4.0"],
     items: [
       { num: "01", h: "El equipo", body: "La Plataforma de Derechos Juveniles ha sido creada por Oriol Chertó, Samuel Li, Martina Casas y Keila Sánchez, estudiantes del Col·legi La Salle Reus. El proyecto nació en 2026 como una iniciativa para acercar el conocimiento de los derechos a los jóvenes de Cataluña de forma accesible, anónima y completamente gratuita." },
       { num: "02", h: "La misión", body: "Queremos que ningún joven se quede sin ejercer sus derechos por desconocimiento. Por eso hemos creado herramientas prácticas —un simulador de situaciones, un chat legal y una guía de recursos— para que cualquier persona de 12 a 22 años pueda entender y actuar ante cualquier situación legal." },
-      { num: "03", h: "Autoría y propiedad intelectual", body: "El código fuente, el diseño, los textos y toda la propiedad intelectual de esta plataforma pertenecen a sus autores originales: Oriol Chertó, Samuel Li, Martina Casas y Keila Sánchez. El proyecto está documentado desde su inicio y la autoría queda registrada bajo la licencia CC BY-SA 4.0." },
-      { num: "04", h: "Licencia de uso", body: "Los contenidos se publican bajo la licencia Creative Commons BY-SA 4.0. Podéis copiar, modificar y redistribuir el material libremente, siempre que citéis la autoría —Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez— y mantengáis la misma licencia en las obras derivadas." },
-      { num: "05", h: "Colaboraciones institucionales", body: "Cualquier propuesta de colaboración, difusión o incorporación del proyecto en programas institucionales debe contar con el consentimiento expreso del equipo autor. Las condiciones se negocian directamente con los creadores del proyecto." },
+      { num: "03", h: "Autoría y propiedad intelectual", body: "El código fuente, el diseño, los textos y toda la propiedad intelectual de esta plataforma pertenecen a sus autores originales: Oriol Chertó, Samuel Li, Martina Casas y Keila Sánchez. La autoría consta en el historial del proyecto desde el primer día." },
+      { num: "04", h: "Licencia de uso", body: "Los textos y contenidos informativos se publican bajo licencia Creative Commons BY-NC-SA 4.0: se pueden compartir y adaptar citando la autoría —Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez—, sin fines comerciales y manteniendo la misma licencia. El código fuente, el diseño y la marca no están incluidos en esta licencia: todos los derechos reservados." },
+      { num: "05", h: "Colaboraciones institucionales", body: "Incorporar la plataforma —su código, diseño o marca— en programas institucionales, o cualquier otra propuesta de colaboración, debe contar con el consentimiento expreso del equipo autor. Las condiciones se negocian directamente con los creadores del proyecto." },
       { num: "06", h: "Valores", body: "Privacidad total, accesibilidad, neutralidad política y sin ánimo de lucro. Esta plataforma no recibe financiación de partidos ni administraciones, no hace publicidad y no comercializa ningún dato. Nuestro único interés es que los jóvenes conozcan y puedan ejercer sus derechos." },
     ],
-    foot_text: "Proyecto original creado en 2026 en el Col·legi La Salle Reus. Cualquier uso institucional o comercial de esta plataforma requiere la autorización expresa de sus autores.",
+    foot_text: "Proyecto original creado en 2026 en el Col·legi La Salle Reus. El uso comercial de los contenidos, y cualquier uso del código, el diseño o la marca, requiere la autorización expresa de los autores.",
     cta: "Probar el simulador",
   },
   chat: {
@@ -665,7 +688,7 @@ const es = {
     ],
     placeholder: "Escribe tu pregunta…",
     send: "Enviar",
-    disc: "Sin registro · ningún mensaje sale de tu navegador",
+    disc: "Sin registro · no escribas datos personales",
     thinking: "Pensando",
     bot_label: "Asistente · IA",
     user_label: "Tú",
@@ -678,7 +701,7 @@ const en = {
   ...ca,
   brand: { word: ["Youth Rights", "Platform"], short: "YRP" },
   nav: { home: "Home", sim: "Simulator", chat: "Legal chat", res: "Resources", forum: "Forum", disclaimer: "Disclaimer", cta: "Start the simulator" },
-  forum: { ...ca.forum, eyebrow: "Community · Anonymous", title_a: "Legal ", title_em: "forum", title_b: ".", search_placeholder: "Search by title…", new_post_btn: "New post", no_posts: "No posts found.", no_replies: "Be the first to reply.", loading: "Loading…", anon: "Anonymous", back: "← Back", reply_placeholder: "Write your reply…", reply_btn: "Reply", new_post_title: "New anonymous post", title_label: "Title", title_placeholder: "Briefly describe your legal problem…", body_label: "Description", body_placeholder: "Explain your situation in detail. Do not include personal data.", cat_label: "Category", submit_btn: "Publish", disc: "This post is completely anonymous. No personal data is stored.", replies_label: "reply", replies_label_pl: "replies", toast_post: "Post published successfully", toast_reply: "Reply sent" },
+  forum: { ...ca.forum, eyebrow: "Community · Anonymous", title_a: "Legal ", title_em: "forum", title_b: ".", search_placeholder: "Search by title…", new_post_btn: "New post", no_posts: "No posts found.", no_replies: "Be the first to reply.", loading: "Loading…", anon: "Anonymous", back: "← Back", reply_placeholder: "Write your reply…", reply_btn: "Reply", new_post_title: "New anonymous post", title_label: "Title", title_placeholder: "Briefly describe your legal problem…", body_label: "Description", body_placeholder: "Explain your situation in detail. Do not include personal data.", cat_label: "Category", submit_btn: "Publish", disc: "Posts are anonymous and public: don't include your name, phone, address or anything that identifies you.", replies_label: "reply", replies_label_pl: "replies", toast_post: "Post published successfully", toast_reply: "Reply sent" },
   hero: {
     ...ca.hero,
     eyebrow: "Civic initiative · Barcelona, 2026",
@@ -690,23 +713,23 @@ const en = {
     lede: "A free, open tool for young people in Catalonia aged 16–30. We help you understand what to do when facing eviction, dismissal, a police stop, or a situation of violence.",
     cta_primary: "Start the simulator",
     cta_secondary: "Open the legal chat",
-    trust: ["No sign-up", "No personal data", "Open source"],
+    trust: ["No sign-up", "No ads", "Free"],
   },
   quisom: {
     ...ca.quisom,
     title_a: "Who ",
     title_em: "we are",
     title_b: ".",
-    meta: ["Educational project · 2026", "Col·legi La Salle Reus", "CC BY-SA 4.0"],
+    meta: ["Educational project · 2026", "Col·legi La Salle Reus", "CC BY-NC-SA 4.0"],
     items: [
       { num: "01", h: "The team", body: "The Youth Rights Platform was created by Oriol Chertó, Samuel Li, Martina Casas and Keila Sánchez, students at Col·legi La Salle Reus. The project was born in 2026 as an initiative to bring knowledge of rights to young people in Catalonia in an accessible, anonymous and completely free way." },
       { num: "02", h: "The mission", body: "We want no young person to be left without exercising their rights out of ignorance. That is why we built practical tools — a situation simulator, a legal chat and a resource guide — so that anyone aged 12 to 22 can understand and act in any legal situation." },
-      { num: "03", h: "Authorship and intellectual property", body: "The source code, design, texts and all intellectual property of this platform belong to its original authors: Oriol Chertó, Samuel Li, Martina Casas and Keila Sánchez. The project has been documented since its inception and authorship is registered under the CC BY-SA 4.0 licence." },
-      { num: "04", h: "Licence", body: "Content is published under the Creative Commons BY-SA 4.0 licence. You may copy, modify and redistribute the material freely, provided you credit the authors — Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez — and keep the same licence on derivative works." },
-      { num: "05", h: "Institutional collaborations", body: "Any proposal to collaborate, share or incorporate the project into institutional programmes requires the express consent of the authoring team. Terms are negotiated directly with the project's creators." },
+      { num: "03", h: "Authorship and intellectual property", body: "The source code, design, texts and all intellectual property of this platform belong to its original authors: Oriol Chertó, Samuel Li, Martina Casas and Keila Sánchez. Authorship is recorded in the project's history from day one." },
+      { num: "04", h: "Licence", body: "Texts and informational content are published under the Creative Commons BY-NC-SA 4.0 licence: they may be shared and adapted with credit to the authors — Plataforma de Drets Juvenils · Chertó, Li, Casas, Sánchez — for non-commercial purposes and under the same licence. The source code, design and brand are not covered by this licence: all rights reserved." },
+      { num: "05", h: "Institutional collaborations", body: "Incorporating the platform — its code, design or brand — into institutional programmes, or any other collaboration proposal, requires the express consent of the authoring team. Terms are negotiated directly with the project's creators." },
       { num: "06", h: "Values", body: "Full privacy, accessibility, political neutrality and non-profit. This platform receives no funding from political parties or public bodies, does not advertise and does not sell any data. Our only interest is that young people know and can exercise their rights." },
     ],
-    foot_text: "Original project created in 2026 at Col·legi La Salle Reus. Any institutional or commercial use of this platform requires the express authorisation of its authors.",
+    foot_text: "Original project created in 2026 at Col·legi La Salle Reus. Commercial use of the content, and any use of the code, design or brand, requires the express authorisation of the authors.",
     cta: "Try the simulator",
   },
   chat: {
@@ -724,7 +747,7 @@ const en = {
     ],
     placeholder: "Type your question…",
     send: "Send",
-    disc: "No account needed · messages stay in your browser",
+    disc: "No account needed · don't share personal data",
     thinking: "Thinking",
     bot_label: "Assistant · AI",
     user_label: "You",
