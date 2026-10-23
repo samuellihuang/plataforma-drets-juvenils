@@ -15,6 +15,12 @@ const supabase = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Render posa un proxy davant: sense això totes les peticions semblen venir
+// de la mateixa IP i el rate limit es comparteix entre tots els usuaris.
+app.set('trust proxy', 1);
+
+const GENERIC_ERROR = 'Error del servidor. Torna-ho a intentar més tard.';
+
 function buildSystemPrompt(lang) {
   if (lang === 'es') {
     return `Eres un asistente educativo especializado en derechos legales para jóvenes en España. Tu función es explicar conceptos legales de forma clara, sencilla y responsable.
@@ -45,6 +51,31 @@ Acaba sempre amb: 'Això és informació orientativa, no assessorament legal pro
 }
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+
+// Model principal configurable des de Render (GEMINI_MODEL). Si un model es retira
+// (404), es prova el següent de la llista perquè el xat no deixi de funcionar.
+const GEMINI_MODELS = [...new Set([
+  process.env.GEMINI_MODEL,
+  'gemini-2.5-flash',
+  'gemini-flash-latest',
+  'gemini-3-flash-preview',
+].filter(Boolean))];
+
+async function generateWithFallback(systemInstruction, text) {
+  let lastErr;
+  for (const name of GEMINI_MODELS) {
+    try {
+      const model = genAI.getGenerativeModel({ model: name, systemInstruction });
+      const result = await model.generateContent(text);
+      return result.response.text();
+    } catch (err) {
+      lastErr = err;
+      if (err.status !== 404) throw err;
+      console.warn(`Model ${name} no disponible, provant el següent.`);
+    }
+  }
+  throw lastErr;
+}
 
 // Security
 app.use(helmet());
@@ -122,24 +153,21 @@ app.post('/api/chat', async (req, res) => {
   }
 
   const lang = language === 'es' || language === 'ca' ? language : 'ca';
-  const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview', systemInstruction: buildSystemPrompt(lang) });
-
   try {
-    const result = await model.generateContent(message.trim());
-    const response = result.response.text();
+    const response = await generateWithFallback(buildSystemPrompt(lang), message.trim());
     if (!response) throw new Error('Resposta buida de l\'API');
 
     return res.json({ response });
   } catch (err) {
     console.error('Error cridant l\'API de Gemini:', err);
 
-    return res.status(500).json({ error: err.message || String(err) });
+    return res.status(500).json({ error: GENERIC_ERROR });
   }
 });
 
 // ── Forum routes ──────────────────────────────────────────────
 const forumGuard = (_req, res, next) => {
-  if (!supabase) return res.status(503).json({ error: 'Fòrum no configurat. Afegeix SUPABASE_URL i SUPABASE_SERVICE_KEY.' });
+  if (!supabase) return res.status(503).json({ error: 'El fòrum no està disponible ara mateix.' });
   next();
 };
 const forumPostLimiter  = rateLimit({ windowMs: 60 * 60 * 1000, max: 5,  message: { error: 'Massa posts. Torna en 1 hora.' } });
@@ -161,7 +189,7 @@ app.get('/api/forum', forumGuard, async (req, res) => {
       return { ...p, reply_count: count ?? 0 };
     }));
     return res.json(withCounts);
-  } catch (e) { return res.status(500).json({ error: e.message }); }
+  } catch (e) { console.error('Error al fòrum:', e); return res.status(500).json({ error: GENERIC_ERROR }); }
 });
 
 // POST /api/forum
@@ -173,7 +201,7 @@ app.post('/api/forum', forumGuard, forumPostLimiter, async (req, res) => {
     const { data, error } = await supabase.from('posts').insert({ title: title.trim(), body: body.trim(), category: (category || 'general').slice(0, 50) }).select().single();
     if (error) throw error;
     return res.status(201).json(data);
-  } catch (e) { return res.status(500).json({ error: e.message }); }
+  } catch (e) { console.error('Error al fòrum:', e); return res.status(500).json({ error: GENERIC_ERROR }); }
 });
 
 // GET /api/forum/:id
@@ -184,7 +212,7 @@ app.get('/api/forum/:id', forumGuard, async (req, res) => {
     const { data: replies, error: re } = await supabase.from('replies').select('*').eq('post_id', req.params.id).order('created_at', { ascending: true });
     if (re) throw re;
     return res.json({ ...post, replies: replies || [] });
-  } catch (e) { return res.status(500).json({ error: e.message }); }
+  } catch (e) { console.error('Error al fòrum:', e); return res.status(500).json({ error: GENERIC_ERROR }); }
 });
 
 // POST /api/forum/:id/reply
@@ -196,10 +224,16 @@ app.post('/api/forum/:id/reply', forumGuard, forumReplyLimiter, async (req, res)
     const { data, error } = await supabase.from('replies').insert({ post_id: req.params.id, body: body.trim() }).select().single();
     if (error) throw error;
     return res.status(201).json(data);
-  } catch (e) { return res.status(500).json({ error: e.message }); }
+  } catch (e) { console.error('Error al fòrum:', e); return res.status(500).json({ error: GENERIC_ERROR }); }
 });
 
 // 404 catch-all
 app.use((_req, res) => res.status(404).json({ error: 'Ruta no trobada.' }));
+
+app.use((err, _req, res, _next) => {
+  console.error('Error no controlat:', err);
+  const isCors = String(err?.message || '').startsWith('CORS');
+  res.status(isCors ? 403 : 500).json({ error: isCors ? 'Origen no permès.' : GENERIC_ERROR });
+});
 
 app.listen(PORT, () => console.log(`Servidor actiu a http://localhost:${PORT}`));
